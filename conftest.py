@@ -117,24 +117,27 @@ _MOCK_RESPONSES = {
 
 @pytest.fixture(autouse=True, scope="function")
 def auto_mock(api_session):
-    """USE_MOCK=true 时自动 mock api_session.post 返回固定数据"""
+    """USE_MOCK=true 时拦截所有 HTTP 请求，返回固定数据"""
     if not USE_MOCK:
         yield
         return
 
-    original_post = api_session.post
+    original_request = api_session.request
 
-    def mock_post(url, **kwargs):
+    def mock_request(method, url, **kwargs):
         if url in _MOCK_RESPONSES:
             resp = MagicMock()
             resp.status_code = 200
             resp.json.return_value = _MOCK_RESPONSES[url]
             return resp
-        return original_post(url, **kwargs)
+        resp = MagicMock()
+        resp.status_code = 200
+        resp.json.return_value = {"code": 0, "msg": "success", "data": {}}
+        return resp
 
-    api_session.post = mock_post
+    api_session.request = mock_request
     yield
-    api_session.post = original_post
+    api_session.request = original_request
 
 
 # ======================
