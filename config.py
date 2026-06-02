@@ -1,4 +1,4 @@
-# config.py
+
 import os
 
 # ======================
@@ -6,13 +6,23 @@ import os
 # ======================
 ENV = os.getenv("TEST_ENV", "test")  # 默认使用 test 环境
 
-BASE_URL = {
-    "dev": "http://fenghuotai-dev.xxx.com/api/v1",
-    "test": "http://fenghuotai-test.xxx.com/api/v1",
-    "prod": "http://fenghuotai-prod.xxx.com/api/v1"
+# =========================================================
+# TODO: 后台管理系统 API 地址（用于登录、配置规则等管理操作）
+# =========================================================
+ADMIN_BASE_URL = {
+    "dev":  "http://admin-dev.xxx.com/api/v1",     # TODO 替换
+    "test": "http://admin-test.xxx.com/api/v1",    # TODO 替换
+    "prod": "http://admin-prod.xxx.com/api/v1",   # TODO 替换
 }
 
-API_BASE_URL = BASE_URL[ENV]
+# =========================================================
+# TODO: APP 用户端 API 地址（用于用户下单等操作）
+# =========================================================
+APP_BASE_URL = {
+    "dev":  "http://app-dev.xxx.com/api/v1",       # TODO 替换
+    "test": "http://app-test.xxx.com/api/v1",      # TODO 替换
+    "prod": "http://app-prod.xxx.com/api/v1",     # TODO 替换
+}
 
 # ======================
 # 2. 账号配置 (Account)

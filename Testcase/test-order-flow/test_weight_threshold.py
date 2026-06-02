@@ -1,11 +1,10 @@
 import pytest
-from config import TEST_DATA_IDS, TEST_USERS, API_BASE_URL
+from config import TEST_DATA_IDS, TEST_USERS, APP_BASE_URL, ENV
 from Common.DB import USE_MOCK
 
 
 class TestOrderFlow:
     """验证下单风控链路的重量阈值规则"""
-
     # ------------------------------------------------------------------
     # TC_073: 单笔重量阈值规则
     # 绑定: 金水区规则 "单笔重量 >10kg 触发送检"
@@ -33,7 +32,7 @@ class TestOrderFlow:
         }
 
         response = api_session.post(
-            f"{API_BASE_URL}/order/create", json=payload, headers=auth_headers
+            f"{APP_BASE_URL[ENV]}/order/create", json=payload, headers=auth_headers
         )
 
         assert response.status_code == 200

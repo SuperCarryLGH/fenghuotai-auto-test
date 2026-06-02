@@ -11,7 +11,11 @@ if PROJECT_ROOT not in sys.path:
 # ===============================
 # 导入 config
 # ===============================
-from config import API_BASE_URL, ACCOUNTS
+from config import ADMIN_BASE_URL, APP_BASE_URL, ACCOUNTS, ENV
+
+# 根据环境选对应端地址
+ADMIN_URL = ADMIN_BASE_URL[ENV]
+APP_URL = APP_BASE_URL[ENV]
 
 import pytest
 import requests
@@ -62,47 +66,49 @@ def login_tool(api_session):
 
 @pytest.fixture(scope="session")
 def admin_token(login_tool):
-    """获取超级管理员 Token"""
-    return login_tool.login_admin()
+    """获取超级管理员 Token（后台管理端）"""
+    return login_tool.admin_login("admin")
 
 
 @pytest.fixture(scope="function")
 def operator_token(login_tool):
-    """获取运营人员 Token"""
-    return login_tool.login_operator()
+    """获取运营人员 Token（后台管理端）"""
+    return login_tool.admin_login("operator")
 
 
 @pytest.fixture(scope="function")
-def operator_token(api_session):
+def app_token(login_tool):
     """
-    获取运营人员 Token
-    优先级：P1，用于日常操作
+    获取 APP 用户 Token
+    TODO: 填上真实的用户手机号/验证码
     """
-    login_url = f"{API_BASE_URL}/auth/login"
-    payload = ACCOUNTS["operator"]
-    response = api_session.post(login_url, json=payload)
-    response.raise_for_status()
-    return response.json()["data"]["token"]
+    return login_tool.app_login(user_id="USER_ID_NORMAL_001")
 
 
 @pytest.fixture(scope="function")
 def auth_headers(operator_token):
     """
-    提供一个带鉴权的 Header
+    提供一个带鉴权的 Header（后台管理端）
     这是最常用的 Fixture
     """
     return {"Authorization": f"Bearer {operator_token}"}
+
+
+@pytest.fixture(scope="function")
+def app_auth_headers(app_token):
+    """提供 APP 端鉴权 Header"""
+    return {"Authorization": f"Bearer {app_token}"}
 
 
 # ======================
 # 【Mock 区块】后续删除：删掉以下内容到 "# 3. 数据库连接" 为止
 # ======================
 _MOCK_RESPONSES = {
-    f"{API_BASE_URL}/auth/login": {
+    f"{ADMIN_URL}/auth/login": {
         "code": 0,
         "data": {"token": "mock_token_auto_test"},
     },
-    f"{API_BASE_URL}/order/create": {
+    f"{APP_URL}/order/create": {
         "code": 0,
         "data": {"order_no": "MOCK_ORDER_001", "status": "WAIT_CHECK"},
     },
