@@ -1,0 +1,44 @@
+# ====================================================================
+# 测试区域/围栏数据
+# 【TODO】把下面的 ID 和坐标替换为系统中真实存在的值
+# ====================================================================
+
+# ---------- 区域 ----------
+regions:
+  - name: "河南省-郑州市-金水区"
+    id: "REGION_ID_12345"   # TODO 替换为真实区域 ID
+    status: "已开通"
+    # TODO 补充区域其他字段
+
+  - name: "河南省-郑州市-二七区"
+    id: "REGION_ID_67890"   # TODO 替换为真实区域 ID
+    status: "未开通"
+    # TODO 补充区域其他字段
+
+# ---------- 围栏 ----------
+fences:
+  - name: "父围栏A"
+    id: "FENCE_ID_PARENT_A"   # TODO 替换为真实父围栏 ID
+    region_id: "REGION_ID_12345"
+    # TODO 补充围栏坐标 (lng/lat)
+
+  - name: "子围栏B（在A内）"
+    id: "FENCE_ID_CHILD_B"    # TODO 替换为真实子围栏 ID
+    parent_id: "FENCE_ID_PARENT_A"
+    region_id: "REGION_ID_12345"
+    # TODO 补充围栏坐标 (lng/lat)
+
+# ---------- 规则绑定 ----------
+# TODO 每条规则记录：rule_id, rule_type(阶梯/重量/频次), threshold, action(禁止/送检)
+rule_bindings:
+  - region_id: "REGION_ID_12345"
+    rule_id: "RULE_ID_STEP_3"     # TODO 替换
+    rule_type: "step"             # 阶梯规则
+    threshold: 3                  # 月下单次数 >= 3 触发
+    action: "FORBID"              # 禁止下单
+
+  - region_id: "REGION_ID_12345"
+    rule_id: "RULE_ID_WEIGHT_10"  # TODO 替换
+    rule_type: "weight"           # 重量规则
+    threshold: 10                 # 单笔 >10kg 触发
+    action: "CHECK"               # 送检

@@ -1,0 +1,30 @@
+# ====================================================================
+# 测试用户数据
+# 【TODO】把下面的 ID 替换为系统中真实存在的用户 ID
+# ====================================================================
+
+users:
+  # ---------- 普通用户 ----------
+  - role: "normal_user"
+    user_id: "USER_ID_NORMAL_001"     # TODO 替换
+    # 用于：正常下单、未触发任何风控的测试
+
+  # ---------- 白名单用户 ----------
+  - role: "whitelist_user"
+    user_id: "USER_ID_WHITELIST_001"  # TODO 替换
+    # 用于：验证白名单跳过风控
+
+  # ---------- 黑名单用户 ----------
+  - role: "blacklist_user"
+    user_id: "USER_ID_BLACKLIST_001"  # TODO 替换
+    # 用于：验证黑名单直接禁止下单
+
+# ---------- 用户月下单次数（前置准备） ----------
+# TODO 补充具体值，用于 reset_test_data 恢复初始状态
+user_month_counts:
+  - user_id: "USER_ID_NORMAL_001"
+    count: 0       # 月初清零状态
+  - user_id: "USER_ID_WHITELIST_001"
+    count: 0
+  - user_id: "USER_ID_BLACKLIST_001"
+    count: 5       # 已经下了 5 单
