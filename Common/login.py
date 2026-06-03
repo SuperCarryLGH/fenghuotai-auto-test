@@ -1,5 +1,5 @@
 import requests
-from config import ADMIN_BASE_URL, APP_BASE_URL, ACCOUNTS, ENV
+from config import ADMIN_URL, APP_URL, ACCOUNTS
 
 
 class Login:
@@ -20,13 +20,13 @@ class Login:
     # ===================================================================
     # 管理后台登录（配置规则 / 日常运营）
     # ===================================================================
+    ADMIN_LOGIN_URL = f"{ADMIN_URL}/admin-api/system/auth/login"
 
-    # TODO: 确认后台登录接口路径和请求体字段
-    ADMIN_LOGIN_URL = f"{ADMIN_BASE_URL[ENV]}/auth/login"
+    # Headers 附加参数（多租户系统需要传租户 ID）
+    ADMIN_LOGIN_HEADERS = {"tenant-id": "1"}
 
-    # TODO: 确认后台登录返回的 token 字段路径
-    # 当前假设: {"code": 0, "data": {"token": "xxx"}}
-    ADMIN_TOKEN_PATH = ("data", "token")
+    # 返回结构: {"code": 0, "data": {"accessToken": "xxx", ...}}
+    ADMIN_TOKEN_PATH = ("data", "accessToken")
 
     def _extract_token(self, response: requests.Response, path: tuple) -> str:
         """从登录响应中按路径提取 token"""
@@ -45,38 +45,36 @@ class Login:
             raise ValueError(f"未知角色: {role}，可选: {list(ACCOUNTS.keys())}")
 
         payload = ACCOUNTS[role]
-        response = self.session.post(self.ADMIN_LOGIN_URL, json=payload)
+        response = self.session.post(
+            self.ADMIN_LOGIN_URL,
+            json=payload,
+            headers=self.ADMIN_LOGIN_HEADERS,
+        )
         response.raise_for_status()
         return self._extract_token(response, self.ADMIN_TOKEN_PATH)
 
     # ===================================================================
-    # APP 用户端登录（普通用户 / 白名单 / 黑名单）
+    # APP 用户端登录（微信小程序手机号登录）
     # ===================================================================
+    APP_LOGIN_URL = f"{APP_URL}/app-api/member/auth/weixin-mini-app-login"
 
-    # TODO: 确认 APP 端登录接口路径
-    APP_LOGIN_URL = f"{APP_BASE_URL[ENV]}/auth/login"
+    APP_LOGIN_HEADERS = {"tenant-id": "1"}
 
-    # TODO: 确认 APP 端登录返回值结构
-    # 当前假设: {"code": 0, "data": {"token": "xxx"}}
-    # 常见情况可能是手机号+验证码登录或账号密码登录
-    APP_TOKEN_PATH = ("data", "token")
+    APP_TOKEN_PATH = ("data", "accessToken")
 
-    def app_login(self, user_id: str = None, mobile: str = None, code: str = None) -> str:
-        """
-        登录 APP 用户端。
-
-        :param user_id:  用户 ID（用于标识登录者，具体字段视接口而定）
-        :param mobile:   手机号（如果是短信验证码登录）
-        :param code:     验证码（如果是短信验证码登录）
-
-        TODO: 根据真实 APP 登录接口调整参数和请求体
-        """
-        # TODO: 替换为真实的 APP 端登录请求体
+    def app_login(self, phone_code: str, login_code: str,
+                  state: str = "test-state-001",
+                  uuid: str = "test-device-001",
+                  device_data: str = "iPhone") -> str:
         payload = {
-            "userId": user_id,
-            "mobile": mobile,
-            "code": code,
+            "phoneCode": phone_code,
+            "loginCode": login_code,
+            "state": state,
+            "uuid": uuid,
+            "deviceData": device_data,
         }
-        response = self.session.post(self.APP_LOGIN_URL, json=payload)
+        response = self.session.post(
+            self.APP_LOGIN_URL, json=payload, headers=self.APP_LOGIN_HEADERS,
+        )
         response.raise_for_status()
         return self._extract_token(response, self.APP_TOKEN_PATH)

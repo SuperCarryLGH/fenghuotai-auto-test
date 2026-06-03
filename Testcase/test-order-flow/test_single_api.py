@@ -1,5 +1,5 @@
 import pytest
-from config import ADMIN_BASE_URL, ENV
+from config import ADMIN_URL
 
 
 class TestUserApi:
@@ -8,7 +8,7 @@ class TestUserApi:
     @pytest.mark.smoke
     def test_get_user_detail(self, api_session, auth_headers):
         """获取用户详情"""
-        url = f"{ADMIN_BASE_URL[ENV]}/system/user/get"
+        url = f"{ADMIN_URL}/admin-api/system/user/get"
         params = {"id": "USER_ID_NORMAL_001"}
 
         resp = api_session.get(url, params=params, headers=auth_headers)
@@ -22,7 +22,7 @@ class TestUserApi:
     @pytest.mark.smoke
     def test_role_page(self, api_session, auth_headers):
         """角色分页查询"""
-        url = f"{ADMIN_BASE_URL[ENV]}/system/role/page"
+        url = f"{ADMIN_URL}/admin-api/system/role/page"
         params = {"pageNo": 1, "pageSize": 10}
 
         resp = api_session.get(url, params=params, headers=auth_headers)
@@ -34,7 +34,7 @@ class TestUserApi:
     @pytest.mark.smoke
     def test_create_role(self, api_session, auth_headers):
         """创建角色"""
-        url = f"{ADMIN_BASE_URL[ENV]}/system/role/create"
+        url = f"{ADMIN_URL}/admin-api/system/role/create"
         body = {"name": "测试角色_todo", "code": "TEST_ROLE"}
 
         resp = api_session.post(url, json=body, headers=auth_headers)

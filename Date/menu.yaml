@@ -1,0 +1,6 @@
+menu:
+  name: "测试"
+  type: 1
+  sort: 0
+  parentId: 1024
+  status: 0

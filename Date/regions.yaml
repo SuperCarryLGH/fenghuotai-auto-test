@@ -1,0 +1,43 @@
+# ====================================================================
+# 区域 / 围栏 / 风控规则 - 测试数据
+# 所有 ID 用 KEY 命名，等你拿到真实数据后替换 VALUE 即可
+# ====================================================================
+
+# ---------- 运营区域 ----------
+regions:
+  henan_zhengzhou_jinshui:
+    id: "REGION_ID_12345"        # TODO 替换为真实区域 ID
+    name: "河南省-郑州市-金水区"
+    status: "已开通"
+
+  henan_zhengzhou_erqi:
+    id: "REGION_ID_67890"        # TODO 替换为真实区域 ID
+    name: "河南省-郑州市-二七区"
+    status: "未开通"
+
+# ---------- 电子围栏 ----------
+fences:
+  parent_fence_a:
+    id: "FENCE_ID_PARENT_A"      # TODO 替换为真实围栏 ID
+    name: "父围栏A"
+    region_key: "henan_zhengzhou_jinshui"
+
+  child_fence_b:
+    id: "FENCE_ID_CHILD_B"       # TODO 替换为真实围栏 ID
+    name: "子围栏B（在A内）"
+    parent_key: "parent_fence_a"
+    region_key: "henan_zhengzhou_jinshui"
+
+# ---------- 风控规则 ----------
+risk_rules:
+  step_rule_limit_3:
+    id: "RULE_ID_STEP_3"         # TODO 替换为真实规则 ID
+    type: "step"                 # 阶梯规则
+    threshold: 3                 # 月下单次数 >= 3 触发
+    action: "FORBID"             # 禁止下单
+
+  weight_rule_10kg:
+    id: "RULE_ID_WEIGHT_10"      # TODO 替换为真实规则 ID
+    type: "weight"               # 重量规则
+    threshold: 10                # 单笔 >10kg 触发
+    action: "CHECK"              # 送检

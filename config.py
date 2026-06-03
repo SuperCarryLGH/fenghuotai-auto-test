@@ -4,71 +4,62 @@ import os
 # ======================
 # 1. 环境配置 (Environment)
 # ======================
-ENV = os.getenv("TEST_ENV", "test")  # 默认使用 test 环境
-
-# =========================================================
-# TODO: 后台管理系统 API 地址（用于登录、配置规则等管理操作）
-# =========================================================
-ADMIN_BASE_URL = {
-    "dev":  "http://admin-dev.xxx.com/api/v1",     # TODO 替换
-    "test": "http://admin-test.xxx.com/api/v1",    # TODO 替换
-    "prod": "http://admin-prod.xxx.com/api/v1",   # TODO 替换
-}
-
-# =========================================================
-# TODO: APP 用户端 API 地址（用于用户下单等操作）
-# =========================================================
-APP_BASE_URL = {
-    "dev":  "http://app-dev.xxx.com/api/v1",       # TODO 替换
-    "test": "http://app-test.xxx.com/api/v1",      # TODO 替换
-    "prod": "http://app-prod.xxx.com/api/v1",     # TODO 替换
-}
+ENV = os.getenv("TEST_ENV", "dev")  # 默认使用 dev 环境
 
 # ======================
-# 2. 账号配置 (Account)
+# 2. 管理后台配置 (Admin)
+#    地址 + 账号按环境绑定，TEST_ENV 切到哪就自动用哪套
 # ======================
-ACCOUNTS = {
-    "admin": {  # 超级管理员，用于配置规则
-        "username": "auto_admin",
-        "password": "AutoTest@123"
+ADMIN_CONFIG = {
+    "dev": {
+        "base_url": "https://api-fht-dev.hengyishou.com",   # TODO 替换
+        "accounts": {
+            "admin": {"username": "admin", "password": "Rs654321."},           # TODO 替换
+            "operator": {"username": "auto_operator", "password": "AutoTest@123"},  # TODO 替换
+        },
     },
-    "operator": {  # 运营人员，用于日常操作
-        "username": "auto_operator",
-        "password": "AutoTest@123"
-    }
-}
-
-# ======================
-# 3. 测试数据 ID (Data IDs)
-# ======================
-TEST_DATA_IDS = {
-    # --- 区域与围栏 ---
-    "region": {
-        "henan_zhengzhou_jinshui": "REGION_ID_12345",  # 河南省-郑州市-金水区 (已开通)
-        "henan_zhengzhou_erqi": "REGION_ID_67890"      # 河南省-郑州市-二七区 (未开通)
+    "test": {
+        "base_url": "http://admin-test.xxx.com/api/v1",     # TODO 替换
+        "accounts": {
+            "admin": {"username": "auto_admin", "password": "AutoTest@123"},        # TODO 替换
+            "operator": {"username": "auto_operator", "password": "AutoTest@123"},  # TODO 替换
+        },
     },
-    "fence": {
-        "parent_fence_a": "FENCE_ID_PARENT_A",  # 父围栏A
-        "child_fence_b": "FENCE_ID_CHILD_B"     # 子围栏B (在A内)
+    "prod": {
+        "base_url": "http://admin-prod.xxx.com/api/v1",    # TODO 替换
+        "accounts": {
+            "admin": {"username": "auto_admin", "password": "AutoTest@123"},        # TODO 替换
+            "operator": {"username": "auto_operator", "password": "AutoTest@123"},  # TODO 替换
+        },
     },
-    # --- 风控规则 ---
-    "risk_rule": {
-        "step_rule_limit_3": "RULE_ID_STEP_3",  # 阶梯规则：0-2正常，3+禁止下单
-        "weight_rule_10kg": "RULE_ID_WEIGHT_10" # 重量规则：>10kg送检
-    }
 }
 
-# ======================
-# 4. 测试用户 (Test Users)
-# ======================
-TEST_USERS = {
-    "whitelist_user": "USER_ID_WHITELIST_001",
-    "blacklist_user": "USER_ID_BLACKLIST_001",
-    "normal_user": "USER_ID_NORMAL_001"
-}
+ADMIN_URL = ADMIN_CONFIG[ENV]["base_url"]
+ACCOUNTS = ADMIN_CONFIG[ENV]["accounts"]
 
 # ======================
-# 5. 数据库配置 (DB)
+# 3. APP 用户端配置
+# ======================
+APP_CONFIG = {
+    "dev": {
+        "base_url": "http://api-fht-dev.hengyishou.com",           # TODO 替换
+        # TODO: 如果需要 APP 端专用账号，加在这里
+        "accounts": {
+            "normal_user": {"mobile": "15617617160", "code": "1234"},
+        },
+    },
+    "test": {
+        "base_url": "http://app-test.xxx.com/api/v1",          # TODO 替换
+    },
+    "prod": {
+        "base_url": "http://app-prod.xxx.com/api/v1",         # TODO 替换
+    },
+}
+
+APP_URL = APP_CONFIG[ENV]["base_url"]
+
+# ======================
+# 4. 数据库配置 (DB)
 # ======================
 DB_CONFIG = {
     "host": "test-db.xxx.com",

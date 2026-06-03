@@ -1,0 +1,7 @@
+dept:
+    id: 100 #部门编号
+    create id: 121212
+    sort: 0
+    name: "恒逸资源"
+    status: "0"
+    create name: "test123"

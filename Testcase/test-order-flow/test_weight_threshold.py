@@ -1,6 +1,7 @@
 import pytest
-from config import TEST_DATA_IDS, TEST_USERS, APP_BASE_URL, ENV
+from config import APP_URL
 from Common.DB import USE_MOCK
+from Common.loader import load_regions, load_users
 
 
 class TestOrderFlow:
@@ -9,6 +10,9 @@ class TestOrderFlow:
     # TC_073: 单笔重量阈值规则
     # 绑定: 金水区规则 "单笔重量 >10kg 触发送检"
     # ------------------------------------------------------------------
+    regions = load_regions()
+    users = load_users()
+
     @pytest.mark.smoke
     @pytest.mark.regression
     @pytest.mark.parametrize("weight, expected_status", [
@@ -18,9 +22,9 @@ class TestOrderFlow:
     def test_weight_threshold(
         self, api_session, auth_headers, db_client, weight, expected_status
     ):
-        region_id = TEST_DATA_IDS["region"]["henan_zhengzhou_jinshui"]
-        fence_id = TEST_DATA_IDS["fence"]["child_fence_b"]
-        user_id = TEST_USERS["normal_user"]
+        region_id = self.regions["regions"]["henan_zhengzhou_jinshui"]["id"]
+        fence_id = self.regions["fences"]["child_fence_b"]["id"]
+        user_id = self.users["users"]["normal_user"]["id"]
 
         payload = {
             "user_id": user_id,
@@ -32,7 +36,7 @@ class TestOrderFlow:
         }
 
         response = api_session.post(
-            f"{APP_BASE_URL[ENV]}/order/create", json=payload, headers=auth_headers
+            f"{APP_URL}/order/create", json=payload, headers=auth_headers
         )
 
         assert response.status_code == 200

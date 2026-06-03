@@ -102,8 +102,9 @@ class DBClient:
     Mock 模式：所有方法返回空结果，不发起真实网络请求。
     """
 
-    def __init__(self, config: dict = None):
+    def __init__(self, config: dict = None, force_mock: bool = False):
         self._config = config or {}
+        self._force_mock = force_mock
         self._conn: Optional[Union["MockConnection", Any]] = None
 
     # -------------------- 连接管理 --------------------
@@ -112,7 +113,7 @@ class DBClient:
         if self._conn is not None:
             return self._conn
 
-        if USE_MOCK:
+        if USE_MOCK or self._force_mock:
             self._conn = MockConnection()
             return self._conn
 

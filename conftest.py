@@ -1,5 +1,8 @@
 import sys
 import os
+import warnings
+
+warnings.filterwarnings("ignore", category=Warning, module="urllib3")
 
 # ===============================
 # 把项目根目录加入 PYTHONPATH
@@ -11,11 +14,7 @@ if PROJECT_ROOT not in sys.path:
 # ===============================
 # 导入 config
 # ===============================
-from config import ADMIN_BASE_URL, APP_BASE_URL, ACCOUNTS, ENV
-
-# 根据环境选对应端地址
-ADMIN_URL = ADMIN_BASE_URL[ENV]
-APP_URL = APP_BASE_URL[ENV]
+from config import ADMIN_URL, APP_URL, ACCOUNTS
 
 import pytest
 import requests
@@ -46,7 +45,11 @@ def api_session():
     作用域为整个测试会话，自动携带 Cookie/Header
     """
     session = requests.Session()
-    session.headers.update({"Content-Type": "application/json"})
+    session.headers.update({
+        "Content-Type": "application/json",
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+                       "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0",
+    })
     session.request = partial(session.request, timeout=10)
     yield session
     session.close()
@@ -85,13 +88,13 @@ def app_token(login_tool):
     return login_tool.app_login(user_id="USER_ID_NORMAL_001")
 
 
-@pytest.fixture(scope="function")
-def auth_headers(operator_token):
+@pytest.fixture(scope="session")
+def auth_headers(admin_token):
     """
     提供一个带鉴权的 Header（后台管理端）
     这是最常用的 Fixture
     """
-    return {"Authorization": f"Bearer {operator_token}"}
+    return {"Authorization": f"Bearer {admin_token}"}
 
 
 @pytest.fixture(scope="function")
@@ -103,15 +106,9 @@ def app_auth_headers(app_token):
 # ======================
 # 【Mock 区块】后续删除：删掉以下内容到 "# 3. 数据库连接" 为止
 # ======================
-_MOCK_RESPONSES = {
-    f"{ADMIN_URL}/auth/login": {
-        "code": 0,
-        "data": {"token": "mock_token_auto_test"},
-    },
-    f"{APP_URL}/order/create": {
-        "code": 0,
-        "data": {"order_no": "MOCK_ORDER_001", "status": "WAIT_CHECK"},
-    },
+_MOCK_URLS = {
+    f"{APP_URL}/app-api/member/auth/send-sms-code",
+    f"{APP_URL}/order/create",
 }
 
 
@@ -125,15 +122,12 @@ def auto_mock(api_session):
     original_request = api_session.request
 
     def mock_request(method, url, **kwargs):
-        if url in _MOCK_RESPONSES:
+        if url in _MOCK_URLS:
             resp = MagicMock()
             resp.status_code = 200
-            resp.json.return_value = _MOCK_RESPONSES[url]
+            resp.json.return_value = {"code": 0, "msg": "success", "data": {}}
             return resp
-        resp = MagicMock()
-        resp.status_code = 200
-        resp.json.return_value = {"code": 0, "msg": "success", "data": {}}
-        return resp
+        return original_request(method, url, **kwargs)
 
     api_session.request = mock_request
     yield
@@ -144,6 +138,7 @@ def auto_mock(api_session):
 # 3. 数据库连接（基于 Common/DB.py 的 DBClient）
 # ======================
 from Common.DB import DBClient, BizHelper
+from Common.loader import load_users
 
 
 @pytest.fixture(scope="session")
@@ -157,7 +152,7 @@ def db_client():
         if not USE_MOCK:
             client.conn  # 验证连接
     except Exception:
-        client = DBClient()  # 连接失败则用 Mock 保底
+        client = DBClient(force_mock=True)  # 连接失败则用 Mock 保底
     yield client
     client.close()
 
@@ -179,8 +174,9 @@ def reset_test_data(db_client):
     如果 db_client 处于 Mock 模式，所有操作静默通过。
     """
     # ---- 测试前：清理脏数据 ----
-    # TODO 1. 补充你的测试用户 ID
-    test_user_ids = ["USER_ID_NORMAL_001", "USER_ID_WHITELIST_001"]
+    _users = load_users().get("users", {})
+    test_user_ids = [u["id"] for u in _users.values() if "id" in u]
+    # TODO: 确认 user_id 值是否正确
 
     # TODO 2. 确认下面的表名和字段名
     for uid in test_user_ids:
