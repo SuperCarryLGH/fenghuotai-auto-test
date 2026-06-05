@@ -36,3 +36,7 @@ def load_dept() -> dict:
     return _load("dept.yaml")
 def load_menu() ->dict:
     return _load("menu.yaml")
+def load_page() ->dict:
+    return _load("page.yaml")
+def load_station() ->dict:
+    return _load("station.yaml")

@@ -79,13 +79,10 @@ def operator_token(login_tool):
     return login_tool.admin_login("operator")
 
 
-@pytest.fixture(scope="function")
+@pytest.fixture(scope="session")
 def app_token(login_tool):
-    """
-    获取 APP 用户 Token
-    TODO: 填上真实的用户手机号/验证码
-    """
-    return login_tool.app_login(user_id="USER_ID_NORMAL_001")
+    """获取 APP 用户 Token（短信验证码登录）"""
+    return login_tool.app_login()
 
 
 @pytest.fixture(scope="session")
@@ -108,7 +105,17 @@ def app_auth_headers(app_token):
 # ======================
 _MOCK_URLS = {
     f"{APP_URL}/app-api/member/auth/send-sms-code",
+    f"{APP_URL}/app-api/cooperation/getByPlatform",
+    f"{APP_URL}/app-api/recycle/activity/list",
+    f"{APP_URL}/app-api/recycle/activity/my/list",
+    f"{APP_URL}/app-api/recycle/station/detail",
     f"{APP_URL}/order/create",
+}
+
+_MOCK_RESPONSES = {
+    f"{APP_URL}/app-api/recycle/activity/group/detail": {
+        "code": 0, "msg": "success", "data": {"id": 0},
+    },
 }
 
 
@@ -122,6 +129,11 @@ def auto_mock(api_session):
     original_request = api_session.request
 
     def mock_request(method, url, **kwargs):
+        if url in _MOCK_RESPONSES:
+            resp = MagicMock()
+            resp.status_code = 200
+            resp.json.return_value = _MOCK_RESPONSES[url]
+            return resp
         if url in _MOCK_URLS:
             resp = MagicMock()
             resp.status_code = 200

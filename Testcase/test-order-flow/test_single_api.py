@@ -1,5 +1,8 @@
+import time
 import pytest
 from config import ADMIN_URL
+from Common.loader import load_users
+users = load_users()
 
 
 class TestUserApi:
@@ -9,7 +12,7 @@ class TestUserApi:
     def test_get_user_detail(self, api_session, auth_headers):
         """获取用户详情"""
         url = f"{ADMIN_URL}/admin-api/system/user/get"
-        params = {"id": "USER_ID_NORMAL_001"}
+        params = {"id": users["users"]["normal_user"]["id"]}
 
         resp = api_session.get(url, params=params, headers=auth_headers)
 
@@ -35,7 +38,8 @@ class TestUserApi:
     def test_create_role(self, api_session, auth_headers):
         """创建角色"""
         url = f"{ADMIN_URL}/admin-api/system/role/create"
-        body = {"name": "测试角色_todo", "code": "TEST_ROLE"}
+        suffix = str(int(time.time()))
+        body = {"name": f"测试角色_{suffix}", "code": f"TEST_ROLE_{suffix}", "status": 0, "sort": 1}
 
         resp = api_session.post(url, json=body, headers=auth_headers)
 

@@ -54,27 +54,37 @@ class Login:
         return self._extract_token(response, self.ADMIN_TOKEN_PATH)
 
     # ===================================================================
-    # APP 用户端登录（微信小程序手机号登录）
+    # APP 用户端登录（短信验证码登录）
+    # 请求头中的 appId/sign/nonce/timestamp 模拟 APP 端签名
     # ===================================================================
-    APP_LOGIN_URL = f"{APP_URL}/app-api/member/auth/weixin-mini-app-login"
+    SMS_LOGIN_URL = f"{ADMIN_URL}/admin-api/system/auth/sms-login"
 
-    APP_LOGIN_HEADERS = {"tenant-id": "1"}
+    SMS_LOGIN_HEADERS = {
+        "tenant-id": "1",
+        "appId": "admin",
+        "sign": "admin",
+        "terminal": "31",
+        "platform": "App",
+        "nonce": "866413",
+        "timestamp": "1780650379429",
+    }
 
     APP_TOKEN_PATH = ("data", "accessToken")
 
-    def app_login(self, phone_code: str, login_code: str,
-                  state: str = "test-state-001",
-                  uuid: str = "test-device-001",
-                  device_data: str = "iPhone") -> str:
-        payload = {
-            "phoneCode": phone_code,
-            "loginCode": login_code,
-            "state": state,
-            "uuid": uuid,
-            "deviceData": device_data,
-        }
+    def app_login(self, mobile: str = None, code: str = "9999") -> str:
+        """
+        APP 短信验证码登录。
+
+        :param mobile: 手机号，默认从 users.yaml 读取 normal_user.mobile
+        :param code: 验证码，默认 9999
+        """
+        if mobile is None:
+            from Common.loader import load_users
+            mobile = load_users()["users"]["normal_user"]["mobile"]
+
+        payload = {"mobile": mobile, "code": code}
         response = self.session.post(
-            self.APP_LOGIN_URL, json=payload, headers=self.APP_LOGIN_HEADERS,
+            self.SMS_LOGIN_URL, json=payload, headers=self.SMS_LOGIN_HEADERS,
         )
         response.raise_for_status()
         return self._extract_token(response, self.APP_TOKEN_PATH)
