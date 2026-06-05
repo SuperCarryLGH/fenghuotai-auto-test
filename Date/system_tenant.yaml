@@ -1,0 +1,6 @@
+tenant:
+  name: "测试租户"
+  create:
+    code: "TEST_TENANT"
+    contact_name: "管理员"
+    contact_mobile: "18600000000"

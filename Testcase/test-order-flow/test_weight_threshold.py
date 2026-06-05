@@ -1,7 +1,10 @@
 import pytest
 from config import APP_URL
 from Common.DB import USE_MOCK
-from Common.loader import load_regions, load_users
+from Common.loader import load_regions, load_users, load_common
+
+
+common = load_common()
 
 
 class TestOrderFlow:

@@ -1,0 +1,9 @@
+app_operation_center:
+  waiting_check:
+    id: 1
+  inspect:
+    id: 1
+  manager_inspect:
+    id: 1
+  package_detail:
+    id: 1

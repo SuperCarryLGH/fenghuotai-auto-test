@@ -1,0 +1,5 @@
+station_clue:
+  name: "测试线索"
+  update_name: "更新线索"
+  visit:
+    name: "测试回访"

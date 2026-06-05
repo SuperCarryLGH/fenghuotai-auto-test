@@ -1,7 +1,8 @@
 import pytest
 from config import APP_URL
-from Common.loader import load_page
+from Common.loader import load_page, load_common
 page = load_page()
+common = load_common()
 
 class TestAppApiRecycleActivityList:
     """用户 APP - 查询活动分页列表"""
@@ -13,17 +14,17 @@ class TestAppApiRecycleActivityList:
         """
         url = f"{APP_URL}/app-api/recycle/activity/list"
         params = {
-            "pageNo":page["page"]["pageNo"],
-            "pageSize":page["page"]["pageSize"],
+            "pageNo": common['common']['page']['pageNo'],
+            "pageSize": common['common']['page']['pageSize'],
             "activityGroupId":1
             }
 
         resp = api_session.get(url, headers=auth_headers,params=params)
         assert resp.status_code == 200
-        data = resp.json()
-        assert data["code"] == 0
-        #assert data["data"]["id"] == 0
-        print(data)
+        r = resp.json()
+        assert r["code"] == 0
+        #assert r["data"]["id"] == 0
+        print(r)
 
 
 

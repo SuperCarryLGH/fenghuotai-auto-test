@@ -1,0 +1,8 @@
+dict:
+  name: "测试字典"
+  update_name: "更新字典"
+  create:
+    type: "test_dict_type"
+  dict_data:
+    label: "测试数据"
+    value: "test_value"

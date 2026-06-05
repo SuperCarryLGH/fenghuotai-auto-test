@@ -1,8 +1,9 @@
 import pytest
 from config import APP_URL
-from Common.loader import load_station,load_page
+from Common.loader import load_station, load_page, load_common
 station = load_station()
 page = load_page()
+common = load_common()
 
 class TestAppApiRecycleStationList:
     """用户 APP - 根据类型查询站点列表（分页精简）"""
@@ -15,13 +16,13 @@ class TestAppApiRecycleStationList:
         url = f"{APP_URL}/app-api/recycle/station/list"
         params = {
             "type": station["station"]["type"],
-            "pageNo": page["page"]["pageNo"],
-            "pageSize": page["page"]["pageSize"],
+            "pageNo": common['common']['page']['pageNo'],
+            "pageSize": common['common']['page']['pageSize'],
             }
 
         resp = api_session.get(url, headers=auth_headers,params=params)
         #assert resp.status_code == 200
-        data = resp.json()
-        #assert data["code"] == 0
-        #assert data["data"] == {}
-        print(data)
+        r = resp.json()
+        #assert r["code"] == 0
+        #assert r["data"] == {}
+        print(r)

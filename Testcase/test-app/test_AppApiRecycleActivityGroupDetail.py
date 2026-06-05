@@ -1,7 +1,8 @@
 import pytest
 from config import APP_URL
-from Common.loader import load_users
+from Common.loader import load_users, load_common
 users = load_users()
+common = load_common()
 
 class TestAppApiRecycleActivityGroupDetail:
     """用户 APP - 发获取活动组信息及活动列表"""
@@ -18,10 +19,10 @@ class TestAppApiRecycleActivityGroupDetail:
 
         resp = api_session.get(url, headers=auth_headers,params=params)
         assert resp.status_code == 200
-        data = resp.json()
-        assert data["code"] == 0
-        assert data["data"]["id"] == 0
-        print(data)
+        r = resp.json()
+        assert r["code"] == 0
+        assert r["data"]["id"] == 0
+        print(r)
 
 
 

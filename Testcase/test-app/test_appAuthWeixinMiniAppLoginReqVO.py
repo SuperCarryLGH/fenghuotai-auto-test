@@ -1,5 +1,8 @@
 import pytest
 from Common.login import Login
+from Common.loader import load_common
+
+common = load_common()
 
 
 class TestAppSmsLogin:

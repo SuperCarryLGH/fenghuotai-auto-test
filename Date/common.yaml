@@ -1,0 +1,10 @@
+common:
+  page:
+    pageNo: 1
+    pageSize: 10
+  status:
+    enabled: 0
+    disabled: 1
+  id:
+    valid: 1
+    invalid: 99999999

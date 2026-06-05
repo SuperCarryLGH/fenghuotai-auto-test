@@ -1,0 +1,6 @@
+post:
+  name: "测试岗位"
+  update_name: "更新岗位"
+  create:
+    code: "TEST_POST"
+    sort: 1

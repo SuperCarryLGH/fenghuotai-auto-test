@@ -1,0 +1,6 @@
+role:
+  name: "测试角色"
+  update_name: "更新角色"
+  create:
+    code: "TEST_ROLE"
+    sort: 1

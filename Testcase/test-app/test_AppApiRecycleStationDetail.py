@@ -1,7 +1,8 @@
 import pytest
 from config import APP_URL
-from Common.loader import load_station
+from Common.loader import load_station, load_common
 station = load_station()
+common = load_common()
 
 class TestAppApiRecycleStationDetail:
     """用户 APP - 站点全量详情（基础信息+签约配置完整数据）"""
@@ -18,7 +19,7 @@ class TestAppApiRecycleStationDetail:
 
         resp = api_session.get(url, headers=auth_headers, params=params)
         assert resp.status_code == 200
-        data = resp.json()
-        assert data["code"] == 0
-        #assert data["data"] == {}
-        print(data)
+        r = resp.json()
+        assert r["code"] == 0
+        #assert r["data"] == {}
+        print(r)

@@ -1,7 +1,8 @@
 import pytest
 from config import APP_URL
-from Common.loader import load_users
+from Common.loader import load_users, load_common
 users = load_users()
+common = load_common()
 
 class TestAppAuthSmsSendReqVO:
     """用户 APP - 发送手机验证码 Request VO"""
@@ -19,7 +20,7 @@ class TestAppAuthSmsSendReqVO:
 
         resp = api_session.post(url, json=params)
         assert resp.status_code == 200
-        data = resp.json()
-        assert data["code"] == 0
-        assert data["data"] == {}
-        print(data)
+        r = resp.json()
+        assert r["code"] == 0
+        assert r["data"] == {}
+        print(r)

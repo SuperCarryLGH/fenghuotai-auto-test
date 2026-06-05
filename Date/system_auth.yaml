@@ -1,0 +1,2 @@
+auth:
+  refresh_token: "test_refresh_token"
