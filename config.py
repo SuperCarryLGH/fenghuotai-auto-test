@@ -14,7 +14,7 @@ ADMIN_CONFIG = {
     "dev": {
         "base_url": "https://api-fht-dev.hengyishou.com",   # TODO 替换
         "accounts": {
-            "admin": {"username": "admin", "password": "Rs654321."},           # TODO 替换
+            "admin": {"username": "autotest", "password": "autotest123"},           # TODO 替换
             "operator": {"username": "auto_operator", "password": "AutoTest@123"},  # TODO 替换
         },
     },
