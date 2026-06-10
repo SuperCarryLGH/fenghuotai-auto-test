@@ -113,3 +113,18 @@ def load_recycle_clear_order_weigher():
 
 def load_recycle_clear_order_driver():
     return _load("recycle_clear_order_driver.yaml")
+
+def load_yaml(filename: str) -> dict:
+    """按文件名从 Date/ 目录加载 YAML（含后缀）"""
+    return _load(filename)
+
+
+def save_yaml(filename: str, data: dict) -> None:
+    """将 dict 写回 Date/ 目录下的 YAML 文件（保留注释与格式）"""
+    from ruamel.yaml import YAML
+    path = os.path.join(DATA_DIR, filename)
+    yaml_ru = YAML()
+    yaml_ru.preserve_quotes = True
+    yaml_ru.indent(mapping=2, sequence=4, offset=2)
+    with open(path, "w", encoding="utf-8") as f:
+        yaml_ru.dump(data, f)

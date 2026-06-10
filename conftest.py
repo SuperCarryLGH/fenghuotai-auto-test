@@ -14,7 +14,7 @@ if PROJECT_ROOT not in sys.path:
 # ===============================
 # 导入 config
 # ===============================
-from config import ADMIN_URL, APP_URL, ACCOUNTS
+from config import APP_URL, ACCOUNTS
 
 import pytest
 import requests
@@ -110,11 +110,18 @@ _MOCK_URLS = {
     f"{APP_URL}/app-api/recycle/activity/my/list",
     f"{APP_URL}/app-api/recycle/station/detail",
     f"{APP_URL}/order/create",
+    f"{APP_URL}/app-api/recycle/order/v2/mini-order-submit",
 }
 
 _MOCK_RESPONSES = {
     f"{APP_URL}/app-api/recycle/activity/group/detail": {
         "code": 0, "msg": "success", "data": {"id": 0},
+    },
+    f"{APP_URL}/app-api/member/auth/sms-login": {
+        "code": 0, "data": {"accessToken": "mock_app_token_per_user"},
+    },
+    f"{APP_URL}/app-api/member/address/create": {
+        "code": 0, "msg": "", "data": "MOCK_ADDR_ID",
     },
 }
 

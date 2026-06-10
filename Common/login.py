@@ -57,7 +57,7 @@ class Login:
     # APP 用户端登录（短信验证码登录）
     # 请求头中的 appId/sign/nonce/timestamp 模拟 APP 端签名
     # ===================================================================
-    SMS_LOGIN_URL = f"{ADMIN_URL}/admin-api/system/auth/sms-login"
+    SMS_LOGIN_URL = f"{APP_URL}/app-api/member/auth/sms-login"
 
     SMS_LOGIN_HEADERS = {
         "tenant-id": "1",
