@@ -1,0 +1,9 @@
+report_msg:
+  activityGroupId: 1
+  activityId: 1
+  userId:
+  title: 'test'
+  coverImage: ''
+  content: ''
+  status: 1
+  remark: ''

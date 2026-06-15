@@ -113,6 +113,8 @@ def load_recycle_clear_order_weigher():
 
 def load_recycle_clear_order_driver():
     return _load("recycle_clear_order_driver.yaml")
+def load_recycle_activity():
+    return _load("activity_report.yaml")
 
 # === Member tag 模块 ===
 def load_member_tag_create():
