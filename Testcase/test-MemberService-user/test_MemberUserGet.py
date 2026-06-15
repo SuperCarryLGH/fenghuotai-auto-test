@@ -2,15 +2,15 @@ import pytest
 from config import ADMIN_URL
 
 
-class TestMemberLevelRecordGet:
-    """获得会员等级记录"""
+class TestMemberUserGet:
+    """获得会员用户"""
 
     @pytest.mark.smoke
-    def test_MemberLevelRecordGet(self, api_session,auth_headers):
+    def test_MemberUserGet(self, api_session,auth_headers):
         """
         运行: TEST_ENV=dev USE_MOCK=false pytest ... -v -s
         """
-        url = f"{ADMIN_URL}/admin-api/member/level-record/get"
+        url = f"{ADMIN_URL}/admin-api/member/user/get"
         params = {
             "id": 1 #编号
             }

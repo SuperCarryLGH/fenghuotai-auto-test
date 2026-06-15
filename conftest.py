@@ -114,6 +114,16 @@ _MOCK_URLS = {
     f"{APP_URL}/app-api/recycle/order/station-order-submit",
     f"{ADMIN_URL}/admin-api/member/tag/create",
     f"{ADMIN_URL}/admin-api/member/level-record/get",
+    f"{ADMIN_URL}/admin-api/member/level-record/page",
+    f"{ADMIN_URL}/admin-api/member/experience-record/get",
+    f"{ADMIN_URL}/admin-api/member/experience-record/page",
+    f"{ADMIN_URL}/admin-api/member/config/get",
+    f"{ADMIN_URL}/admin-api/member/config/save",
+    f"{ADMIN_URL}/admin-api/member/user/get",
+    f"{ADMIN_URL}/admin-api/member/user/page",
+    f"{ADMIN_URL}/admin-api/member/user/update",
+    f"{ADMIN_URL}/admin-api/member/user/update-level",
+    f"{ADMIN_URL}/admin-api/member/user/update-point",
 }
 
 _MOCK_RESPONSES = {
@@ -135,6 +145,36 @@ _MOCK_RESPONSES = {
     f"{ADMIN_URL}/admin-api/member/level-record/get": {
         "code": 0, "msg": "", "data": {},
     },
+    f"{ADMIN_URL}/admin-api/member/level-record/page":{
+        "code": 0, "msg": "", "data": {},
+    },
+    f"{ADMIN_URL}/admin-api/member/experience-record/get":{
+        "code": 0, "msg": "", "data": {},
+    },
+    f"{ADMIN_URL}/admin-api/member/experience-record/page":{
+        "code": 0, "msg": "", "data": {},
+    },
+    f"{ADMIN_URL}/admin-api/member/config/get":{
+        "code": 0, "msg": "", "data": {},
+    },
+    f"{ADMIN_URL}/admin-api/member/config/save":{
+        "code": 0, "msg": "", "data": "true",
+    },
+    f"{ADMIN_URL}/admin-api/member/user/get":{
+        "code": 0, "msg": "", "data": {},
+    },
+    f"{ADMIN_URL}/admin-api/member/user/page":{
+        "code": 0, "msg": "", "data": {},
+    },
+    f"{ADMIN_URL}/admin-api/member/user/update":{
+        "code": 0, "msg": "", "data": "true",
+    },
+    f"{ADMIN_URL}/admin-api/member/user/update-level":{
+        "code": 0, "msg": "", "data": "true",
+    },
+    f"{ADMIN_URL}/admin-api/member/user/update-point":{
+        "code": 0, "msg": "", "data": "true",
+}
 }
 
 

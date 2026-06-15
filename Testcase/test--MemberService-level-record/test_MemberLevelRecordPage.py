@@ -2,17 +2,21 @@ import pytest
 from config import ADMIN_URL
 
 
-class TestMemberLevelRecordGet:
-    """获得会员等级记录"""
+class TestMemberLevelRecordPage:
+    """获得会员等级记录分页"""
 
     @pytest.mark.smoke
-    def test_MemberLevelRecordGet(self, api_session,auth_headers):
+    def test_MemberLevelRecordPage(self, api_session,auth_headers):
         """
         运行: TEST_ENV=dev USE_MOCK=false pytest ... -v -s
         """
-        url = f"{ADMIN_URL}/admin-api/member/level-record/get"
+        url = f"{ADMIN_URL}/admin-api/member/level-record/page"
         params = {
-            "id": 1 #编号
+            "PageNo": "1",
+            "PageSize": "100",
+            "userId": "", #用户编号
+            "levelId": "", #等级编号
+            "createTime": "" #创建时间
             }
 
         resp = api_session.get(url, headers=auth_headers,params=params)
