@@ -1,0 +1,38 @@
+station_msg1:
+  platform: ""
+  provider: ""
+  channel: ""
+  scene: ""
+  lat: 0
+  lon: 0
+  itemId: 0
+  pics: ""
+  promoterId: ""
+  promotionPlatform: ""
+  promotionChannel: ""
+  promotionStationId: ""
+  activityId: ""
+  payType: 0
+  stationId: 2061713873303195650
+  name: "同乐站点"
+  mobile: "15617617160"
+
+
+station_msg2:
+  platform: ""
+  provider: ""
+  channel: ""
+  scene: ""
+  lat: 0
+  lon: 0
+  itemId: 0
+  pics: ""
+  promoterId: ""
+  promotionPlatform: ""
+  promotionChannel: ""
+  promotionStationId: ""
+  activityId: ""
+  payType: 0
+  stationId: 2061713873303195650
+  name: "同乐站点"
+  mobile: "18338956022"

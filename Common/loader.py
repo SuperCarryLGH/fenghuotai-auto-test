@@ -144,8 +144,11 @@ def load_yaml(filename: str) -> dict:
     """按文件名从 Date/ 目录加载 YAML（含后缀）"""
     return _load(filename)
 
+# === order 模块 ===
+def load_station_order():
+    return _load("station_order_submit.yaml")
 
-def save_yaml(filename: str, data: dict) -> None
+def save_yaml(filename: str, data: dict) -> None:
     """将 dict 写回 Date/ 目录下的 YAML 文件（保留注释与格式）"""
     from ruamel.yaml import YAML
     path = os.path.join(DATA_DIR, filename)

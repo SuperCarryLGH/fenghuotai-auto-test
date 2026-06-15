@@ -111,6 +111,7 @@ _MOCK_URLS = {
     f"{APP_URL}/app-api/recycle/station/detail",
     f"{APP_URL}/order/create",
     f"{APP_URL}/app-api/recycle/order/v2/mini-order-submit",
+    f"{APP_URL}/app-api/recycle/order/station-order-submit",
     #f"{APP_URL}/app-api/member/tag/create"
 }
 
