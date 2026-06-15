@@ -12,7 +12,7 @@ class Test_AdminApiRecycleStationClueStationStatus:
 
     @pytest.mark.smoke
     def test_AdminApiRecycleStationClueStationStatus(self, api_session, auth_headers):
-        url = f"{ADMIN_URL}/admin-api/recycle/station/clue/station-status"
+        url = f"{ADMIN_URL}/admin-api/recycle/station-clue/station-status"
         body = {"id": common['common']['id']['valid'], "status": common['common']['status']['enabled']}
         resp = api_session.put(url, json=body, headers=auth_headers)
         assert resp.status_code == 200

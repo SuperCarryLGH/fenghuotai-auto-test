@@ -12,7 +12,7 @@ class Test_AdminApiRecycleStationClueStationDashboard:
 
     @pytest.mark.smoke
     def test_AdminApiRecycleStationClueStationDashboard(self, api_session, auth_headers):
-        url = f"{ADMIN_URL}/admin-api/recycle/station/clue/station-dashboard"
+        url = f"{ADMIN_URL}/admin-api/recycle/station-clue/station-dashboard"
         resp = api_session.get(url, headers=auth_headers)
         assert resp.status_code == 200
         r = resp.json()

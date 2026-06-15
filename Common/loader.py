@@ -114,12 +114,38 @@ def load_recycle_clear_order_weigher():
 def load_recycle_clear_order_driver():
     return _load("recycle_clear_order_driver.yaml")
 
+# === Member tag 模块 ===
+def load_member_tag_create():
+    return _load("member_tag_create.yaml")
+
+def load_member_tag_delete():
+    return _load("member_tag_delete.yaml")
+
+def load_member_tag_get():
+    return _load("member_tag_get.yaml")
+
+def load_member_tag_list():
+    return _load("member_tag_list.yaml")
+
+def load_member_tag_page():
+    return _load("member_tag_page.yaml")
+
+def load_member_tag_update():
+    return _load("member_tag_update.yaml")
+
+# === Member level 模块 ===
+def load_member_level_create():
+    return _load("member_level_create.yaml")
+
+def load_member_level_update():
+    return _load("member_level_update.yaml")
+
 def load_yaml(filename: str) -> dict:
     """按文件名从 Date/ 目录加载 YAML（含后缀）"""
     return _load(filename)
 
 
-def save_yaml(filename: str, data: dict) -> None:
+def save_yaml(filename: str, data: dict) -> None
     """将 dict 写回 Date/ 目录下的 YAML 文件（保留注释与格式）"""
     from ruamel.yaml import YAML
     path = os.path.join(DATA_DIR, filename)

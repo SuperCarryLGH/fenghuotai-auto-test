@@ -111,6 +111,7 @@ _MOCK_URLS = {
     f"{APP_URL}/app-api/recycle/station/detail",
     f"{APP_URL}/order/create",
     f"{APP_URL}/app-api/recycle/order/v2/mini-order-submit",
+    #f"{APP_URL}/app-api/member/tag/create"
 }
 
 _MOCK_RESPONSES = {
@@ -123,6 +124,9 @@ _MOCK_RESPONSES = {
     f"{APP_URL}/app-api/member/address/create": {
         "code": 0, "msg": "", "data": "MOCK_ADDR_ID",
     },
+    #f"{APP_URL}/app-api/member/tag/create": {
+        #"code": 0, "msg": "", "data": 0,
+
 }
 
 
