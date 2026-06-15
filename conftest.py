@@ -117,6 +117,9 @@ _MOCK_URLS = {
 }
 
 _MOCK_RESPONSES = {
+    f"{ADMIN_URL}/admin-api/system/auth/login": {
+        "code": 0, "data": {"accessToken": "mock_admin_token"},
+    },
     f"{APP_URL}/app-api/recycle/activity/group/detail": {
         "code": 0, "msg": "success", "data": {"id": 0},
     },
