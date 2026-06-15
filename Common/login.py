@@ -45,6 +45,16 @@ class Login:
             raise ValueError(f"未知角色: {role}，可选: {list(ACCOUNTS.keys())}")
 
         payload = ACCOUNTS[role]
+        return self.admin_login_with(**payload)
+
+    def admin_login_with(self, username: str, password: str) -> str:
+        """
+        使用自定义账号密码登录后台管理端。
+
+        :param username: 用户名
+        :param password: 密码
+        """
+        payload = {"username": username, "password": password}
         response = self.session.post(
             self.ADMIN_LOGIN_URL,
             json=payload,
@@ -81,7 +91,15 @@ class Login:
         if mobile is None:
             from Common.loader import load_users
             mobile = load_users()["users"]["normal_user"]["mobile"]
+        return self.app_login_with(mobile, code)
 
+    def app_login_with(self, mobile: str, code: str = "9999") -> str:
+        """
+        使用自定义手机号登录 APP 端。
+
+        :param mobile: 手机号
+        :param code: 验证码，默认 9999
+        """
         payload = {"mobile": mobile, "code": code}
         response = self.session.post(
             self.SMS_LOGIN_URL, json=payload, headers=self.SMS_LOGIN_HEADERS,
