@@ -138,7 +138,7 @@ _MOCK_RESPONSES = {
 }
 
 
-@pytest.fixture(autouse=True, scope="function")
+@pytest.fixture(autouse=True, scope="session")
 def auto_mock(api_session):
     """USE_MOCK=true 时拦截所有 HTTP 请求，返回固定数据"""
     if not USE_MOCK:
