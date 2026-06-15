@@ -1,3 +1,10 @@
 page:
   pageNo: 1
   pageSize: 10
+status:
+  status1: 10 #待回收
+  status2: 20 #回收中
+  status3: 24 #待清算
+  status4: 30 #已完成
+  status5: 40 #已清运
+  status6:    #查全部
