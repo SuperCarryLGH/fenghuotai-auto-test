@@ -16,7 +16,7 @@ class TestMemberLevelList:
             "status": "0",
             }
 
-        resp = api_session.get(url, headers=auth_headers,json=params)
+        resp = api_session.get(url, headers=auth_headers,params=params)
         assert resp.status_code == 200
         r = resp.json()
         assert r["code"] == 0

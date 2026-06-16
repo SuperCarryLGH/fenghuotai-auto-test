@@ -1,9 +1,10 @@
 report_msg:
   activityGroupId: 1
-  activityId: 1
+  activityId: 100 #活动ID
   userId:
   title: 'test'
   coverImage: ''
   content: ''
   status: 1
   remark: ''
+  activityRecordId: 1 # 是否主动参与的
