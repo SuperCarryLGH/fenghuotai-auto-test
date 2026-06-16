@@ -124,6 +124,20 @@ _MOCK_URLS = {
     f"{ADMIN_URL}/admin-api/member/user/update",
     f"{ADMIN_URL}/admin-api/member/user/update-level",
     f"{ADMIN_URL}/admin-api/member/user/update-point",
+    f"{ADMIN_URL}/admin-api/member/sign-in/config/create",
+    f"{ADMIN_URL}/admin-api/member/sign-in/config/delete",
+    f"{ADMIN_URL}/admin-api/member/sign-in/config/get",
+    f"{ADMIN_URL}/admin-api/member/sign-in/config/list",
+    f"{ADMIN_URL}/admin-api/member/sign-in/config/update",
+    f"{ADMIN_URL}/admin-api/member/point/record/page",
+    f"{ADMIN_URL}/admin-api/member/sign-in/record/page",
+    f"{ADMIN_URL}/admin-api/member/social-user/wxa-qrcode",
+    f"{ADMIN_URL}/admin-api/member/group/create",
+    f"{ADMIN_URL}/admin-api/member/group/delete",
+    f"{ADMIN_URL}/admin-api/member/group/get",
+    f"{ADMIN_URL}/admin-api/member/group/listallsimple",
+    f"{ADMIN_URL}/admin-api/member/group/page",
+    f"{ADMIN_URL}/admin-api/member/group/update",
 }
 
 _MOCK_RESPONSES = {
@@ -174,7 +188,49 @@ _MOCK_RESPONSES = {
     },
     f"{ADMIN_URL}/admin-api/member/user/update-point":{
         "code": 0, "msg": "", "data": "true",
-}
+    },
+    f"{ADMIN_URL}/admin-api/member/sign-in/config/create":{
+        "code": 0, "msg": "", "data": 0,
+    },
+    f"{ADMIN_URL}/admin-api/member/sign-in/config/delete":{
+        "code": 0, "msg": "", "data": "true",
+    },
+    f"{ADMIN_URL}/admin-api/member/sign-in/config/get":{
+        "code": 0, "msg": "", "data": {},
+    },
+    f"{ADMIN_URL}/admin-api/member/sign-in/config/list":{
+        "code": 0, "msg": "", "data": {},
+    },
+    f"{ADMIN_URL}/admin-api/member/sign-in/config/update":{
+        "code": 0, "msg": "", "data": "true",
+    },
+    f"{ADMIN_URL}/admin-api/member/point/record/page":{
+        "code": 0, "msg": "", "data": {},
+    },
+    f"{ADMIN_URL}/admin-api/member/sign-in/record/page":{
+        "code": 0, "msg": "", "data": {},
+    },
+    f"{ADMIN_URL}/admin-api/member/social-user/wxa-qrcode":{
+        "code": 0, "msg": "", "data": "",
+    },
+    f"{ADMIN_URL}/admin-api/member/group/create":{
+        "code": 0, "msg": "", "data": 0
+    },
+    f"{ADMIN_URL}/admin-api/member/group/delete":{
+        "code": 0, "msg": "", "data": "true",
+    },
+    f"{ADMIN_URL}/admin-api/member/group/get":{
+        "code": 0, "msg": "", "data": {},
+    },
+    f"{ADMIN_URL}/admin-api/member/group/listallsimple":{
+        "code": 0, "msg": "", "data": {},
+    },
+    f"{ADMIN_URL}/admin-api/member/group/page":{
+        "code": 0, "msg": "", "data": {},
+    },
+    f"{ADMIN_URL}/admin-api/member/group/update":{
+        "code": 0, "msg": "", "data": "true",
+    },
 }
 
 
