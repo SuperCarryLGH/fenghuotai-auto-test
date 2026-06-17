@@ -116,7 +116,7 @@ def load_recycle_clear_order_driver():
 def load_recycle_activity():
     return _load("activity_report.yaml")
 
-# === Member tag 模块 ===
+# === Member Service 模块 ===
 def load_member_tag_create():
     return _load("member_tag_create.yaml")
 
@@ -135,7 +135,6 @@ def load_member_tag_page():
 def load_member_tag_update():
     return _load("member_tag_update.yaml")
 
-# === Member level 模块 ===
 def load_member_level_create():
     return _load("member_level_create.yaml")
 

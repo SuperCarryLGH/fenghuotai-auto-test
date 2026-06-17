@@ -138,6 +138,7 @@ _MOCK_URLS = {
     f"{ADMIN_URL}/admin-api/member/group/listallsimple",
     f"{ADMIN_URL}/admin-api/member/group/page",
     f"{ADMIN_URL}/admin-api/member/group/update",
+    f"{ADMIN_URL}/admin-api/member/addresss/list",
 }
 
 _MOCK_RESPONSES = {
@@ -230,6 +231,9 @@ _MOCK_RESPONSES = {
     },
     f"{ADMIN_URL}/admin-api/member/group/update":{
         "code": 0, "msg": "", "data": "true",
+    },
+    f"{ADMIN_URL}/admin-api/member/addresss/list":{
+        "code": 0, "msg": "", "data": {},
     },
 }
 
