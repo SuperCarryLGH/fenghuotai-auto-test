@@ -133,9 +133,6 @@ _MOCK_RESPONSES = {
     f"{APP_URL}/app-api/recycle/activity/group/detail": {
         "code": 0, "msg": "success", "data": {"id": 0},
     },
-    f"{APP_URL}/app-api/member/auth/sms-login": {
-        "code": 0, "data": {"accessToken": "mock_app_token_per_user"},
-    },
     f"{APP_URL}/app-api/member/address/create": {
         "code": 0, "msg": "", "data": "MOCK_ADDR_ID",
     },

@@ -45,7 +45,7 @@ APP_CONFIG = {
         "base_url": "https://api-fht-dev.hengyishou.com",           # TODO 替换
         # TODO: 如果需要 APP 端专用账号，加在这里
         "accounts": {
-            "normal_user": {"mobile": "186000000006", "code": "9999"},
+            "normal_user": {"mobile": "15617617160", "code": "9999"},
         },
     },
     "test": {
