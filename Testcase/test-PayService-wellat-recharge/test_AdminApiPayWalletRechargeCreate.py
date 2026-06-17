@@ -7,15 +7,16 @@ role_data = load_system_role()
 
 
 class Test_AdminApiPayWalletRechargeCreate:
-    """admin获取角色信息"""
+    """创建钱包充值记录（发起充值）"""
 
     @pytest.mark.smoke
     def test_AdminApiPayWalletRechargeCreate(self, api_session, auth_headers):
         url = f"{ADMIN_URL}/admin-api/pay/wallet-recharge/create"
-        params = {"id": common['common']['id']['valid']}
-        resp = api_session.get(url, params=params, headers=auth_headers)
+        params = {
+            "payPrice": 10,
+        }
+        resp = api_session.post(url, json=params, headers=auth_headers)
         assert resp.status_code == 200
         r = resp.json()
         assert r["code"] == 0
         print(r)
-#test_AdminApiPayWalletRechargeCreate.py
