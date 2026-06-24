@@ -14,10 +14,10 @@ class TestBatchCreateAddress:
         data = load_yaml("batch_users.yaml")
         users = data["batch_users"]
 
-        new_ids = []
+        new_ids = [None] * len(users)
         failures = []
 
-        for user in users:
+        for i, user in enumerate(users):
             desc = user.get("desc", user["mobile"])
             try:
                 token = login_tool.app_login(mobile=user["mobile"])
@@ -34,7 +34,7 @@ class TestBatchCreateAddress:
                 assert resp.status_code == 200, f"HTTP {resp.status_code}"
                 assert resp_data["code"] == 0, f"code={resp_data['code']}, msg={resp_data.get('msg', '')}"
                 address_id = resp_data["data"]
-                new_ids.append(address_id)
+                new_ids[i] = address_id
                 print(f"✅ {desc} → {address_id}")
             except Exception as e:
                 failures.append((desc, str(e)))
@@ -45,17 +45,15 @@ class TestBatchCreateAddress:
             text = f.read()
 
         idx = 0
-        total = len(new_ids)
-
         def _replace(m):
             nonlocal idx
-            if idx < total:
-                val = new_ids[idx]
-                idx += 1
+            val = new_ids[idx]
+            idx += 1
+            if val is not None:
                 return f'addressId: "{val}"'
             return m.group(0)
 
-        text = re.sub(r'addressId:\s*".*"', _replace, text, count=total)
+        text = re.sub(r'addressId:\s*".*"', _replace, text)
 
         with open(yaml_path, "w", encoding="utf-8") as f:
             f.write(text)
