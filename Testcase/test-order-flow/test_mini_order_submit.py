@@ -10,27 +10,28 @@ class TestMiniOrderSubmit:
     def test_mini_order_submit(self, api_session, login_tool):
         mobile = "15617617160"
         token = login_tool.app_login(mobile=mobile)
+        print(token)
         headers = {**Login.SMS_LOGIN_HEADERS, "Authorization": f"Bearer {token}"}
 
-        url = f"{APP_URL}/app-api/recycle/order/mini-order-submit"
+        url = f"{APP_URL}/app-api/recycle/order/v2/mini-order-submit"
         payload = {
-            "platform": "微信小程序",
+            "platform": "web",
             "provider": "",
             "channel": "",
             "scene": "",
             #"lat": ,
             #"lon": ,
-            "itemId": 1001,
+            #"itemId": ,
             "pics": "",
             "promoterId": "",
             "promotionPlatform": "",
             "promotionChannel": "",
             "promotionStationId": "",
-            "activityId": "12",
+            "activityId": "13",
             #"payType": 1,
-            "appointmentDate": "2026-06-17",
+            "appointmentDate": "2026-06-18",
             "appointmentTimePeriod": "17:00-18:00",
-            "appointmentWeekStr": "周三",
+            "appointmentWeekStr": "周四",
             "estimatedInfo": "",
             "predictWeight": "10.0",
             "addressId": "2066773491032387585",

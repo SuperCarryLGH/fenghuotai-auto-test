@@ -1,21 +1,26 @@
 import pytest
-from config import ADMIN_URL
+from config import APP_URL
+from Common.login import Login
 
 
 class TestMemberUserGet:
     """获得会员用户"""
 
     @pytest.mark.smoke
-    def test_MemberUserGet(self, api_session,auth_headers):
+    def test_MemberUserGet(self, api_session,login_tool):
         """
         运行: TEST_ENV=dev USE_MOCK=false pytest ... -v -s
         """
-        url = f"{ADMIN_URL}/admin-api/member/user/get"
+        mobile = "15617617160"
+        token = login_tool.app_login(mobile=mobile)
+        print(token)
+        headers = {**Login.SMS_LOGIN_HEADERS, "Authorization": f"Bearer {token}"}
+        url = f"{APP_URL}/app-api/member/user/get-certificates"
         params = {
-            "id": 1 #编号
+            #"id": 1 #编号
             }
 
-        resp = api_session.get(url, headers=auth_headers,params=params)
+        resp = api_session.get(url, headers=headers,params=params)
         assert resp.status_code == 200
         r = resp.json()
         assert r["code"] == 0
