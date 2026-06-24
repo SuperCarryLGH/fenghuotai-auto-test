@@ -139,6 +139,16 @@ _MOCK_URLS = {
     f"{ADMIN_URL}/admin-api/member/group/page",
     f"{ADMIN_URL}/admin-api/member/group/update",
     f"{ADMIN_URL}/admin-api/member/addresss/list",
+    f"{APP_URL}/app-api/recycle/order/v2/mini-order-submit",
+    f"{APP_URL}/admin-api/recycle/app-transferOrder/call-transfer-now",
+    f"{APP_URL}/admin-api/recycle/app-transferOrder/add-package",
+    f"{APP_URL}/admin-api/recycle/app-transferOrder/call-transfer-statistic",
+    f"{APP_URL}/admin-api/recycle/app-transferOrder/cancel",
+    f"{APP_URL}/admin-api/recycle/app-transferOrder/get",
+    f"{APP_URL}/admin-api/recycle/app-transferOrder/loading-complete",
+    f"{APP_URL}/admin-api/recycle/app-transferOrder/package-list",
+    f"{APP_URL}/admin-api/recycle/app-transferOrder/page",
+    f"{APP_URL}/admin-api/recycle/app-clearOrder-weigher/get-transfer-stockin-detail",
 }
 
 _MOCK_RESPONSES = {
@@ -233,6 +243,36 @@ _MOCK_RESPONSES = {
         "code": 0, "msg": "", "data": "true",
     },
     f"{ADMIN_URL}/admin-api/member/addresss/list":{
+        "code": 0, "msg": "", "data": {},
+    },
+    f"{APP_URL}/app-api/recycle/order/v2/mini-order-submit":{
+        "code": 0, "msg": "", "data": {},
+    },
+    f"{APP_URL}/admin-api/recycle/app-transferOrder/call-transfer-now":{
+        "code": 0, "msg": "", "data": {},
+    },
+    f"{APP_URL}/admin-api/recycle/app-transferOrder/add-package":{
+        "code": 0, "msg": "", "data": "true",
+    },
+    f"{APP_URL}/admin-api/recycle/app-transferOrder/call-transfer-statistic":{
+        "code": 0, "msg": "", "data": {},
+    },
+    f"{APP_URL}/admin-api/recycle/app-transferOrder/cancel":{
+        "code": 0, "msg": "", "data": "true",
+    },
+    f"{APP_URL}/admin-api/recycle/app-transferOrder/get":{
+        "code": 0, "msg": "", "data": {},
+    },
+    f"{APP_URL}/admin-api/recycle/app-transferOrder/loading-complete":{
+        "code": 0, "msg": "", "data": {},
+    },
+    f"{APP_URL}/admin-api/recycle/app-transferOrder/package-list":{
+        "code": 0, "msg": "", "data": {},
+    },
+    f"{APP_URL}/admin-api/recycle/app-transferOrder/page":{
+        "code": 0, "msg": "", "data": {},
+    },
+    f"{APP_URL}/admin-api/recycle/app-clearOrder-weigher/get-transfer-stockin-detail":{
         "code": 0, "msg": "", "data": {},
     },
 }

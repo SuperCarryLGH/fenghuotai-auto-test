@@ -1,0 +1,17 @@
+transfer:
+    "warehouseId": 0
+    "operationCenterId": 0
+    "appointmentTimePeriod": "09:00-11:00"
+    "appointmentDate": "2026-03-06"
+    "appointmentWeekStr": "周六"
+    "transferType": 1
+    "transferOrderId": 1991024132323229698
+    "packageNo": "SD-2023-057"
+    "id": 1991024132323229698
+    "driverName":
+    "driverPhone":
+    "driverLicensePlateNumber":
+    "loadPicUrls":
+    "pageSize": 10
+    "pageNo": 1
+    "status": 20

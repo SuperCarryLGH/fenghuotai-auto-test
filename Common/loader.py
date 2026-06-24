@@ -141,6 +141,12 @@ def load_member_level_create():
 def load_member_level_update():
     return _load("member_level_update.yaml")
 
+# === transfer 模块 ===
+def load_recycle_apptransferOrder_calltransfernow():
+    return _load("recycle_apptransferOrder_calltransfernow.yaml")
+
+
+
 def load_yaml(filename: str) -> dict:
     """按文件名从 Date/ 目录加载 YAML（含后缀）"""
     return _load(filename)

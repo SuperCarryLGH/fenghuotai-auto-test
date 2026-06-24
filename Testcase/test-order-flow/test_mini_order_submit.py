@@ -8,7 +8,7 @@ class TestMiniOrderSubmit:
 
     @pytest.mark.smoke
     def test_mini_order_submit(self, api_session, login_tool):
-        mobile = "19022391628"
+        mobile = "15617617160"
         token = login_tool.app_login(mobile=mobile)
         print(token)
         headers = {**Login.SMS_LOGIN_HEADERS, "Authorization": f"Bearer {token}"}
@@ -21,7 +21,7 @@ class TestMiniOrderSubmit:
             "scene": "",
             # "lat": ,
             # "lon": ,
-            "itemId": 1001,
+            "itemId": "",
             "pics": "",
             "promoterId": "",
             "promotionPlatform": "",
@@ -33,12 +33,13 @@ class TestMiniOrderSubmit:
             "appointmentTimePeriod": "17:00-18:00",
             "appointmentWeekStr": "周四",
             "estimatedInfo": "",
-            "predictWeight": "10.0",
-            "addressId": "2060279024028872706",
+            "predictWeight": "",
+            "addressId": "2066773491032387585",
         }
 
         resp = api_session.post(url, json=payload, headers=headers)
         assert resp.status_code == 200
         data = resp.json()
         # assert data["code"] == 0
+        print(token)
         print(data)
