@@ -35,7 +35,7 @@ from unittest.mock import MagicMock
 # ======================
 # 【Mock 开关】后续删除：删掉 auto_mock 和 mock_* 相关代码即可
 # ======================
-USE_MOCK = os.getenv("USE_MOCK", "true").lower() in ("1", "true", "yes")
+USE_MOCK = os.getenv("USE_MOCK", "false").lower() in ("1", "true", "yes")
 
 
 @pytest.fixture(scope="session")
@@ -110,7 +110,7 @@ _MOCK_URLS = {
     f"{APP_URL}/app-api/recycle/activity/my/list",
     f"{APP_URL}/app-api/recycle/station/detail",
     f"{APP_URL}/order/create",
-    f"{APP_URL}/app-api/recycle/order/v2/mini-order-submit",
+    #f"{APP_URL}/app-api/recycle/order/v2/mini-order-submit",
     f"{APP_URL}/app-api/recycle/order/station-order-submit",
     f"{ADMIN_URL}/admin-api/member/tag/create",
     f"{ADMIN_URL}/admin-api/member/level-record/get",
@@ -145,12 +145,15 @@ _MOCK_RESPONSES = {
     f"{ADMIN_URL}/admin-api/system/auth/login": {
         "code": 0, "data": {"accessToken": "mock_admin_token"},
     },
+    f"{APP_URL}/app-api/member/auth/sms-login": {
+        "code": 0, "data": {"accessToken": "mock_app_token"},
+    },
     f"{APP_URL}/app-api/recycle/activity/group/detail": {
         "code": 0, "msg": "success", "data": {"id": 0},
     },
-    f"{APP_URL}/app-api/member/address/create": {
-        "code": 0, "msg": "", "data": "MOCK_ADDR_ID",
-    },
+    #f"{APP_URL}/app-api/member/address/create": {
+     #   "code": 0, "msg": "", "data": "MOCK_ADDR_ID",
+    #},
     f"{ADMIN_URL}/admin-api/member/tag/create": {
         #"code": 0, "msg": "", "data": 0,
     },

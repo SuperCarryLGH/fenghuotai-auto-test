@@ -30,7 +30,9 @@ class Login:
 
     def _extract_token(self, response: requests.Response, path: tuple) -> str:
         """从登录响应中按路径提取 token"""
-        data = response.json()
+        resp_json = response.json()
+        print(f"\n[DEBUG] 登录响应: {resp_json}", flush=True)
+        data = resp_json
         for key in path:
             data = data[key]
         return data
