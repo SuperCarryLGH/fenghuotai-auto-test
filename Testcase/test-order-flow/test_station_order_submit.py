@@ -19,7 +19,7 @@ class TestStationOrderSubmit:
         payload = {
             "platform": station_msg["station_msg1"]["platform"],
             "provider": station_msg["station_msg1"]["provider"],
-            "channel": station_msg["station_msg1"]["channel"],
+            #"channel": station_msg["station_msg1"]["channel"],
             "scene": station_msg["station_msg1"]["scene"],
             "lat": station_msg["station_msg1"]["lat"],
             "lon": station_msg["station_msg1"]["lon"],
@@ -33,7 +33,8 @@ class TestStationOrderSubmit:
             "payType": station_msg["station_msg1"]["payType"],
             "stationId": station_msg["station_msg1"]["stationId"],
             "name": station_msg["station_msg1"]["name"],
-            "mobile": mobile,
+            "mobile": station_msg["station_msg1"]["mobile"],
+            "predictWeight": station_msg["station_msg1"]["predictWeight"],
         }
 
         resp = api_session.post(url, json=payload, headers=headers)

@@ -1,23 +1,3 @@
-"""
-高德地图 POI 搜索 — 再生资源回收行业竞品统计
-
-用法：
-    export AMAP_KEY="你的高德Web服务Key"
-    python amap_recycle_search.py
-
-输出：
-    output/recycle_stats.csv      — 按区县统计明细
-    output/recycle_heatmap.html   — 热力图
-
-注意事项：
-    - 全国 ~3000 个区县 × 3 个关键词，总计 ~10000-17000 次 API 调用
-    - QPS 默认 2（个人 Key），企业 Key 可调高至 10-20
-    - 支持断点续跑：遇到超限自动停止，第二天重跑自动跳过已完成的区县
-    - 想完全重跑，删除 output/.progress.json 和 output/.data.json 即可
-    - 个人 Key 每日 5000 次，需分 2-4 天跑；企业 Key 可一次性跑完
-    - 同一家店被多个关键词命中时，只计为 1 家独立店
-"""
-
 import asyncio
 import csv
 import json
@@ -29,7 +9,7 @@ from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Optional
 import aiohttp
-AMAP_KEY = os.getenv("AMAP_KEY", "0dee687b93fcb08516fe7a05ec9cf9d2")
+AMAP_KEY = os.getenv("AMAP_KEY", "4d628e660688eb29a50df9f9a8bfe71d")
 KEYWORDS = [
     "废品回收",
     "再生资源回收",
@@ -93,7 +73,6 @@ class AmapClient:
             return None
 
     async def get_districts(self) -> list[dict]:
-        """获取全国行政区划树（省→市→区/县）"""
         data = await self._request("/config/district", {
             "keywords": "中国",
             "subdistrict": "3",
@@ -103,9 +82,8 @@ class AmapClient:
             return []
         dists = data.get("districts", [])
         return dists[0].get("districts", []) if dists else []
-
     async def search_poi(self, keyword: str, city_adcode: str, page: int = 1) -> Optional[dict]:
-        """搜索 POI，返回 API 响应"""
+        """搜索 POI"""
         return await self._request("/place/text", {
             "keywords": keyword,
             "city": city_adcode,

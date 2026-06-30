@@ -43,14 +43,14 @@ class TestBatchOrders:
             "appointmentTimePeriod": order["appointmentTimePeriod"],
             "appointmentWeekStr": appointment_week_str,
             "estimatedInfo": "",
-            "predictWeight": "10kg",
+            "predictWeight": "",
             "addressId": user["address"]["addressId"],
             "lat": order.get("lat", ""),
             "lon": order.get("lon", ""),
         }
-        print(payload)
+        print("请求:",payload)
         resp = api_session.post(url, json=payload, headers=headers)
         assert resp.status_code == 200
         data = resp.json()
-        print(data)
+        print("响应:",data)
         assert data["code"] == 0

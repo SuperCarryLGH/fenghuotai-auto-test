@@ -1,25 +1,26 @@
 station_msg1:
-  platform: ""
+  platform: "web"
   provider: ""
   channel: ""
   scene: ""
-  lat: 0
-  lon: 0
-  itemId: 0
+  lat: 23.129163
+  lon: 113.264435
+  itemId: ""
   pics: ""
   promoterId: ""
   promotionPlatform: ""
   promotionChannel: ""
   promotionStationId: ""
   activityId: ""
-  payType: 0
-  stationId: 2061713873303195650
+  payType: 2
+  stationId: 1
   name: "同乐站点"
   mobile: "15617617160"
+  predictWeight: 50000025
 
 
 station_msg2:
-  platform: ""
+  platform: "web"
   provider: ""
   channel: ""
   scene: ""
