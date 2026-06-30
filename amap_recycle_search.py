@@ -21,7 +21,7 @@ OUTPUT_DIR = "output"
 PROGRESS_FILE = os.path.join(OUTPUT_DIR, ".progress.json")
 DATA_FILE = os.path.join(OUTPUT_DIR, ".data.json")
 AMAP_BASE = "https://restapi.amap.com/v3"
-# Token Bucket
+#令牌桶
 class RateLimiter:
     def __init__(self, max_per_second: float = 3):
         self.max_per_second = max_per_second
@@ -319,8 +319,6 @@ async def main():
     if AMAP_KEY == "YOUR_AMAP_KEY_HERE":
         print("=" * 60)
         print("请先设置高德 Web 服务 Key：")
-        print("  export AMAP_KEY=\"你的Key\"")
-        print("  或在脚本中修改 AMAP_KEY 变量")
         print("=" * 60)
         sys.exit(1)
 
@@ -363,7 +361,6 @@ async def main():
             save_data(all_stats)
             print(f"\n[!] 额度已超限 ({e})，已采集 {len(all_stats)} 个区县，进度已保存")
             print("    - 明天再跑会自动跳过已完成的区县")
-            print("    - 或换企业 Key 一次性跑完")
 
         # 3) 保存最终进度
         save_progress(completed)
