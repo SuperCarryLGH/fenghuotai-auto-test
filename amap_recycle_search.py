@@ -123,19 +123,22 @@ def flatten_districts(provinces: list[dict]) -> list[tuple]:
             ccode = city.get("adcode", "")
             city_districts = city.get("districts", [])
             if not city_districts:
-                rows.append((pname, pcode, cname, ccode, cname, ccode))
+                rows.append((pname, pcode, cname, ccode, cname, ccode, city.get("level", "")))
             else:
                 for dist in city_districts:
                     dname = dist.get("name", "")
                     dcode = dist.get("adcode", "")
-                    rows.append((pname, pcode, cname, ccode, dname, dcode))
+                    dlevel = dist.get("level", "")
+                    rows.append((pname, pcode, cname, ccode, dname, dcode, dlevel))
     return rows
 
 
 async def search_district(client: AmapClient, row: tuple) -> Optional[DistrictStats]:
     """一个区县的所有关键词执行搜索"""
-    province, province_code, city, city_code, district, district_code = row
-    print(f"  [{province}] {city} {district} ({district_code})")
+    province, province_code, city, city_code, district, district_code, dist_level = row
+    # 区县级用 district_code（大陆区县），乡镇级用 city_code（台湾乡镇高德不支持）
+    search_code = district_code if dist_level == "district" else city_code
+    print(f"  [{province}] {city} {district} ({district_code}) level={dist_level} search_code={search_code}")
     
     stats = DistrictStats(
         province=province,
@@ -150,7 +153,7 @@ async def search_district(client: AmapClient, row: tuple) -> Optional[DistrictSt
         page = 1
         total = 0
         while True:
-            resp = await client.search_poi(kw, district_code, page)
+            resp = await client.search_poi(kw, search_code, page)
             if resp is None:
                 break
             pois = resp.get("pois", [])
