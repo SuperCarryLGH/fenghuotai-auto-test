@@ -12,7 +12,7 @@ ENV = os.getenv("TEST_ENV", "dev")  # 默认使用 dev 环境
 # ======================
 ADMIN_CONFIG = {
     "dev": {
-        "base_url": "https://api-fht-dev.hengyishou.com",   # TODO 替换
+        "base_url": "http://api-fht-dev.hengyishou.com",   # TODO 替换
         "accounts": {
             "admin": {"username": "autotest", "password": "autotest123"},           # TODO 替换
             "operator": {"username": "auto_operator", "password": "AutoTest@123"},  # TODO 替换
@@ -53,7 +53,7 @@ APP_CONFIG = {
         "base_url": "http://app-test.xxx.com/api/v1",          # TODO 替换
     },
     "prod": {
-        "base_url": "http://app-prod.xxx.com/api/v1",         # TODO 替换
+        "base_url": "https://api-fht.hengyishou.com",
     },
 }
 

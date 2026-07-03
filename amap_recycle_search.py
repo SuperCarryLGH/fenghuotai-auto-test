@@ -108,7 +108,7 @@ class DistrictStats:
 
 # POI 去重（(poi_id, name, address) 三元组）
 def poi_key(poi: dict) -> tuple:
-    return (poi.get("id", ""), poi.get("name", ""), poi.get("address", ""))
+    return (str(poi.get("id") or ""), str(poi.get("name") or ""), str(poi.get("address") or ""))
 
 
 #遍历行政区划并搜索
@@ -149,6 +149,7 @@ async def search_district(client: AmapClient, row: tuple) -> Optional[DistrictSt
         district_code=district_code,
     )
 
+    has_data = False
     for kw in KEYWORDS:
         page = 1
         total = 0
@@ -160,6 +161,7 @@ async def search_district(client: AmapClient, row: tuple) -> Optional[DistrictSt
             total = int(resp.get("count", 0))
             if not pois:
                 break
+            has_data = True
             for poi in pois:
                 key = poi_key(poi)
                 stats.keyword_counts[kw].add(key)
@@ -168,7 +170,7 @@ async def search_district(client: AmapClient, row: tuple) -> Optional[DistrictSt
                 break
             page += 1
 
-    return stats
+    return stats if has_data else None
 # 输出
 def export_csv(stats_list: list[DistrictStats], path: str):
     """导出 CSV """
@@ -298,7 +300,7 @@ def dict_to_stats(d: dict) -> DistrictStats:
         district=d["district"],
         district_code=d["district_code"],
     )
-    s.keyword_counts = {k: set(v) for k, v in d["keyword_counts"].items()}
+    s.keyword_counts = {k: set(tuple(x) for x in v) for k, v in d["keyword_counts"].items()}
     s.all_pois = set(tuple(x) for x in d["all_pois"])
     return s
 
@@ -319,7 +321,7 @@ def load_data() -> list[DistrictStats]:
         return []
 # 主入口
 async def main():
-    if AMAP_KEY == "YOUR_AMAP_KEY_HERE":
+    if not AMAP_KEY:
         print("=" * 60)
         print("请先设置高德 Web 服务 Key：")
         print("=" * 60)
@@ -331,7 +333,11 @@ async def main():
 
         # 1) 获取行政区划
         print("[1/4] 获取全国行政区划...")
-        provinces = await client.get_districts()
+        try:
+            provinces = await client.get_districts()
+        except QuotaExceededError as e:
+            print(f"\n[!] 额度已超限 ({e})，无法获取行政区划")
+            return
         if not provinces:
             print("[ERROR] 无法获取行政区划数据，请检查 Key 是否有效")
             return
@@ -348,13 +354,15 @@ async def main():
 
         try:
             for i, row in enumerate(districts, 1):
-                district_code = row[5]
-                if district_code in completed:
+                province, province_code, city, city_code, district, district_code, dist_level = row
+                search_code = district_code if dist_level == "district" else city_code
+                completion_key = f"{search_code}|{district_code}"
+                if completion_key in completed:
                     continue
                 stats = await search_district(client, row)
                 if stats:
                     all_stats.append(stats)
-                    completed.add(district_code)
+                    completed.add(completion_key)
                 if i % 50 == 0:
                     save_progress(completed)
                     save_data(all_stats)

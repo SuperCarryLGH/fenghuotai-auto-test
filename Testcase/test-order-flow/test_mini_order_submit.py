@@ -8,33 +8,29 @@ class TestMiniOrderSubmit:
 
     @pytest.mark.smoke
     def test_mini_order_submit(self, api_session, login_tool):
-        mobile = "15617637160"
-        token = login_tool.app_login(mobile=mobile)
+        token = login_tool.app_login(mobile="15617617160")
         print(token)
         headers = {**Login.SMS_LOGIN_HEADERS, "Authorization": f"Bearer {token}"}
 
         url = f"{APP_URL}/app-api/recycle/order/v2/mini-order-submit"
         payload = {
             "platform": "web",
-            "provider": "",
-            "channel": "",
-            "scene": "",
-            # "lat": ,
-            # "lon": ,
-            "itemId": "",
-            "pics": "",
-            "promoterId": "",
-            #"promotionPlatform": "",
-            #"promotionChannel": "DTSPGG",
-            #"promotionStationId": 1,
-            #"activityId": "13",
-            #"payType": 1,
-            "appointmentDate": "2026-06-28",
+            "provider": "smk",
+            "bizMode": "WeightClothes",
+            "userName": "用户04",
+            "userPhone": "15617617160",
+            "addressId": "2071903932806721538",
+            "appointmentDate": "2026-07-03",
             "appointmentTimePeriod": "17:00-18:00",
-            "appointmentWeekStr": "周日",
-            "estimatedInfo": "",
-            "predictWeight": "10.0",
-            "addressId": "2070706339107958786",
+            "appointmentWeekStr": "周五",
+            "estimatedInfo": "5~10kg",
+            "lat": "34.79678190031236",
+            "lon": "113.68181482834622",
+            "num": 5,
+            #"activityId":12,
+            "predictWeight": "5~10kg",
+            "channel":"smk",
+            "scene":"smk",
         }
 
         resp = api_session.post(url, json=payload, headers=headers)

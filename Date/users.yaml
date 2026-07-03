@@ -5,8 +5,8 @@
 
 users:
   normal_user:
-    mobile: "18600000000"
-    id: "2054373680970809345"       # TODO 替换为真实用户 ID
+    mobile: "15617637160"
+    id: "2071418151776374786"       # TODO 替换为真实用户 ID
     remark: "普通用户，用于正常下单"
 
   whitelist_user:
