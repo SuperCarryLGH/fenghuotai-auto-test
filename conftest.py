@@ -35,7 +35,7 @@ from unittest.mock import MagicMock
 # ======================
 # 【Mock 开关】后续删除：删掉 auto_mock 和 mock_* 相关代码即可
 # ======================
-USE_MOCK = os.getenv("USE_MOCK", "false").lower() in ("1", "true", "yes")
+USE_MOCK = os.getenv("USE_MOCK", "true").lower() in ("1", "true", "yes")
 
 
 @pytest.fixture(scope="session")
