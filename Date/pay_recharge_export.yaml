@@ -1,0 +1,11 @@
+export:
+  pageNo: "1"
+  pageSize: "200"
+  id: "2072504077109817345"
+  centerIdOrName: ""
+  flowType: "10"
+  companyId: "4"
+  accountingCompanyId: ""
+  tradeChannel: "1"
+  createTime: "1782875212000"
+  payStatus: "false"
