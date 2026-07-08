@@ -17,7 +17,7 @@ class TestStationOrderSubmit:
 
         url = f"{APP_URL}/app-api/recycle/order/station-order-submit"
         payload = {
-            "platform": station_msg["station_msg1"]["platform"],
+            "platform": station_msg["station_msg1"                                                                                                                                                                                                                         ]["platform"],
             "provider": station_msg["station_msg1"]["provider"],
             #"channel": station_msg["station_msg1"]["channel"],
             "scene": station_msg["station_msg1"]["scene"],
@@ -29,7 +29,7 @@ class TestStationOrderSubmit:
             "promotionPlatform": station_msg["station_msg1"]["promotionPlatform"],
             "promotionChannel": station_msg["station_msg1"]["promotionChannel"],
             "promotionStationId": station_msg["station_msg1"]["promotionStationId"],
-            "activityId": station_msg["station_msg1"]["activityId"],
+            "activityId": station_msg["station_msg1"]["activityId"], 
             "payType": station_msg["station_msg1"]["payType"],
             "stationId": station_msg["station_msg1"]["stationId"],
             "name": station_msg["station_msg1"]["name"],

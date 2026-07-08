@@ -53,11 +53,8 @@ APP_CONFIG = {
         "base_url": "http://app-test.xxx.com/api/v1",          # TODO 替换
     },
     "prod": {
-<<<<<<< Updated upstream
         "base_url": "https://api-fht.hengyishou.com",
-=======
-        "base_url": "https://admin-fht.hengyishou.com",         # TODO 替换
->>>>>>> Stashed changes
+        "base_url1": "https://admin-fht.hengyishou.com",         # TODO 替换
     },
 }
 
