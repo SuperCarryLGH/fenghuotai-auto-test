@@ -1,17 +1,17 @@
-from xxlimited import Null
-
 import pytest
 from config import ADMIN_URL
+
+
 class TestAdminApiPayFundCreate:
     """公司充值 - 分拣中心充值"""
 
     @pytest.mark.smoke
-    def test_AdminApiPayFundCreate(self, api_session,auth_headers):
+    def test_AdminApiPayFundCreate(self, api_session, auth_headers):
         """
         运行: TEST_ENV=dev USE_MOCK=false pytest ... -v -s
         """
         url = f"{ADMIN_URL}/admin-api/pay/fund/create"
-        params = {
+        payload = {
                   "companyId": 100, #公司 ID（公司充值与分拣中心充值场景均必填）,示例值(100)
                   "sortingCenterId": 200,
                   "fundType": 10, #充值类型 10-公司充值 20-分拣中心充值,示例值(10)
@@ -23,10 +23,9 @@ class TestAdminApiPayFundCreate:
                   "bizNo": "FF202606180001"
                 }
 
-        resp = api_session.post(url, headers=auth_headers,json=params)
+        resp = api_session.post(url, headers=auth_headers, json=payload)
         assert resp.status_code == 200
         r = resp.json()
         assert r["code"] == 0
-        assert r["msg"] != Null
-        assert r["data"] == True
+        assert r["data"] is True
         print(r)

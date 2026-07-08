@@ -30,7 +30,7 @@ class TestPayRechargeExport:
         assert resp.status_code == 200
         r = resp.json()
         assert r["code"] == 0
-        assert r["total"] > 0
+        assert r["data"]["total"] > 0
         assert len(r["data"]["list"]) > 0
 
         print(r)

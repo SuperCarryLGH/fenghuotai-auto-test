@@ -1,7 +1,7 @@
-from xxlimited import Null
-
 import pytest
 from config import ADMIN_URL
+
+
 class TestAdminApiPayWalletTransactionExportWalletTran:
     """获得钱包流水导出"""
 

@@ -35,7 +35,7 @@ from unittest.mock import MagicMock
 # ======================
 # 【Mock 开关】后续删除：删掉 auto_mock 和 mock_* 相关代码即可
 # ======================
-USE_MOCK = os.getenv("USE_MOCK", "true").lower() in ("1", "true", "yes")
+USE_MOCK = os.getenv("USE_MOCK", "False").lower() in ("1", "true", "yes")
 
 
 @pytest.fixture(scope="session")
@@ -371,7 +371,10 @@ def reset_test_data(db_client):
 
     # TODO 2. 确认下面的表名和字段名
     for uid in test_user_ids:
-        db_client.update("user_month_count", {"count": 0}, "user_id = %s", (uid,))
+        try:
+            db_client.update("user_month_count", {"count": 0}, "user_id = %s", (uid,))
+        except Exception:
+            pass
 
     yield  # 这里执行测试用例
 

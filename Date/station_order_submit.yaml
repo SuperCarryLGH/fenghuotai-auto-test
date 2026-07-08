@@ -15,11 +15,7 @@ station_msg1:
   payType: 2
   stationId: 2071933798574993409
   name: "润生"
-<<<<<<< Updated upstream
   mobile: "15617617160"
-=======
-  mobile: "18338956022"
->>>>>>> Stashed changes
   predictWeight: 50000025
 
 
