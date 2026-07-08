@@ -12,9 +12,9 @@ ENV = os.getenv("TEST_ENV", "dev")  # 默认使用 dev 环境
 # ======================
 ADMIN_CONFIG = {
     "dev": {
-        "base_url": "http://api-fht-dev.hengyishou.com",   # TODO 替换
+        "base_url": "https://api-fht-dev.hengyishou.com",   # TODO 替换
         "accounts": {
-            "admin": {"username": "autotest", "password": "autotest123"},           # TODO 替换
+            "admin": {"username": "autotest", "password": "1qaz!QAZ"},           # TODO 替换
             "operator": {"username": "auto_operator", "password": "AutoTest@123"},  # TODO 替换
         },
     },
@@ -63,9 +63,9 @@ APP_URL = APP_CONFIG[ENV]["base_url"]
 # 4. 数据库配置 (DB)
 # ======================
 DB_CONFIG = {
-    "host": "test-db.xxx.com",
+    "host": "rm-bp1kmprsfdog024fsro.mysql.rds.aliyuncs.com",
     "port": 3306,
-    "user": "test_db_user",
-    "password": "test_db_password",
-    "database": "fenghuotai_test"
+    "user": "sf_fht_dev",
+    "password": "8HUvyZf6X&FNR%5",
+    "database": "fht_yhs"
 }

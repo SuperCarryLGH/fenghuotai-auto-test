@@ -12,10 +12,10 @@ class TestAdminApiPayChargeOperateFund:
         """
         url = f"{ADMIN_URL}/rpc-api/pay/pay/charge-operate-fund"
         payload = {
-            "orgId": 1560,                                      # [必填] 网点ID
+            "orgId": 2061713873303195650,                                      # [必填] 网点ID
             "tradeChannel": 1,                                  # [必填] 充值渠道 1-微信 2-支付宝
-            "rechargeAmount": 10000,                            # [必填] 充值金额，单位：分（≥1）
-            "thirdNo": "4200001234202306010000000001",          # [必填] 第三方充值单号（微信/支付宝订单号）
+            "rechargeAmount": 1,                            # [必填] 充值金额，单位：分（≥1）
+            "thirdNo": "4200001234202306012345678901",          # [必填] 第三方充值单号（微信/支付宝订单号）
             "bizNo": "1000000000",                              # [必填] 业务单号
         }
 

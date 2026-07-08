@@ -1,12 +1,12 @@
-from xxlimited import Null
-
 import pytest
 from config import ADMIN_URL
+
+
 class TestAdminApiPayWalletTransactionWalletTranPage:
     """获得钱包流水分页-新"""
 
     @pytest.mark.smoke
-    def test_AdminApiPayWalletTransactionWalletTranPage(self, api_session,auth_headers):
+    def test_AdminApiPayWalletTransactionWalletTranPage(self, api_session, auth_headers):
         """
         运行: TEST_ENV=dev USE_MOCK=false pytest ... -v -s
         """
@@ -22,11 +22,10 @@ class TestAdminApiPayWalletTransactionWalletTranPage:
             # "userType": "1",           # 用户类型
         }
 
-        resp = api_session.get(url, headers=auth_headers,params=params)
+        resp = api_session.get(url, headers=auth_headers, params=params)
         assert resp.status_code == 200
         r = resp.json()
-        max=r["data"]["total"]-1
         assert r["code"] == 0
-        assert r["data"]["total"] != Null
-        assert r["data"]["list"][max] != Null
+        assert r["data"]["total"] > 0
+        assert len(r["data"]["list"]) > 0
         print(r)

@@ -30,7 +30,7 @@ class TestStationOrderSubmit:
             "promotionChannel": station_msg["station_msg1"]["promotionChannel"],
             "promotionStationId": station_msg["station_msg1"]["promotionStationId"],
             "activityId": station_msg["station_msg1"]["activityId"],
-            "payType": station_msg["station_msg1"]["payType"],
+            #"payType": station_msg["station_msg1"]["payType"],
             "stationId": station_msg["station_msg1"]["stationId"],
             "name": station_msg["station_msg1"]["name"],
             "mobile": station_msg["station_msg1"]["mobile"],

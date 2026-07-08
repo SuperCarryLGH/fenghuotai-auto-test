@@ -155,6 +155,15 @@ def load_yaml(filename: str) -> dict:
 def load_station_order():
     return _load("station_order_submit.yaml")
 
+# === pay 模块 ===
+def load_pay_recharge_export():
+    return _load("pay_recharge_export.yaml")
+def load_pay_withdraw_page():
+    return _load("pay_withdraw_page.yaml")
+def load_pay_withdraw_audit():
+    return _load("pay_withdraw_audit.yaml")
+
+
 def save_yaml(filename: str, data: dict) -> None:
     """将 dict 写回 Date/ 目录下的 YAML 文件（保留注释与格式）"""
     from ruamel.yaml import YAML

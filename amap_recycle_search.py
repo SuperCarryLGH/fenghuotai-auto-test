@@ -9,7 +9,7 @@ from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Optional
 import aiohttp
-AMAP_KEY = os.getenv("AMAP_KEY", "4d628e660688eb29a50df9f9a8bfe71d")
+AMAP_KEY = os.getenv("AMAP_KEY", "ea44abcc66c996667953325792c84c8f")
 KEYWORDS = [
     "废品回收",
     "再生资源回收",

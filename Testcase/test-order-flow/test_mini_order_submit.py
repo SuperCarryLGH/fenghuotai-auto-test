@@ -15,7 +15,7 @@ class TestMiniOrderSubmit:
         url = f"{APP_URL}/app-api/recycle/order/v2/mini-order-submit"
         payload = {
             "platform": "web",
-            "provider": "smk",
+            "provider": "",
             "bizMode": "WeightClothes",
             "userName": "用户04",
             "userPhone": "15617617160",
@@ -29,8 +29,8 @@ class TestMiniOrderSubmit:
             "num": 5,
             #"activityId":12,
             "predictWeight": "5~10kg",
-            "channel":"smk",
-            "scene":"smk",
+            #"channel":"",
+            #"scene":"smk",
         }
 
         resp = api_session.post(url, json=payload, headers=headers)

@@ -35,13 +35,13 @@ from unittest.mock import MagicMock
 # ======================
 # 【Mock 开关】后续删除：删掉 auto_mock 和 mock_* 相关代码即可
 # ======================
-USE_MOCK = os.getenv("USE_MOCK", "true").lower() in ("1", "true", "yes")
+USE_MOCK = os.getenv("USE_MOCK", "False").lower() in ("1", "true", "yes")
 
 
 @pytest.fixture(scope="session")
 def api_session():
     """
-    提供一个全局的 requests.Session 对象
+    提供一个全局的 requests.Se ssion 对象
     作用域为整个测试会话，自动携带 Cookie/Header
     """
     session = requests.Session()
@@ -149,6 +149,11 @@ _MOCK_URLS = {
     f"{APP_URL}/admin-api/recycle/app-transferOrder/package-list",
     f"{APP_URL}/admin-api/recycle/app-transferOrder/page",
     f"{APP_URL}/admin-api/recycle/app-clearOrder-weigher/get-transfer-stockin-detail",
+    f"{ADMIN_URL}/admin-api/pay/recharge/get",
+    f"{ADMIN_URL}/admin-api/pay/recharge/page",
+    f"{ADMIN_URL}/admin-api/pay/withdraw/page",
+    f"{ADMIN_URL}/admin-api/pay/withdraw/get",
+    f"{ADMIN_URL}/admin-api/pay/withdraw/audit",
 }
 
 _MOCK_RESPONSES = {
@@ -275,6 +280,21 @@ _MOCK_RESPONSES = {
     f"{APP_URL}/admin-api/recycle/app-clearOrder-weigher/get-transfer-stockin-detail":{
         "code": 0, "msg": "", "data": {},
     },
+    f"{ADMIN_URL}/admin-api/pay/recharge/get":{
+        "code": 0, "msg": "", "data": {},
+    },
+    f"{ADMIN_URL}/admin-api/pay/recharge/page":{
+        "code": 0, "msg": "", "data": {},
+    },
+    f"{ADMIN_URL}/admin-api/pay/withdraw/page":{
+        "code": 0, "msg": "", "data": {},
+    },
+    f"{ADMIN_URL}/admin-api/pay/withdraw/get":{
+        "code": 0, "msg": "", "data": {},
+    },
+    f"{ADMIN_URL}/admin-api/pay/withdraw/audit":{
+        "code": 0, "msg": "", "data": {},
+    },
 }
 
 
@@ -351,7 +371,10 @@ def reset_test_data(db_client):
 
     # TODO 2. 确认下面的表名和字段名
     for uid in test_user_ids:
-        db_client.update("user_month_count", {"count": 0}, "user_id = %s", (uid,))
+        try:
+            db_client.update("user_month_count", {"count": 0}, "user_id = %s", (uid,))
+        except Exception:
+            pass
 
     yield  # 这里执行测试用例
 
