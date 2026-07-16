@@ -78,7 +78,7 @@ class Login:
         "terminal": "31",
         "platform": "App",
         "nonce": "866413",
-        "timestamp": "1780650379429",
+        "timestamp": "",   # 每次登录时动态更新
     }
 
     APP_TOKEN_PATH = ("data", "accessToken")
@@ -102,6 +102,8 @@ class Login:
         :param mobile: 手机号
         :param code: 验证码，默认 9999
         """
+        import time
+        self.SMS_LOGIN_HEADERS["timestamp"] = str(int(time.time() * 1000))
         payload = {"mobile": mobile, "code": code}
         response = self.session.post(
             self.SMS_LOGIN_URL, json=payload, headers=self.SMS_LOGIN_HEADERS,
