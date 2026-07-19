@@ -1,0 +1,1 @@
+{'code': 0, 'msg': '', 'data': [{'terminal': 20, 'userCount': 19}, {'terminal': 0, 'userCount': 3}, {'terminal': 10, 'userCount': 17}, {'terminal': 31, 'userCount': 38}, {'terminal': 60, 'userCount': 2}, {'terminal': 50, 'userCount': 291}]}

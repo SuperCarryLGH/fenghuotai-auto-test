@@ -6,7 +6,7 @@ class TestSystemRoleExportExcel:
     """导出角色 Excel"""
 
     @pytest.mark.smoke
-    def test_SystemRoleExportExcel(self, api_session, auth_headers, system_role_id):
+    def test_SystemRoleExportExcel(self, api_session, auth_headers, autotest_role_id):
         url = f"{ADMIN_URL}/admin-api/system/role/export-excel"
         # ⚠️ 敏感操作 — 参数已补全，确认后再执行
         body = {

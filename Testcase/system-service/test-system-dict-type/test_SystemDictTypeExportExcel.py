@@ -13,7 +13,5 @@ class TestSystemDictTypeExportExcel:
             "pageSize": 10,
         }
         resp = api_session.get(url, params=params, headers=auth_headers)
-        assert resp.status_code == 200
-        r = resp.json()
-        assert r["code"] == 0
-        print(r)
+        assert resp.status_code == 200 and len(resp.content) > 0
+        print(f"下载成功, 文件大小={len(resp.content)}bytes")

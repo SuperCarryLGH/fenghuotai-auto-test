@@ -1,0 +1,1 @@
+{'code': 0, 'msg': '', 'data': {'userId': 15617637160, 'userType': 1, 'balance': 0, 'totalExpense': 0, 'totalRecharge': 0, 'freezePrice': 0, 'walletId': None, 'id': '2078075996152393730', 'name': None, 'companyName': None, 'manageName': None, 'mobile': None, 'updateTime': 1784286901000, 'walletHolderName': None}}

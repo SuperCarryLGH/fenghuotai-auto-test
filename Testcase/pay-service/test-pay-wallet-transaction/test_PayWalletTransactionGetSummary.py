@@ -6,10 +6,10 @@ class TestPayWalletTransactionGetSummary:
     """获得钱包流水统计"""
 
     @pytest.mark.smoke
-    def test_PayWalletTransactionGetSummary(self, api_session, auth_headers):
+    def test_PayWalletTransactionGetSummary(self, api_session, station_token):
         url = f"{APP_URL}/app-api/pay/wallet-transaction/get-summary"
-        params = {"id": 1}  # TODO: 补充查询参数
-        resp = api_session.get(url, params=params, headers=auth_headers)
+        params = {}
+        resp = api_session.get(url, params=params, headers={"Authorization": f"Bearer {station_token}"})
         assert resp.status_code == 200
         r = resp.json()
         assert r["code"] == 0

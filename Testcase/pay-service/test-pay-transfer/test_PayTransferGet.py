@@ -8,7 +8,7 @@ class TestPayTransferGet:
     @pytest.mark.smoke
     def test_PayTransferGet(self, api_session, auth_headers):
         url = f"{ADMIN_URL}/admin-api/pay/transfer/get"
-        params = {"id": 1}  # TODO: 替换为实际存在的 ID
+        params = {"id": 15617637160}
         resp = api_session.get(url, params=params, headers=auth_headers)
         assert resp.status_code == 200
         r = resp.json()

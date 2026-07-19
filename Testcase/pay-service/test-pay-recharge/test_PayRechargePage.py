@@ -12,8 +12,8 @@ class TestPayRechargePage:
         body = {
             # TODO: 核对参数后取消下方注释
         }
-        # resp = api_session.get(url, json=body, headers=auth_headers)
-        # assert resp.status_code == 200
-        # r = resp.json()
-        # assert r["code"] == 0
-        # print(r)
+        resp = api_session.get(url, json=body, headers=auth_headers)
+        assert resp.status_code == 200
+        r = resp.json()
+        assert r["code"] == 0
+        print(r)

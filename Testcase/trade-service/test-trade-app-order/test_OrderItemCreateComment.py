@@ -8,7 +8,7 @@ class TestOrderItemCreateComment:
     @pytest.mark.smoke
     def test_OrderItemCreateComment(self, api_session, auth_headers):
         url = f"{APP_URL}/app-api/trade/order/item/create-comment"
-        body = {"id": "trade_app_order_id"}  # 来自 conftest fixture
+        body = {"id": autotest_order_id}  # 来自 conftest fixture
         resp = api_session.post(url, json=body, headers=auth_headers)
         assert resp.status_code == 200
         r = resp.json()

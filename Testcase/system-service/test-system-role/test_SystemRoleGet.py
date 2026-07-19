@@ -6,7 +6,7 @@ class TestSystemRoleGet:
     """获得角色信息"""
 
     @pytest.mark.smoke
-    def test_SystemRoleGet(self, api_session, auth_headers, system_role_id):
+    def test_SystemRoleGet(self, api_session, auth_headers, autotest_role_id):
         url = f"{ADMIN_URL}/admin-api/system/role/get"
         # ⚠️ 敏感操作 — 参数已补全，确认后再执行
         body = {

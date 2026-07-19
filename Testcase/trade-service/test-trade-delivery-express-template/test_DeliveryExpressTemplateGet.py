@@ -8,7 +8,7 @@ class TestDeliveryExpressTemplateGet:
     @pytest.mark.smoke
     def test_DeliveryExpressTemplateGet(self, api_session, auth_headers):
         url = f"{ADMIN_URL}/admin-api/trade/delivery/express-template/get"
-        params = {"id": "trade_delivery_express_template_id"}  # 来自 conftest fixture
+        params = {"id": autotest_express_template_id}  # 来自 conftest fixture
         resp = api_session.get(url, params=params, headers=auth_headers)
         assert resp.status_code == 200
         r = resp.json()

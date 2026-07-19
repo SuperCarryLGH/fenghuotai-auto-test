@@ -10,3 +10,4 @@ class TestSystemMenuSimpleList:
         url = f"{ADMIN_URL}/admin-api/system/menu/simple-list"
         params = {}
         resp = api_session.get(url, params=params, headers=auth_headers)
+        print(resp.json())

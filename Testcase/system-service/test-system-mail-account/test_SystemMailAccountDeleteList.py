@@ -6,7 +6,7 @@ class TestSystemMailAccountDeleteList:
     """批量删除邮箱账号"""
 
     @pytest.mark.smoke
-    def test_SystemMailAccountDeleteList(self, api_session, auth_headers, system_mail_account_id):
+    def test_SystemMailAccountDeleteList(self, api_session, auth_headers, autotest_mail_account_id):
         url = f"{ADMIN_URL}/admin-api/system/mail-account/delete-list"
         params = {"ids": str(autotest_mail_account_id)}  # 来自 conftest fixture
         resp = api_session.delete(url, params=params, headers=auth_headers)

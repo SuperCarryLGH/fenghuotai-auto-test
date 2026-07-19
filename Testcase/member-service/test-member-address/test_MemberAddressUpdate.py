@@ -7,12 +7,12 @@ class TestMemberAddressUpdate:
     """更新用户收件地址"""
 
     @pytest.mark.smoke
-    def test_MemberAddressUpdate(self, api_session, login_tool, address_id):
+    def test_MemberAddressUpdate(self, api_session, login_tool, autotest_address_id):
         token = login_tool.app_login(mobile="15617637160")
         headers = {**Login.SMS_LOGIN_HEADERS, "Authorization": f"Bearer {token}"}
         url = f"{APP_URL}/app-api/member/address/update"
         body = {
-            "id": address_id,
+            "id": autotest_address_id,
             "name": "用户01",
             "mobile": "15617637160",
             "areaId": 330108,

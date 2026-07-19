@@ -1,0 +1,3 @@
+[Fixture] created autotest_operate_area_id = 2078692718584655873
+{'code': 0, 'msg': '', 'data': True}
+[Fixture] deleted autotest_operate_area_id = 2078692718584655873

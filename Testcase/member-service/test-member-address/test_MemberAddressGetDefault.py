@@ -11,6 +11,6 @@ class TestMemberAddressGetDefault:
         token = login_tool.app_login(mobile="15617637160")
         headers = {**Login.SMS_LOGIN_HEADERS, "Authorization": f"Bearer {token}"}
         url = f"{APP_URL}/app-api/member/address/get-default"
-        params = {"id": 1}  # TODO: 补充查询参数
+        params = {}
         resp = api_session.get(url, params=params, headers=headers)
         assert resp.status_code == 200

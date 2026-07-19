@@ -1,0 +1,1 @@
+{'code': 0, 'msg': '', 'data': {'totalInbound': None, 'totalSorting': None, 'totalSortingRatio': None, 'edgeMaterial': None, 'edgeMaterialRatio': None, 'blackMaterial': None, 'blackMaterialRatio': None, 'stock': 1043635.03, 'cost': 730160.362}}

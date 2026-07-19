@@ -1,0 +1,1 @@
+{'code': 0, 'msg': '', 'data': {'total': 3, 'list': [{'name': '购物达人', 'remark': '你猜', 'status': 1, 'id': '2078078182735343618', 'createTime': 1784287422000}, {'name': '购物达人', 'remark': '你猜', 'status': 1, 'id': '2078075945028022274', 'createTime': 1784286889000}, {'name': '哈哈哈', 'remark': '你猜', 'status': 0, 'id': 1, 'createTime': 1692712693000}]}}

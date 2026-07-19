@@ -6,10 +6,10 @@ class TestRiskRuleDetailUpdate:
     """更新风控-规则区间明细"""
 
     @pytest.mark.smoke
-    def test_RiskRuleDetailUpdate(self, api_session, auth_headers, rule_detail_id):
+    def test_RiskRuleDetailUpdate(self, api_session, auth_headers, autotest_rule_detail_id):
         url = f"{ADMIN_URL}/admin-api/risk/rule-detail/update"
         body = {
-            "id": rule_detail_id,
+            "id": autotest_rule_detail_id,
             "minCount": 3,
             "maxCount": 5,
             "actionType": 10,

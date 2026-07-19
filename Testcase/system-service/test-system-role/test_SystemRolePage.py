@@ -6,7 +6,7 @@ class TestSystemRolePage:
     """获得角色分页"""
 
     @pytest.mark.smoke
-    def test_SystemRolePage(self, api_session, auth_headers, system_role_id):
+    def test_SystemRolePage(self, api_session, auth_headers, autotest_role_id):
         url = f"{ADMIN_URL}/admin-api/system/role/page"
         # ⚠️ 敏感操作 — 参数已补全，确认后再执行
         body = {

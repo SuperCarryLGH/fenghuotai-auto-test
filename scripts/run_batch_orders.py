@@ -2,7 +2,7 @@ import json
 import sys
 import os
 from datetime import date, timedelta
-
+            #20个用户依次下单
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
 from config import APP_URL

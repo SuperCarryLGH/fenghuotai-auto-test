@@ -1,0 +1,1 @@
+{'code': 0, 'msg': '', 'data': {'wxTransferOpenid': '', 'aliAvatar': None, 'aliTransferName': '', 'aliTransferMobile': '', 'aliTransferOpenid': '', 'wxUserName': None, 'wxNickName': None, 'wxAvatar': None}}

@@ -6,7 +6,7 @@ class TestSystemRoleListAllSimple:
     """获取角色精简信息列表"""
 
     @pytest.mark.smoke
-    def test_SystemRoleListAllSimple(self, api_session, auth_headers, system_role_id):
+    def test_SystemRoleListAllSimple(self, api_session, auth_headers, autotest_role_id):
         url = f"{ADMIN_URL}/admin-api/system/role/list-all-simple"
         # ⚠️ 敏感操作 — 参数已补全，确认后再执行
         body = {

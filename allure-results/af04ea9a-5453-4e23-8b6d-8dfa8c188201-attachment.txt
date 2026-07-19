@@ -1,0 +1,1 @@
+{'code': 0, 'msg': '', 'data': {'pointTradeDeductEnable': True, 'pointTradeDeductUnitPrice': 13506, 'pointTradeDeductMaxPrice': 32428, 'pointTradeGivePoint': 100, 'id': 5}}

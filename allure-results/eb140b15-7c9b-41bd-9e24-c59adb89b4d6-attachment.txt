@@ -1,0 +1,2 @@
+url: https://api-fht-dev.hengyishou.com/admin-api/pay/fund/page
+params: {'pageNo': 1, 'pageSize': 10, 'fundType': 20}

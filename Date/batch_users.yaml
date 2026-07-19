@@ -26,7 +26,7 @@ batch_users:
       communityCode: ""
       longitude: 120.155
       latitude: 30.184
-      addressId: "2069592339519500289"
+      addressId: "2078696067002396673"
   - desc: "创建用户-用户02"
     username: "00000002"
     password: "00000002"
@@ -51,7 +51,7 @@ batch_users:
       communityCode: ""
       longitude: 120.035
       latitude: 30.274
-      addressId: "2069592340148645890"
+      addressId: "2078696067816091649"
   - desc: "创建用户-用户03"
     username: "00000003"
     password: "00000003"
@@ -76,7 +76,7 @@ batch_users:
       communityCode: ""
       longitude: 120.025
       latitude: 30.256
-      addressId: "2069592340777791490"
+      addressId: "2078696068482985986"
   - desc: "创建用户-用户04"
     username: "00000004"
     password: "00000004"
@@ -101,7 +101,7 @@ batch_users:
       communityCode: ""
       longitude: 120.305
       latitude: 30.427
-      addressId: "2069590581388898305"
+      addressId: "2078696069418315778"
   - desc: "创建用户-用户05"
     username: "00000005"
     password: "00000005"
@@ -126,7 +126,7 @@ batch_users:
       communityCode: ""
       longitude: 120.15
       latitude: 30.173
-      addressId: "2069592341742481410"
+      addressId: "2078696070076821505"
   - desc: "创建用户-用户06"
     username: "00000006"
     password: "00000006"
@@ -151,7 +151,7 @@ batch_users:
       communityCode: ""
       longitude: 120.227
       latitude: 30.206
-      addressId: "2069592342392598530"
+      addressId: "2078696070869544962"
   - desc: "创建用户-用户07"
     username: "00000007"
     password: "00000007"
@@ -176,7 +176,7 @@ batch_users:
       communityCode: ""
       longitude: 119.971
       latitude: 30.28
-      addressId: "2069592342988189698"
+      addressId: "2078696071641296897"
   - desc: "创建用户-用户08"
     username: "00000008"
     password: "00000008"
@@ -201,7 +201,7 @@ batch_users:
       communityCode: ""
       longitude: 120.152
       latitude: 30.291
-      addressId: "2069592343592169473"
+      addressId: "2078696072358522881"
   - desc: "创建用户-用户09"
     username: "00000009"
     password: "00000009"
@@ -226,7 +226,7 @@ batch_users:
       communityCode: ""
       longitude: 120.305
       latitude: 30.413
-      addressId: "2069590584601735169"
+      addressId: "2078696073126080514"
   - desc: "创建用户-用户10"
     username: "00000010"
     password: "00000010"
@@ -251,7 +251,7 @@ batch_users:
       communityCode: ""
       longitude: 120.276
       latitude: 30.154
-      addressId: "2069592344535887874"
+      addressId: "2078696073864278018"
   - desc: "创建用户-用户11"
     username: "00000011"
     password: "00000011"
@@ -276,7 +276,7 @@ batch_users:
       communityCode: ""
       longitude: 120.212
       latitude: 30.24
-      addressId: "2069592345097924610"
+      addressId: "2078696074745081858"
   - desc: "创建用户-用户12"
     username: "00000012"
     password: "00000012"
@@ -301,7 +301,7 @@ batch_users:
       communityCode: ""
       longitude: 120.212
       latitude: 30.189
-      addressId: "2069592346511405057"
+      addressId: "2078696075500056578"
   - desc: "创建用户-用户13"
     username: "00000013"
     password: "00000013"
@@ -326,7 +326,7 @@ batch_users:
       communityCode: ""
       longitude: 120.015
       latitude: 30.287
-      addressId: "2069592347090219010"
+      addressId: "2078696076150173697"
   - desc: "创建用户-用户14"
     username: "00000014"
     password: "00000014"
@@ -351,7 +351,7 @@ batch_users:
       communityCode: ""
       longitude:
       latitude:
-      addressId: "2069592347706781698"
+      addressId: "2078696076867399682"
   - desc: "创建用户-用户15"
     username: "00000015"
     password: "00000015"
@@ -376,7 +376,7 @@ batch_users:
       communityCode: ""
       longitude: 120.277
       latitude: 30.183
-      addressId: "2069592348319150082"
+      addressId: "2078696077593014273"
   - desc: "创建用户-用户16"
     username: "00000016"
     password: "00000016"
@@ -401,7 +401,7 @@ batch_users:
       communityCode: ""
       longitude: 120.348
       latitude: 30.222
-      addressId: "2069592349019598849"
+      addressId: "2078696078238937089"
   - desc: "创建用户-用户17"
     username: "00000017"
     password: "00000017"
@@ -426,7 +426,7 @@ batch_users:
       communityCode: ""
       longitude: 120.14
       latitude: 30.304
-      addressId: "2069592349694881794"
+      addressId: "2078696078985523202"
   - desc: "创建用户-用户18"
     username: "00000018"
     password: "00000018"
@@ -451,7 +451,7 @@ batch_users:
       communityCode: ""
       longitude: 120.494
       latitude: 30.294
-      addressId: "2069592350286278657"
+      addressId: "2078696079723720705"
   - desc: "创建用户-用户19"
     username: "00000019"
     password: "00000019"
@@ -476,7 +476,7 @@ batch_users:
       communityCode: ""
       longitude: 120.258
       latitude: 30.356
-      addressId: "2069592350982533122"
+      addressId: "2078696080436752386"
   - desc: "创建用户-用户20"
     username: "00000020"
     password: "00000020"
@@ -501,4 +501,4 @@ batch_users:
       communityCode: ""
       longitude: 120.219
       latitude: 30.205
-      addressId: "2069592351561347074"
+      addressId: "2078696081137201153"

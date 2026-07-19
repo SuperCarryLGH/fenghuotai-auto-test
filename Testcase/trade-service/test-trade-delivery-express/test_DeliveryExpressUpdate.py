@@ -8,7 +8,7 @@ class TestDeliveryExpressUpdate:
     @pytest.mark.smoke
     def test_DeliveryExpressUpdate(self, api_session, auth_headers):
         url = f"{ADMIN_URL}/admin-api/trade/delivery/express/update"
-        body = {"id": "trade_delivery_express_id"}  # 来自 conftest fixture
+        body = {"id": autotest_express_id}  # 来自 conftest fixture
         resp = api_session.put(url, json=body, headers=auth_headers)
         assert resp.status_code == 200
         r = resp.json()

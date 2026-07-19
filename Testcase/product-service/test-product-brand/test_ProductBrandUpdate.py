@@ -8,7 +8,7 @@ class TestProductBrandUpdate:
     @pytest.mark.smoke
     def test_ProductBrandUpdate(self, api_session, auth_headers):
         url = f"{ADMIN_URL}/admin-api/product/brand/update"
-        body = {"id": "product_brand_id"}  # 来自 conftest fixture
+        body = {"id": autotest_brand_id}  # 来自 conftest fixture
         resp = api_session.put(url, json=body, headers=auth_headers)
         assert resp.status_code == 200
         r = resp.json()
