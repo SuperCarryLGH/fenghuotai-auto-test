@@ -8,7 +8,7 @@ class TestPayWalletGetWithdrawDetail:
     @pytest.mark.smoke
     def test_PayWalletGetWithdrawDetail(self, api_session, auth_headers):
         url = f"{ADMIN_URL}/admin-api/pay/wallet/get-withdraw-detail"
-        params = {"id": 1}  # TODO: 补充查询参数
+        params = {"withdrawId": 15617637160}
         resp = api_session.get(url, params=params, headers=auth_headers)
         assert resp.status_code == 200
         r = resp.json()

@@ -8,7 +8,7 @@ class TestPayWalletUpdateBalance:
     @pytest.mark.smoke
     def test_PayWalletUpdateBalance(self, api_session, auth_headers):
         url = f"{ADMIN_URL}/admin-api/pay/wallet/update-balance"
-        body = {"id": 1}  # TODO: 补充参数
+        body = {"userId": 15617637160, "balance": 0}  # 敏感操作,确认后执行
         resp = api_session.put(url, json=body, headers=auth_headers)
         assert resp.status_code == 200
         r = resp.json()

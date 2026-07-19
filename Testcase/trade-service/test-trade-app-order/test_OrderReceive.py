@@ -8,7 +8,7 @@ class TestOrderReceive:
     @pytest.mark.smoke
     def test_OrderReceive(self, api_session, auth_headers):
         url = f"{APP_URL}/app-api/trade/order/receive"
-        body = {"id": "trade_app_order_id"}  # 来自 conftest fixture
+        body = {"id": autotest_order_id}  # 来自 conftest fixture
         resp = api_session.put(url, json=body, headers=auth_headers)
         assert resp.status_code == 200
         r = resp.json()

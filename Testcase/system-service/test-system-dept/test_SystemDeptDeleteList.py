@@ -6,7 +6,7 @@ class TestSystemDeptDeleteList:
     """批量删除部门"""
 
     @pytest.mark.smoke
-    def test_SystemDeptDeleteList(self, api_session, auth_headers, system_dept_id):
+    def test_SystemDeptDeleteList(self, api_session, auth_headers, autotest_dept_id):
         url = f"{ADMIN_URL}/admin-api/system/dept/delete-list"
         # ⚠️ 敏感操作 — 参数已补全，确认后再执行
         body = {"ids": str(autotest_dept_id)}  # 来自 conftest fixture

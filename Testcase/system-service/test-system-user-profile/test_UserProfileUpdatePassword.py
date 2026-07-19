@@ -8,7 +8,10 @@ class TestUserProfileUpdatePassword:
     @pytest.mark.smoke
     def test_UserProfileUpdatePassword(self, api_session, auth_headers):
         url = f"{ADMIN_URL}/admin-api/system/user/profile/update-password"
-        body = {"id": 1}  # TODO: 补充参数
+        body = {
+                  "oldPassword": "1qaz!QAZ",
+                  "newPassword": "1qaz!QAZ"
+                }  # TODO: 补充参数
         resp = api_session.put(url, json=body, headers=auth_headers)
         assert resp.status_code == 200
         r = resp.json()

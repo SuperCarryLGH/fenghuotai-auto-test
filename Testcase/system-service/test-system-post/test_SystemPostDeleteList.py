@@ -6,7 +6,7 @@ class TestSystemPostDeleteList:
     """批量删除岗位"""
 
     @pytest.mark.smoke
-    def test_SystemPostDeleteList(self, api_session, auth_headers, system_post_id):
+    def test_SystemPostDeleteList(self, api_session, auth_headers, autotest_post_id):
         url = f"{ADMIN_URL}/admin-api/system/post/delete-list"
         params = {"ids": str(autotest_post_id)}  # 来自 conftest fixture
         resp = api_session.delete(url, params=params, headers=auth_headers)

@@ -6,10 +6,10 @@ class TestRiskUserLimitUpdate:
     """修改用户黑白名单"""
 
     @pytest.mark.smoke
-    def test_RiskUserLimitUpdate(self, api_session, auth_headers, user_limit_id):
+    def test_RiskUserLimitUpdate(self, api_session, auth_headers, autotest_user_limit_id):
         url = f"{ADMIN_URL}/admin-api/risk/user-limit/update"
         body = {
-            "id": user_limit_id,
+            "id": autotest_user_limit_id,
             "reason": "autotest_updated",
         }
         resp = api_session.put(url, json=body, headers=auth_headers)

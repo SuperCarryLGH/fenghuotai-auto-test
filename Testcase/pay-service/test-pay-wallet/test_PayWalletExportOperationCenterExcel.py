@@ -14,6 +14,4 @@ class TestPayWalletExportOperationCenterExcel:
         }
         resp = api_session.get(url, params=params, headers=auth_headers)
         assert resp.status_code == 200
-        r = resp.json()
-        assert r["code"] == 0
-        print(r)
+        print(f"下载成功, 文件大小={len(resp.content)}bytes")
