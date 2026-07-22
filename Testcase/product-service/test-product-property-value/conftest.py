@@ -6,7 +6,7 @@ from config import ADMIN_URL
 @pytest.fixture(scope="module")
 def autotest_value_id(api_session, auth_headers):
     """创建测试数据，返回 ID。模块内共享，执行完后自动清理。"""
-    body = {"name": "autotest_prop_195703", "status": 0}
+    body = {"propertyId": 1, "name": "autotest_prop_195703", "remark": "测试"}
     resp = api_session.post(f"{ADMIN_URL}/admin-api/product/property/value/create", json=body, headers=auth_headers)
     assert resp.status_code == 200
     data = resp.json()

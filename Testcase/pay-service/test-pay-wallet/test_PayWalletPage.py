@@ -11,6 +11,7 @@ class TestPayWalletPage:
         params = {
             "pageNo": 1,
             "pageSize": 10,
+            "walletType": 40,
         }
         resp = api_session.get(url, params=params, headers=auth_headers)
         assert resp.status_code == 200

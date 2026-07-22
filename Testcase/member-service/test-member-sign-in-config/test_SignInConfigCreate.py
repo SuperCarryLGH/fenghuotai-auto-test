@@ -1,3 +1,4 @@
+import time
 import pytest
 from config import ADMIN_URL
 
@@ -8,7 +9,7 @@ class TestSignInConfigCreate:
     @pytest.mark.smoke
     def test_SignInConfigCreate(self, api_session, auth_headers):
         url = f"{ADMIN_URL}/admin-api/member/sign-in/config/create"
-        body = {"name": f"配置_194200", "value": f"val_194200"}
+        body = {"day": int(time.time()) % 365 + 1, "point": 10, "experience": 10, "status": 0}
         resp = api_session.post(url, json=body, headers=auth_headers)
         assert resp.status_code == 200
         r = resp.json()

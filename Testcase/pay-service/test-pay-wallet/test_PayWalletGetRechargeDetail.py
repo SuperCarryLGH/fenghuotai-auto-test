@@ -8,7 +8,7 @@ class TestPayWalletGetRechargeDetail:
     @pytest.mark.smoke
     def test_PayWalletGetRechargeDetail(self, api_session, auth_headers):
         url = f"{ADMIN_URL}/admin-api/pay/wallet/get-recharge-detail"
-        params = {"rechargeId": 15617637160}
+        params = {"rechargeId": 2079806408323100674}
         resp = api_session.get(url, params=params, headers=auth_headers)
         assert resp.status_code == 200
         r = resp.json()

@@ -11,6 +11,7 @@ class TestRiskUserLimitPage:
         params = {
             "pageNo": 1,
             "pageSize": 10,
+            "type": 1,
         }
         resp = api_session.get(url, params=params, headers=auth_headers)
         assert resp.status_code == 200
