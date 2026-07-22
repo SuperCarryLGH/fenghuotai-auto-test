@@ -15,3 +15,4 @@ class Test_AdminApiRecycleAdminOrderDeleteList:
         params = {"ids": [common['common']['id']['invalid']]}
         resp = api_session.delete(url, params=params, headers=auth_headers)
         assert resp.status_code == 200
+        print(resp.json())
