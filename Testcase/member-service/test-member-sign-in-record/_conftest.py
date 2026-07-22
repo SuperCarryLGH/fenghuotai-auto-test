@@ -9,7 +9,7 @@ def autotest_record_id(api_session, login_tool):
     """创建测试数据，返回 ID。模块内共享，执行完后自动清理。"""
     token = login_tool.app_login(mobile="15617637160")
     headers = {**Login.SMS_LOGIN_HEADERS, "timestamp": str(int(time.time() * 1000)), "Authorization": f"Bearer {token}"}
-    body = {"name": "autotest_signin_195703", "point": 10, "status": 0}
+    body = {}
     resp = api_session.post(f"{APP_URL}/app-api/member/sign-in/record/create", json=body, headers=headers)
     assert resp.status_code == 200
     data = resp.json()

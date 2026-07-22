@@ -8,5 +8,5 @@ class TestErpAppWarehouseGetByCode:
     @pytest.mark.smoke
     def test_ErpAppWarehouseGetByCode(self, api_session, auth_headers):
         url = f"{ADMIN_URL}/admin-api/erp/app-warehouse/get-by-code"
-                params = {}
+        params = {}
         resp = api_session.get(url, params=params, headers=auth_headers)
