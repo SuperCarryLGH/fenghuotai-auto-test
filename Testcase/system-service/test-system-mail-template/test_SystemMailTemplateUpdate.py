@@ -6,9 +6,10 @@ class TestSystemMailTemplateUpdate:
     """修改邮件模版"""
 
     @pytest.mark.smoke
-    def test_SystemMailTemplateUpdate(self, api_session, auth_headers):
+    def test_SystemMailTemplateUpdate(self, api_session, auth_headers, autotest_mail_template_id):
         url = f"{ADMIN_URL}/admin-api/system/mail-template/update"
-        body = {"id": "id"}  # 来自 conftest fixture
+        import time
+        body = {"id": autotest_mail_template_id, "name": f"mailtpl_{int(time.time())}", "code": f"CODE_{int(time.time())}", "accountId": 1, "title": "autotest_updated", "content": "autotest content", "status": 0}
         resp = api_session.put(url, json=body, headers=auth_headers)
         assert resp.status_code == 200
         r = resp.json()

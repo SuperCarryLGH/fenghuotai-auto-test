@@ -7,9 +7,9 @@ class TestUpdatePaidRecycleOrder:
 
     @pytest.mark.smoke
     def test_UpdatePaidRecycleOrder(self, api_session, auth_headers):
-        url = f"{ADMIN_URL}/update-paid-recycle-order"
+        url = f"{ADMIN_URL}/admin-api/trade/order/update-paid-recycle-order"
         body = {
-            # TODO: 补充请求体参数
+            "id": 1,
         }
         resp = api_session.post(url, json=body, headers=auth_headers)
         assert resp.status_code == 200

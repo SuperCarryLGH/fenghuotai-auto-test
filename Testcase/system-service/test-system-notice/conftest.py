@@ -6,7 +6,7 @@ from config import ADMIN_URL
 @pytest.fixture(scope="module")
 def autotest_notice_id(api_session, auth_headers):
     """创建测试数据，返回 ID。模块内共享，执行完后自动清理。"""
-    body = {"title": "autotest_notice_195703", "content": "autotest content", "status": 0}
+    body = {"title": f"autotest_notice_{int(time.time())}", "content": "autotest content", "type": 1, "status": 0}
     resp = api_session.post(f"{ADMIN_URL}/admin-api/system/notice/create", json=body, headers=auth_headers)
     assert resp.status_code == 200
     data = resp.json()

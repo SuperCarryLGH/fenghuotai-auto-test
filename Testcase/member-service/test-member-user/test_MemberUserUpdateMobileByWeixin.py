@@ -1,15 +1,18 @@
 import pytest
 from config import APP_URL
+from Common.login import Login
 
 
 class TestMemberUserUpdateMobileByWeixin:
-    """基于微信小程序的授权码，修改用户手机"""
+    """---"""
 
     @pytest.mark.smoke
-    def test_MemberUserUpdateMobileByWeixin(self, api_session, auth_headers):
+    def test_MemberUserUpdateMobileByWeixin(self, api_session, login_tool):
+        token = login_tool.app_login(mobile="15617637160")
+        headers = {**Login.SMS_LOGIN_HEADERS, "Authorization": f"Bearer {token}"}
         url = f"{APP_URL}/app-api/member/user/update-mobile-by-weixin"
-        body = {"id": 1}  # TODO: 补充参数
-        resp = api_session.put(url, json=body, headers=auth_headers)
+        body = {"code": "9999"}
+        resp = api_session.put(url, json=body, headers=headers)
         assert resp.status_code == 200
         r = resp.json()
         assert r["code"] == 0

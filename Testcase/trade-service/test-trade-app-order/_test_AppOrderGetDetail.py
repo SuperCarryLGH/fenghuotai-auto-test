@@ -6,7 +6,7 @@ class TestAppOrderGetDetail:
     """获得交易订单"""
 
     @pytest.mark.smoke
-    def test_AppOrderGetDetail(self, api_session, auth_headers):
+    def test_AppOrderGetDetail(self, api_session, auth_headers, autotest_order_id):
         url = f"{APP_URL}/app-api/trade/order/get-detail"
         params = {"id": autotest_order_id}  # 来自 conftest fixture
         resp = api_session.get(url, params=params, headers=auth_headers)

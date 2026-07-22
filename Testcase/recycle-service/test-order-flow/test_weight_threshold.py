@@ -1,7 +1,9 @@
 import pytest
+import time
 from config import APP_URL
 from Common.DB import USE_MOCK
 from Common.loader import load_regions, load_users, load_common
+from Common.login import Login
 
 
 common = load_common()
@@ -23,7 +25,7 @@ class TestOrderFlow:
         pytest.param(5.0,  "NORMAL",     id="under_10kg_pass"),
     ])
     def test_weight_threshold(
-        self, api_session, auth_headers, db_client, weight, expected_status
+        self, api_session, login_tool, db_client, weight, expected_status
     ):
         region_id = self.regions["regions"]["henan_zhengzhou_jinshui"]["id"]
         fence_id = self.regions["fences"]["child_fence_b"]["id"]
@@ -38,8 +40,11 @@ class TestOrderFlow:
             "lat": 34.789,
         }
 
+        token = login_tool.app_login()
+        headers = {**Login.SMS_LOGIN_HEADERS, "timestamp": str(int(time.time() * 1000)), "Authorization": f"Bearer {token}"}
+
         response = api_session.post(
-            f"{APP_URL}/order/create", json=payload, headers=auth_headers
+            f"{APP_URL}/order/create", json=payload, headers=headers
         )
 
         assert response.status_code == 200

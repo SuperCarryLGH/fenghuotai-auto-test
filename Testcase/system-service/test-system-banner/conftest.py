@@ -6,7 +6,7 @@ from config import ADMIN_URL
 @pytest.fixture(scope="module")
 def autotest_banner_id(api_session, auth_headers):
     """创建测试数据，返回 ID。模块内共享，执行完后自动清理。"""
-    body = {"title": "autotest_banner_195703", "status": 0}
+    body = {"title": f"autotest_banner_{int(time.time())}", "linkType": "1", "openType": "10", "picUrl": "http://test.com/test.jpg", "position": "1", "platform": "web", "provider": "all", "url": "http://test.com", "browseCount": 0, "memo": "autotest", "status": "0"}
     resp = api_session.post(f"{ADMIN_URL}/admin-api/system/banner/create", json=body, headers=auth_headers)
     assert resp.status_code == 200
     data = resp.json()

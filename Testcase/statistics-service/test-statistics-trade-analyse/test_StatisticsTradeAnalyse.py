@@ -11,6 +11,8 @@ class TestStatisticsTradeAnalyse:
         params = {
             "pageNo": 1,
             "pageSize": 10,
+            "beginDate": "2024-01-01",
+            "endDate": "2024-12-31",
         }
         resp = api_session.get(url, params=params, headers=auth_headers)
         assert resp.status_code == 200

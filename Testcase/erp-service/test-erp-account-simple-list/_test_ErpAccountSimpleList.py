@@ -8,5 +8,5 @@ class TestErpAccountSimpleList:
     @pytest.mark.smoke
     def test_ErpAccountSimpleList(self, api_session, auth_headers):
         url = f"{ADMIN_URL}/admin-api/erp/account/simple-list"
-                params = {}
+        params = {}
         resp = api_session.get(url, params=params, headers=auth_headers)

@@ -8,5 +8,5 @@ class TestBpmCategorySimpleList:
     @pytest.mark.smoke
     def test_BpmCategorySimpleList(self, api_session, auth_headers):
         url = f"{ADMIN_URL}/admin-api/bpm/category/simple-list"
-                params = {}
+        params = {}
         resp = api_session.get(url, params=params, headers=auth_headers)

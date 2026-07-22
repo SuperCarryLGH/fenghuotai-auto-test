@@ -6,7 +6,7 @@ class TestProductBrandUpdate:
     """更新品牌"""
 
     @pytest.mark.smoke
-    def test_ProductBrandUpdate(self, api_session, auth_headers):
+    def test_ProductBrandUpdate(self, api_session, auth_headers, autotest_brand_id):
         url = f"{ADMIN_URL}/admin-api/product/brand/update"
         body = {"id": autotest_brand_id}  # 来自 conftest fixture
         resp = api_session.put(url, json=body, headers=auth_headers)

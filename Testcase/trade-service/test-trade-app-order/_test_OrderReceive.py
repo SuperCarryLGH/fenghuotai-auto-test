@@ -6,7 +6,7 @@ class TestOrderReceive:
     """确认交易订单收货"""
 
     @pytest.mark.smoke
-    def test_OrderReceive(self, api_session, auth_headers):
+    def test_OrderReceive(self, api_session, auth_headers, autotest_order_id):
         url = f"{APP_URL}/app-api/trade/order/receive"
         body = {"id": autotest_order_id}  # 来自 conftest fixture
         resp = api_session.put(url, json=body, headers=auth_headers)

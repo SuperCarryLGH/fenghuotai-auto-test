@@ -6,7 +6,7 @@ class TestDeliveryExpressTemplateUpdate:
     """更新快递运费模板"""
 
     @pytest.mark.smoke
-    def test_DeliveryExpressTemplateUpdate(self, api_session, auth_headers):
+    def test_DeliveryExpressTemplateUpdate(self, api_session, auth_headers, autotest_express_template_id):
         url = f"{ADMIN_URL}/admin-api/trade/delivery/express-template/update"
         body = {"id": autotest_express_template_id}  # 来自 conftest fixture
         resp = api_session.put(url, json=body, headers=auth_headers)

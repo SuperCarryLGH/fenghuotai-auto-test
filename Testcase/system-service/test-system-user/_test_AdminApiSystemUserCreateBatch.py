@@ -1,3 +1,4 @@
+import time
 import pytest
 from config import ADMIN_URL
 from Common.loader import load_yaml
@@ -12,10 +13,11 @@ class TestBatchCreateUser:
     @pytest.mark.parametrize("user", users, ids=[u["desc"] for u in users])
     def test_create_user(self, api_session, auth_headers, user):
         url = f"{ADMIN_URL}/admin-api/system/user/create"
+        suffix = str(int(time.time()))[-8:]
         payload = {
-            "username": user["username"],
+            "username": f"{user['username']}{suffix}",
             "password": user["password"],
-            "nickname": user["nickname"],
+            "nickname": f"{user['nickname']}{suffix}",
             "mobile": user["mobile"],
             "sex": user["sex"],
             "status": user["status"],

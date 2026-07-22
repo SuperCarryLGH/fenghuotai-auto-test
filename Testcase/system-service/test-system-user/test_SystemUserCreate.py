@@ -8,7 +8,9 @@ class TestSystemUserCreate:
     @pytest.mark.smoke
     def test_SystemUserCreate(self, api_session, auth_headers):
         url = f"{ADMIN_URL}/admin-api/system/user/create"
-        body = {"username": f"test_194199", "password": "123456", "nickname": f"用户_194199", "mobile": f"19194199", "sex": 1, "status": 0}
+        import time
+        suffix = str(int(time.time()))[-8:]
+        body = {"username": f"test{suffix}", "password": "123456", "nickname": f"用户{suffix}", "mobile": f"156{suffix}", "sex": 1, "status": 0}
         resp = api_session.post(url, json=body, headers=auth_headers)
         assert resp.status_code == 200
         r = resp.json()

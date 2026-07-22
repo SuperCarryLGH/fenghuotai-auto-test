@@ -6,9 +6,9 @@ class TestSystemDictTypeUpdate:
     """修改字典类型"""
 
     @pytest.mark.smoke
-    def test_SystemDictTypeUpdate(self, api_session, auth_headers):
+    def test_SystemDictTypeUpdate(self, api_session, auth_headers, autotest_dict_type_id):
         url = f"{ADMIN_URL}/admin-api/system/dict-type/update"
-        body = {"id": "id"}  # 来自 conftest fixture
+        body = {"id": autotest_dict_type_id, "name": "autotest_updated", "type": "autotest", "status": 0}
         resp = api_session.put(url, json=body, headers=auth_headers)
         assert resp.status_code == 200
         r = resp.json()
