@@ -1,10 +1,9 @@
 import time
 import pytest
 from config import ADMIN_URL
-from Common.loader import load_common, load_recycle_admin_order
+from Common.loader import load_common
 
 common = load_common()
-module_data = load_recycle_admin_order()
 
 
 class Test_AdminApiRecycleAdminOrderUpdate:
@@ -13,11 +12,12 @@ class Test_AdminApiRecycleAdminOrderUpdate:
     @pytest.mark.smoke
     def test_AdminApiRecycleAdminOrderUpdate(self, api_session, auth_headers):
         url = f"{ADMIN_URL}/admin-api/recycle/admin-order/update"
-        suffix = str(int(time.time()))
         body = {
             "id": common['common']['id']['valid'],
-            "name": f"{module_data['admin_order']['update_name']}_{suffix}",
-            "status": common['common']['status']['enabled'],
+            "orderNo": common['common']['id']['orderNo'],
+            "clearStatus": common['common']['id']['clearStatus'],
+            "addressId": common['common']['id']['addressId']
         }
         resp = api_session.put(url, json=body, headers=auth_headers)
         assert resp.status_code == 200
+        print(resp.json())

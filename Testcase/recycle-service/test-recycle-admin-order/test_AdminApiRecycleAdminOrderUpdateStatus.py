@@ -1,9 +1,8 @@
 import pytest
 from config import ADMIN_URL
-from Common.loader import load_common, load_recycle_admin_order
+from Common.loader import load_common
 
 common = load_common()
-module_data = load_recycle_admin_order()
 
 
 class Test_AdminApiRecycleAdminOrderUpdateStatus:
@@ -15,3 +14,4 @@ class Test_AdminApiRecycleAdminOrderUpdateStatus:
         body = {"id": common['common']['id']['valid'], "status": common['common']['status']['enabled']}
         resp = api_session.put(url, json=body, headers=auth_headers)
         assert resp.status_code == 200
+        print(resp.json())

@@ -15,3 +15,4 @@ class Test_AdminApiRecycleAdminOrderGet:
         params = {"id": common['common']['id']['valid']}
         resp = api_session.get(url, params=params, headers=auth_headers)
         assert resp.status_code == 200
+        print(resp.json())
