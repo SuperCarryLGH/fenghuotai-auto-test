@@ -8,7 +8,7 @@ class TestProductPropertyUpdate:
     @pytest.mark.smoke
     def test_ProductPropertyUpdate(self, api_session, auth_headers, autotest_property_id):
         url = f"{ADMIN_URL}/admin-api/product/property/update"
-        body = {"id": autotest_property_id}  # 来自 conftest fixture
+        body = {"id": autotest_property_id, "name": "autotest_property_updated"}
         resp = api_session.put(url, json=body, headers=auth_headers)
         assert resp.status_code == 200
         r = resp.json()

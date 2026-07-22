@@ -10,7 +10,7 @@ class TestPayWalletTransactionGetSummary:
     @pytest.mark.smoke
     def test_PayWalletTransactionGetSummary(self, api_session, login_tool):
         url = f"{APP_URL}/app-api/pay/wallet-transaction/get-summary"
-        params = {}
+        params = {"beginTime": "2024-01-01", "endTime": "2024-12-31"}
         token = login_tool.app_login()
         headers = {**Login.SMS_LOGIN_HEADERS, "timestamp": str(int(time.time() * 1000)), "Authorization": f"Bearer {token}"}
         resp = api_session.get(url, params=params, headers=headers)

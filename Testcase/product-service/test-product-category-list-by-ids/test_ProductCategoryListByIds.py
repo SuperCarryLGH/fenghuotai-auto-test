@@ -13,7 +13,7 @@ class TestProductCategoryListByIds:
         token = login_tool.app_login()
         headers = {**Login.SMS_LOGIN_HEADERS, "timestamp": str(int(time.time() * 1000)), "Authorization": f"Bearer {token}"}
         url = f"{APP_URL}/app-api/product/category/list-by-ids"
-        params = {"id": 1}  # TODO: 补充查询参数
+        params = {"ids": [48]}
         resp = api_session.get(url, params=params, headers=headers)
         assert resp.status_code == 200
         r = resp.json()
