@@ -6,7 +6,7 @@ class TestProductSpuDelete:
     """删除商品 SPU"""
 
     @pytest.mark.smoke
-    def test_ProductSpuDelete(self, api_session, auth_headers):
+    def test_ProductSpuDelete(self, api_session, auth_headers, autotest_spu_id):
         url = f"{ADMIN_URL}/admin-api/product/spu/delete"
         params = {"id": autotest_spu_id}  # 来自 conftest fixture
         resp = api_session.delete(url, params=params, headers=auth_headers)

@@ -6,7 +6,7 @@ class TestSignInConfigGet:
     """获得签到规则"""
 
     @pytest.mark.smoke
-    def test_SignInConfigGet(self, api_session, auth_headers):
+    def test_SignInConfigGet(self, api_session, auth_headers, autotest_config_id):
         url = f"{ADMIN_URL}/admin-api/member/sign-in/config/get"
         params = {"id": autotest_config_id}  # 来自 conftest fixture
         resp = api_session.get(url, params=params, headers=auth_headers)

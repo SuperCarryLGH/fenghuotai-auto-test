@@ -6,7 +6,7 @@ class TestDeliveryExpressDelete:
     """删除快递公司"""
 
     @pytest.mark.smoke
-    def test_DeliveryExpressDelete(self, api_session, auth_headers):
+    def test_DeliveryExpressDelete(self, api_session, auth_headers, autotest_express_id):
         url = f"{ADMIN_URL}/admin-api/trade/delivery/express/delete"
         params = {"id": autotest_express_id}  # 来自 conftest fixture
         resp = api_session.delete(url, params=params, headers=auth_headers)

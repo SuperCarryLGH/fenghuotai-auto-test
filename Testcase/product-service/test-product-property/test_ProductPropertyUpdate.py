@@ -6,7 +6,7 @@ class TestProductPropertyUpdate:
     """更新属性项"""
 
     @pytest.mark.smoke
-    def test_ProductPropertyUpdate(self, api_session, auth_headers):
+    def test_ProductPropertyUpdate(self, api_session, auth_headers, autotest_property_id):
         url = f"{ADMIN_URL}/admin-api/product/property/update"
         body = {"id": autotest_property_id}  # 来自 conftest fixture
         resp = api_session.put(url, json=body, headers=auth_headers)

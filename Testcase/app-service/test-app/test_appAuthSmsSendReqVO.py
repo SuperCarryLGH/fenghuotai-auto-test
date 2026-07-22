@@ -1,5 +1,7 @@
+import time
 import pytest
 from config import APP_URL
+from Common.login import Login
 from Common.loader import load_users, load_common
 users = load_users()
 common = load_common()
@@ -13,14 +15,15 @@ class TestAppAuthSmsSendReqVO:
         运行: TEST_ENV=dev USE_MOCK=false pytest ... -v -s
         """
         url = f"{APP_URL}/app-api/member/auth/send-sms-code"
+        headers = {**Login.SMS_LOGIN_HEADERS, "timestamp": str(int(time.time() * 1000))}
         params = {
                     "mobile": users["users"]["normal_user"]["mobile"],
                     "scene": 1
             }
 
-        resp = api_session.post(url, json=params)
+        resp = api_session.post(url, json=params, headers=headers)
         assert resp.status_code == 200
         r = resp.json()
         assert r["code"] == 0
-        assert r["data"] == {}
+        assert r["data"] is True
         print(r)

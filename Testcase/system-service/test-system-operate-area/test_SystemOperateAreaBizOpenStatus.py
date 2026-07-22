@@ -6,10 +6,10 @@ class TestSystemOperateAreaBizOpenStatus:
     """更新业务开通状态"""
 
     @pytest.mark.smoke
-    def test_SystemOperateAreaBizOpenStatus(self, api_session, auth_headers):
+    def test_SystemOperateAreaBizOpenStatus(self, api_session, auth_headers, autotest_operate_area_id):
         url = f"{ADMIN_URL}/admin-api/system/operate-area/biz-open-status"
-        body = {"id": "id"}  # 来自 conftest fixture
-        resp = api_session.put(url, json=body, headers=auth_headers)
+        params = {"ids": [autotest_operate_area_id], "status": 1}
+        resp = api_session.put(url, params=params, headers=auth_headers)
         assert resp.status_code == 200
         r = resp.json()
         assert r["code"] == 0

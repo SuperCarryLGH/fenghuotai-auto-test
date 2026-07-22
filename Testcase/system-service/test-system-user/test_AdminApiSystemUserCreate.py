@@ -1,3 +1,4 @@
+import time
 import pytest
 from config import ADMIN_URL
 
@@ -8,11 +9,12 @@ class TestCreateUser:
     @pytest.mark.smoke
     def test_create_user(self, api_session, auth_headers):
         url = f"{ADMIN_URL}/admin-api/system/user/create"
+        suffix = str(int(time.time()))[-8:]
         payload = {
-            "username": "00000001",
-            "password": "00000001",
+            "username": f"user{suffix}",
+            "password": "autotest123",
             "nickname": "西音",
-            "mobile": "19500000001",
+            "mobile": f"156{suffix}",
             "sex": 1,
             "status": 0,
         }

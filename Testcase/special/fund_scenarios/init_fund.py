@@ -53,12 +53,16 @@ for sc_id, comp_id in sc_company.items():
         comp_set[comp_id] = {"id": comp_id, "name": f"公司{comp_id}", "code": "", "purpose": 2}
 
 user_sc = {}
-for _, ro in recycle_orders.iterrows():
+completed = recycle_orders[
+    recycle_orders["status"].notna() & (recycle_orders["status"] == 30)
+].sort_values("create_time")
+for _, ro in completed.iterrows():
     try:
         uid = _to_int(ro["user_id"])
         oc = _to_int(ro["operation_center_id"])
     except: continue
-    if uid and oc in sc_ids: user_sc[uid] = oc
+    if uid and oc in sc_ids and uid not in user_sc:
+        user_sc[uid] = oc
 
 wal_uid, wal_bal = {}, {}
 for _, w in wallets.iterrows():

@@ -6,9 +6,9 @@ class TestSystemMailTemplateSendMail:
     """发送短信"""
 
     @pytest.mark.smoke
-    def test_SystemMailTemplateSendMail(self, api_session, auth_headers):
+    def test_SystemMailTemplateSendMail(self, api_session, auth_headers, autotest_mail_template_id):
         url = f"{ADMIN_URL}/admin-api/system/mail-template/send-mail"
-        body = {"id": "id"}  # 来自 conftest fixture
+        body = {"toMails": ["autotest@test.com"], "ccMails": [], "bccMails": [], "templateCode": "AUTOTEST_MAIL"}
         resp = api_session.post(url, json=body, headers=auth_headers)
         assert resp.status_code == 200
         r = resp.json()

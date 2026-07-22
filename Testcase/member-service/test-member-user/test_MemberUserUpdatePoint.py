@@ -3,12 +3,12 @@ from config import ADMIN_URL
 
 
 class TestMemberUserUpdatePoint:
-    """更新会员用户积分"""
+    """---"""
 
     @pytest.mark.smoke
     def test_MemberUserUpdatePoint(self, api_session, auth_headers):
         url = f"{ADMIN_URL}/admin-api/member/user/update-point"
-        body = {"id": 1}  # TODO: 补充参数
+        body = {"id": 2071418043802406914, "point": 100}
         resp = api_session.put(url, json=body, headers=auth_headers)
         assert resp.status_code == 200
         r = resp.json()

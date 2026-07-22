@@ -6,7 +6,7 @@ class TestSignInConfigUpdate:
     """更新签到规则"""
 
     @pytest.mark.smoke
-    def test_SignInConfigUpdate(self, api_session, auth_headers):
+    def test_SignInConfigUpdate(self, api_session, auth_headers, autotest_config_id):
         url = f"{ADMIN_URL}/admin-api/member/sign-in/config/update"
         body = {"id": autotest_config_id}  # 来自 conftest fixture
         resp = api_session.put(url, json=body, headers=auth_headers)

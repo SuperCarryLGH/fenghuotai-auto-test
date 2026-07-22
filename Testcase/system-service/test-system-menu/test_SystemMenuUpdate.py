@@ -6,10 +6,10 @@ class TestSystemMenuUpdate:
     """修改菜单"""
 
     @pytest.mark.smoke
-    def test_SystemMenuUpdate(self, api_session, auth_headers):
+    def test_SystemMenuUpdate(self, api_session, auth_headers, autotest_menu_id):
         url = f"{ADMIN_URL}/admin-api/system/menu/update"
         # ⚠️ 敏感操作 — 参数已补全，确认后再执行
-        body = {"id": "id"}  # 来自 conftest fixture
+        body = {"id": autotest_menu_id, "name": "autotest_updated", "type": 1, "sort": 0, "parentId": 100, "status": 0}
         resp = api_session.put(url, json=body, headers=auth_headers)
         assert resp.status_code == 200
         r = resp.json()
