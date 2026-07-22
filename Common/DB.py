@@ -368,3 +368,33 @@ def quick_query(sql: str, params: tuple = ()) -> Union[Optional[Dict], List[Dict
                 return db.fetch_one(sql, params)
             return db.fetch_all(sql, params)
         return db.execute(sql, params)
+
+
+def query(sql: str, params: tuple = ()):
+    """执行 SELECT 查询，返回 list[dict]。最简调用方式。
+    
+    用法:
+        rows = query("SELECT id, name FROM member_user WHERE operation_center_id = %s", (sc_id,))
+        for row in rows:
+            print(row["name"])
+    """
+    with DBClient() as db:
+        return db.fetch_all(sql, params)
+
+
+def query_one(sql: str, params: tuple = ()) -> Optional[Dict]:
+    """执行 SELECT 查询，只返回第一行 dict 或 None。
+    
+    用法:
+        user = query_one("SELECT * FROM member_user WHERE id = %s", (uid,))
+        if user:
+            print(user["nickname"])
+    """
+    with DBClient() as db:
+        return db.fetch_one(sql, params)
+
+
+def exec_sql(sql: str, params: tuple = ()):
+    """执行 INSERT/UPDATE/DELETE，返回受影响行数。"""
+    with DBClient() as db:
+        return db.execute(sql, params)
