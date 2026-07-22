@@ -9,7 +9,7 @@ class TestRiskRuleDetailCreate:
     @pytest.mark.smoke
     def test_RiskRuleDetailCreate(self, api_session, auth_headers):
         url = f"{ADMIN_URL}/admin-api/risk/rule-detail/create"
-        ruleId = int(time.time())
+        ruleId = int(time.time() * 1000000)
         body = {
               #"id": 33333333,
               "ruleId": ruleId,

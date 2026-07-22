@@ -6,7 +6,13 @@ from config import ADMIN_URL
 @pytest.fixture(scope="module")
 def autotest_app_id(api_session, auth_headers):
     """创建测试数据，返回 ID。模块内共享，执行完后自动清理。"""
-    body = {"name": f"autotest_{int(time.time())}", "status": 0}
+    body = {
+        "appKey": f"autotest_key_{int(time.time())}",
+        "name": f"autotest_{int(time.time())}",
+        "status": 0,
+        "orderNotifyUrl": "http://127.0.0.1:48080/pay-callback",
+        "refundNotifyUrl": "http://127.0.0.1:48080/refund-callback",
+    }
     resp = api_session.post(f"{ADMIN_URL}/admin-api/pay/app/create", json=body, headers=auth_headers)
     assert resp.status_code == 200
     data = resp.json()

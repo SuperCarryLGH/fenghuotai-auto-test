@@ -13,8 +13,8 @@ class TestProductFavoriteDelete:
         token = login_tool.app_login()
         headers = {**Login.SMS_LOGIN_HEADERS, "timestamp": str(int(time.time() * 1000)), "Authorization": f"Bearer {token}"}
         url = f"{APP_URL}/app-api/product/favorite/delete"
-        params = {"id": autotest_favorite_id}  # 来自 conftest fixture
-        resp = api_session.delete(url, params=params, headers=headers)
+        body = {"spuId": 633}
+        resp = api_session.delete(url, json=body, headers=headers)
         assert resp.status_code == 200
         r = resp.json()
         assert r["code"] == 0
