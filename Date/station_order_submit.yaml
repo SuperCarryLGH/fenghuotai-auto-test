@@ -13,9 +13,15 @@ station_msg1:
   promotionStationId: ""
   activityId: ""
   payType: 2
+<<<<<<< Updated upstream
   stationId: 2071933798574993409
   name: "测试"
   mobile: "15617617160"
+=======
+  stationId: 1
+  name: "站点1"
+  mobile: "15617637160"
+>>>>>>> Stashed changes
   predictWeight: 50000025
 
 
