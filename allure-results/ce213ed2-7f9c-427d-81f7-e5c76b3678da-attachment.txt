@@ -1,0 +1,1 @@
+{'code': 0, 'msg': '', 'data': {'id': 100, 'name': '用户管理', 'permission': 'system:user:list', 'type': 2, 'sort': 1, 'parentId': 1, 'path': 'user', 'icon': 'ep:avatar', 'component': 'system/user/index', 'componentName': 'SystemUser', 'status': 0, 'visible': True, 'keepAlive': True, 'alwaysShow': True, 'createTime': 1609837428000, 'bizData': None}}

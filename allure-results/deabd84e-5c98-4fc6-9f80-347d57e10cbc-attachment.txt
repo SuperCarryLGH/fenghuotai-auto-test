@@ -1,0 +1,1 @@
+{'code': 0, 'msg': '', 'data': [{'id': 100, 'name': '恒逸资源', 'parentId': 0, 'sort': 0, 'leaderUserId': 1, 'phone': '15888888888', 'email': 'ry@qq.com', 'status': 0, 'createTime': 1609837427000}]}

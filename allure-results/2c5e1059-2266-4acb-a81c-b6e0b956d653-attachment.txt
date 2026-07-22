@@ -1,0 +1,3 @@
+[Fixture] created autotest_dict_type_id = 2078694282359599106
+{'code': 0, 'msg': '', 'data': True}
+[Fixture] deleted autotest_dict_type_id = 2078694282359599106

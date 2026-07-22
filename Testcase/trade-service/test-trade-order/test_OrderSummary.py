@@ -1,0 +1,19 @@
+import pytest
+from config import ADMIN_URL
+
+
+class TestOrderSummary:
+    """获得交易订单统计"""
+
+    @pytest.mark.smoke
+    def test_OrderSummary(self, api_session, auth_headers):
+        url = f"{ADMIN_URL}/admin-api/trade/order/summary"
+        params = {
+            "pageNo": 1,
+            "pageSize": 10,
+        }
+        resp = api_session.get(url, params=params, headers=auth_headers)
+        assert resp.status_code == 200
+        r = resp.json()
+        assert r["code"] == 0
+        print(r)

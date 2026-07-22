@@ -1,0 +1,15 @@
+
+共 5 个用户，开始批量登录...
+
+  19100000082 响应: {'code': 0, 'msg': '', 'data': {'userId': '2072519033872052225', 'accessToken': '1d5c150f93824a8e8a1860cf22bf9e65', 'refreshToken': 'ff31f1121fd047f9a0c40860c660c355', 'expiresTime': 1784506267222, 'openid': None}}
+ 成功 用户01         | 19100000082 → 1d5c150f93824a8e8a1860cf22bf9e65
+  19200000083 响应: {'code': 0, 'msg': '', 'data': {'userId': '2072519034467643394', 'accessToken': 'a2007dad2f4d48358b71216c620c034f', 'refreshToken': '4370e9423bbb4770bb3f09b6bf729a53', 'expiresTime': 1784506267343, 'openid': None}}
+ 成功 用户02         | 19200000083 → a2007dad2f4d48358b71216c620c034f
+  19300000084 响应: {'code': 0, 'msg': '', 'data': {'userId': '2072519035054845954', 'accessToken': '475da37255064324a7bdddfb3aed3b17', 'refreshToken': 'f682f26355234237a7138efe025fb10c', 'expiresTime': 1784506267433, 'openid': None}}
+ 成功 用户03         | 19300000084 → 475da37255064324a7bdddfb3aed3b17
+  19300000085 响应: {'code': 0, 'msg': '', 'data': {'userId': '2072519035545579521', 'accessToken': 'a76d43c2ad8b4c73bf93d04ba5745ab3', 'refreshToken': '8720e8c85b824590bfd43dedeb40af29', 'expiresTime': 1784506267514, 'openid': None}}
+ 成功 用户04         | 19300000085 → a76d43c2ad8b4c73bf93d04ba5745ab3
+  19300000086 响应: {'code': 0, 'msg': '', 'data': {'userId': '2072519036015341569', 'accessToken': 'bc8078707ff24a6a8a9374f4bb61cfd8', 'refreshToken': '34277d04d42b43e79c6966c22464f24c', 'expiresTime': 1784506267618, 'openid': None}}
+ 成功 用户05         | 19300000086 → bc8078707ff24a6a8a9374f4bb61cfd8
+
+批量登录完成: 成功 5，失败 0

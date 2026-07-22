@@ -1,0 +1,3 @@
+
+[DEBUG] 登录响应: {'code': 0, 'msg': '', 'data': {'userId': '2067128064918024194', 'accessToken': '53fa5aa6fb5845a69c60f800f41900ba', 'refreshToken': 'be314ad738b644f687486ab75c9a73a0', 'expiresTime': 1784505886019, 'openid': None}}
+{'code': 0, 'msg': '', 'data': [{'name': '青铜', 'level': 1, 'experience': 10000, 'discountPercent': 100, 'icon': 'http://127.0.0.1:48080/admin-api/infra/file/4/get/59a1d52ebd38cc843fb5fafc30bce85f15d6ac22c8227dc3fe775d064f71ca6e.png', 'backgroundUrl': 'http://127.0.0.1:48080/admin-api/infra/file/4/get/179e45b487daad722fa8bccf382fa35a80caa0a6e6633ca4da961bfbefd9d68a.jpg'}]}

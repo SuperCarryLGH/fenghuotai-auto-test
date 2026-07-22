@@ -1,0 +1,1 @@
+{'code': 0, 'msg': '', 'data': {'value': {'yesterdayOrderCount': 0, 'yesterdayPayPrice': 0, 'monthOrderCount': 0, 'monthPayPrice': 0}, 'reference': {'yesterdayOrderCount': 0, 'yesterdayPayPrice': 0, 'monthOrderCount': 0, 'monthPayPrice': 0}}}

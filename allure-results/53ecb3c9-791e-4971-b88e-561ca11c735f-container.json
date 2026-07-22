@@ -1,0 +1,1 @@
+{"uuid": "dfa604c0-8bc4-4b20-864e-a6c678180522", "children": ["ad312a7b-c240-4adf-8060-fc326c6014a4"], "befores": [{"name": "autotest_dict_type_id", "status": "passed", "start": 1784434311748, "stop": 1784434311801}], "afters": [{"name": "autotest_dict_type_id::0", "status": "passed", "start": 1784434311871, "stop": 1784434311915}], "start": 1784434311748, "stop": 1784434311915}

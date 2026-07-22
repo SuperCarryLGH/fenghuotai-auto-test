@@ -1,0 +1,5 @@
+
+[DEBUG] 登录响应: {'code': 0, 'msg': '', 'data': {'userId': '2067497419770032130', 'accessToken': 'd3780a40ace243e6a05e4f348ed7cae3', 'refreshToken': '450e6352068a44fe924ba8585b41bebe', 'expiresTime': 1784359444133, 'openid': None}}
+d3780a40ace243e6a05e4f348ed7cae3
+请求: {'platform': 'web', 'provider': '', 'channel': '', 'scene': '', 'pics': '', 'promoterId': '', 'promotionPlatform': '', 'promotionChannel': '', 'promotionStationId': '', 'activityId': '12', 'appointmentDate': '2026-07-18', 'appointmentTimePeriod': '09:00-11:00', 'appointmentWeekStr': '周六', 'estimatedInfo': '', 'predictWeight': '', 'addressId': '2078078256336990209', 'lat': '', 'lon': ''}
+响应: {'code': 60031, 'msg': '订单校验不允许下单', 'data': None}

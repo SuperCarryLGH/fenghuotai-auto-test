@@ -1,8 +1,8 @@
 create:
-  name: "芋艿"
-  experience: 100000
-  level: 4
+  name: "autotest"
+  experience: 1
+  level: 32
   discountPercent: 98
   icon:
   backgroundUrl:
-  status: 1
+  status: 0

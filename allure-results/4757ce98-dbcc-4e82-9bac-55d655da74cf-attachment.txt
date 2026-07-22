@@ -1,0 +1,5 @@
+
+[DEBUG] 登录响应: {'code': 0, 'msg': '', 'data': {'userId': '2067497489412255745', 'accessToken': 'e54bd130d6ec4aab885fbd55d6531347', 'refreshToken': '1ec2aabbf1884646b760cb8b918bad05', 'expiresTime': 1784359617514, 'openid': None}}
+e54bd130d6ec4aab885fbd55d6531347
+请求: {'platform': 'web', 'provider': '', 'channel': '', 'scene': '', 'pics': '', 'promoterId': '', 'promotionPlatform': '', 'promotionChannel': '', 'promotionStationId': '', 'activityId': '12', 'appointmentDate': '2026-07-18', 'appointmentTimePeriod': '08:00-09:00', 'appointmentWeekStr': '周六', 'estimatedInfo': '', 'predictWeight': '', 'addressId': '2078078977581117442', 'lat': '', 'lon': ''}
+响应: {'code': 0, 'msg': '', 'data': {'id': '2078079002352676865', 'orderNo': 'PO202607171926571', 'status': 10, 'subStatus': 11, 'userPhone': '****0015'}}
