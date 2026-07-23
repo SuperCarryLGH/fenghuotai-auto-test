@@ -23,14 +23,14 @@ class TestMiniOrderSubmit:
         url = f"{APP_URL}/app-api/recycle/order/v2/mini-order-submit"
         payload = {
             "platform": "web",
-            "provider": "sfmini",
+            "provider": "szd",
             "bizMode": "WeightClothes",
             "userName": "QA",
             "userPhone": mobile,
             "addressId": "2079049311432077313",
             "appointmentDate": time.strftime("%Y-%m-%d", time.localtime(time.time() + 86400)),
             "appointmentTimePeriod": "17:00-18:00",
-            "appointmentWeekStr": "周三",
+            "appointmentWeekStr": "周五",
             "estimatedInfo": "5~10kg",
             "lat": "34.79678190031236",
             "lon": "113.68181482834622",

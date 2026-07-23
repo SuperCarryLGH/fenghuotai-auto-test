@@ -10,6 +10,7 @@ class TestRiskRuleDetailUpdate:
         url = f"{ADMIN_URL}/admin-api/risk/rule-detail/update"
         body = {
             "id": autotest_rule_detail_id,
+            "ruleId": 1,
             "minCount": 3,
             "maxCount": 5,
             "actionType": 10,

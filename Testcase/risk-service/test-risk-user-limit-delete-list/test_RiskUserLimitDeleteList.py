@@ -8,7 +8,5 @@ class TestRiskUserLimitDeleteList:
     @pytest.mark.smoke
     def test_RiskUserLimitDeleteList(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/risk/user-limit/delete-list"
-        params = {"ids":1666666666}
+        params = {"ids": [1666666666]}
         ok(api_session.delete(url, params=params, headers=auth_headers))
-
-        assert r["code"] == 0

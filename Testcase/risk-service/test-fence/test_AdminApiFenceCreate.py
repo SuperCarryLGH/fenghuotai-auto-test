@@ -11,10 +11,11 @@ class Test_AdminApiFenceCreate:
 
     @pytest.mark.smoke
     def test_AdminApiFenceCreate(self, api_session, auth_headers, ok):
-        url = f"{ADMIN_URL}/admin-api/fence/create"
+        url = f"{ADMIN_URL}/admin-api/risk/electronic-fence/create"
         suffix = str(int(time.time()))
         body = {
-            "name": f"测试围栏_{suffix}",
+            "fenceName": f"测试围栏_{suffix}",
+            "fenceLevel": 1,
             "status": common['common']['status']['enabled'],
         }
         ok(api_session.post(url, json=body, headers=auth_headers))

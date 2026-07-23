@@ -10,6 +10,6 @@ class Test_AdminApiFenceGet:
 
     @pytest.mark.smoke
     def test_AdminApiFenceGet(self, api_session, auth_headers, ok):
-        url = f"{ADMIN_URL}/admin-api/fence/get"
+        url = f"{ADMIN_URL}/admin-api/risk/electronic-fence/get"
         params = {"id": common['common']['id']['valid']}
         ok(api_session.get(url, params=params, headers=auth_headers))

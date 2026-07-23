@@ -10,18 +10,13 @@ class TestMemberExperienceRecordPage:
         """
         运行: TEST_ENV=dev USE_MOCK=false pytest ... -v -s
         """
-        url = f"{ADMIN_URL}/admin-api/member/level-record/page"
+        url = f"{ADMIN_URL}/admin-api/member/experience-record/page"
         params = {
-            "PageNo": "1",
-            "PageSize": "200",
-            "userId": "",
-            "levelId": "",
-            "creatTime": ""
+            "pageNo": 1,
+            "pageSize": 200,
             }
 
         ok(api_session.get(url, headers=auth_headers,params=params))
-        #assert r["data"] == {}
-        print(r)
 
 
 

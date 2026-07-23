@@ -10,6 +10,9 @@ class TestRiskUserLimitUpdate:
         url = f"{ADMIN_URL}/admin-api/risk/user-limit/update"
         body = {
             "id": autotest_user_limit_id,
+            "type": 2,
+            "targetType": 1,
+            "targetId": "2071418043802406914",
             "reason": "autotest_updated",
         }
         ok(api_session.put(url, json=body, headers=auth_headers))
