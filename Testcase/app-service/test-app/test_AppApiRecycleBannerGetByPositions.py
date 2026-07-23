@@ -1,24 +1,20 @@
+import time
 import pytest
-from config import ADMIN_URL
+from config import APP_URL
 from Common.loader import load_station, load_common
+from Common.login import Login
 station = load_station()
 common = load_common()
 
 class TestAppApiRecycleBannerGetByPositions:
     """用户 APP - 根据位置获取banner"""
 
-    def test_AppApiRecycleBannerGetByPositions(self, api_session,auth_headers):
-        """
-        运行: TEST_ENV=dev USE_MOCK=false pytest ... -v -s
-        """
-        url = f"{ADMIN_URL}/app-api/recycle/banner/get-by-positions"
+    def test_AppApiRecycleBannerGetByPositions(self, api_session, login_tool, ok):
+        token = login_tool.app_login()
+        headers = {**Login.SMS_LOGIN_HEADERS, "timestamp": str(int(time.time() * 1000)), "Authorization": f"Bearer {token}"}
+        url = f"{APP_URL}/app-api/recycle/banner/get-by-positions"
         params = {
-                    "position": 1,
+                    "positions": 1,
             }
 
-        resp = api_session.get(url, headers=auth_headers,params=params)
-        #assert resp.status_code == 200
-        r = resp.json()
-        #assert r["code"] == 0
-        #assert r["data"] == {}
-        print(r)
+        ok(api_session.get(url, headers=headers, params=params))

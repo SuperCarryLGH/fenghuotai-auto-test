@@ -59,6 +59,8 @@ APP_CONFIG = {
 
 APP_URL = APP_CONFIG[ENV]["base_url"]
 
+USE_REAL_SMS_CODE = os.getenv("USE_REAL_SMS_CODE", "false").lower() in ("1", "true", "yes")
+
 # ======================
 # 4. 数据库配置 (DB)
 # ======================

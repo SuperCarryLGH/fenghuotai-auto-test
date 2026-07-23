@@ -4,7 +4,6 @@ import warnings
 
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-
 warnings.filterwarnings("ignore", category=Warning, module="urllib3")
 
 # ===============================
