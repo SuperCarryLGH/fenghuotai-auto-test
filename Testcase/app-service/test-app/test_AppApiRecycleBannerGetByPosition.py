@@ -10,7 +10,7 @@ class TestAppApiRecycleBannerGetByPosition:
     """用户 APP - 根据位置获取banner"""
 
     @pytest.mark.smoke
-    def test_AppApiRecycleBannerGetByPosition(self, api_session, login_tool):
+    def test_AppApiRecycleBannerGetByPosition(self, api_session, login_tool, ok):
         """
         运行: TEST_ENV=dev USE_MOCK=false pytest ... -v -s
         """
@@ -21,9 +21,4 @@ class TestAppApiRecycleBannerGetByPosition:
                     "position": 1,
             }
 
-        resp = api_session.get(url, headers=headers,params=params)
-        #assert resp.status_code == 200
-        r = resp.json()
-        #assert r["code"] == 0
-        #assert r["data"] == {}
-        print(r)
+        ok(api_session.get(url, headers=headers,params=params))

@@ -22,7 +22,3 @@ class TestAppApiRecycleStationDetail:
             }
 
         ok(api_session.get(url, headers=headers, params=params))
-        r = resp.json()
-        assert r["code"] == 0
-        #assert r["data"] == {}
-        print(r)

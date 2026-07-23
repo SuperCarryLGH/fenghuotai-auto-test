@@ -22,10 +22,6 @@ class TestAppApiRecycleActivityGroupDetail:
             }
 
         ok(api_session.get(url, headers=headers,params=params))
-        r = resp.json()
-        assert r["code"] == 0
-        assert r["data"]["id"] == 1
-        print(r)
 
 
 

@@ -11,7 +11,7 @@ class TestAppApiRecycleStationList:
     """用户 APP - 根据类型查询站点列表（分页精简）"""
 
     @pytest.mark.smoke
-    def test_AppApiRecycleStationList(self, api_session, login_tool):
+    def test_AppApiRecycleStationList(self, api_session, login_tool, ok):
         """
         运行: TEST_ENV=dev USE_MOCK=false pytest ... -v -s
         """
@@ -24,9 +24,4 @@ class TestAppApiRecycleStationList:
             "pageSize": common['common']['page']['pageSize'],
             }
 
-        resp = api_session.get(url, headers=headers,params=params)
-        #assert resp.status_code == 200
-        r = resp.json()
-        #assert r["code"] == 0
-        #assert r["data"] == {}
-        print(r)
+        ok(api_session.get(url, headers=headers,params=params))
