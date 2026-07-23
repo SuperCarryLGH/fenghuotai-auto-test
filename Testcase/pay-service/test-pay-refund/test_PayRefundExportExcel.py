@@ -6,10 +6,12 @@ class TestPayRefundExportExcel:
     """导出退款订单 Excel"""
 
     @pytest.mark.smoke
-    def test_PayRefundExportExcel(self, api_session, auth_headers, ok):
+    def test_PayRefundExportExcel(self, api_session, auth_headers):
         url = f"{ADMIN_URL}/admin-api/pay/refund/export-excel"
         params = {
             "pageNo": 1,
             "pageSize": 10,
         }
-        ok(api_session.get(url, params=params, headers=auth_headers))
+        resp = api_session.get(url, params=params, headers=auth_headers)
+        assert resp.status_code == 200
+        assert len(resp.content) > 0

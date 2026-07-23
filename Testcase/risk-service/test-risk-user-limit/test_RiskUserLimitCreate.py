@@ -9,10 +9,10 @@ class TestRiskUserLimitCreate:
     def test_RiskUserLimitCreate(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/risk/user-limit/create"
         body = {
-              "id": 16666666666,
+              "userId": 2071418043802406914,
               "type": 2,
               "targetType": 1,
-              "targetId": "16666666666",
+              "targetId": "2071418043802406914",
               "reason": "违规操作",
               "periodType": 0,
               "effectiveTime": "",

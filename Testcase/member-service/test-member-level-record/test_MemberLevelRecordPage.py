@@ -12,16 +12,11 @@ class TestMemberLevelRecordPage:
         """
         url = f"{ADMIN_URL}/admin-api/member/level-record/page"
         params = {
-            "PageNo": "1",
-            "PageSize": "200",
-            "userId": "",
-            "levelId": "",
-            "creatTime": ""
+            "pageNo": 1,
+            "pageSize": 200,
             }
 
         ok(api_session.get(url, headers=auth_headers,params=params))
-        #assert r["data"] == {}
-        print(r)
 
 
 

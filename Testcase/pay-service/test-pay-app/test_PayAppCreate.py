@@ -1,3 +1,4 @@
+import time
 import pytest
 from config import ADMIN_URL
 
@@ -8,9 +9,10 @@ class TestPayAppCreate:
     @pytest.mark.smoke
     def test_PayAppCreate(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/pay/app/create"
+        suffix = str(int(time.time()))
         body = {
-              "appKey": "autotest",
-              "name": "autotest",
+              "appKey": f"autotest_{suffix}",
+              "name": f"autotest_{suffix}",
               "status": 1,
               "remark": "autotest",
               "orderNotifyUrl": "http://autotest/pay-callback",
