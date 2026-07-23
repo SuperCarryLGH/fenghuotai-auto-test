@@ -10,6 +10,3 @@ class TestSystemOperateAreaCreate:
         url = f"{ADMIN_URL}/admin-api/system/operate-area/create"
         body = {"name": f"autotest_194199", "status": 0}
         ok(api_session.post(url, json=body, headers=auth_headers))
-        r = resp.json()
-        assert r["code"] == 0
-        print(r)

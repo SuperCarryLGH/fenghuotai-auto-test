@@ -13,4 +13,3 @@ class Test_AdminApiRecycleAdminOrderUpdateStatus:
         url = f"{ADMIN_URL}/admin-api/recycle/admin-order/update-status"
         body = {"id": common['common']['id']['valid'], "status": common['common']['status']['enabled']}
         ok(api_session.put(url, json=body, headers=auth_headers))
-        print(resp.json())

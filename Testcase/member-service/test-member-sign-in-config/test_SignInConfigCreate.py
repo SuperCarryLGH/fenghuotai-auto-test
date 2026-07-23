@@ -11,6 +11,3 @@ class TestSignInConfigCreate:
         url = f"{ADMIN_URL}/admin-api/member/sign-in/config/create"
         body = {"day": int(time.time()) % 365 + 1, "point": 10, "experience": 10, "status": 0}
         ok(api_session.post(url, json=body, headers=auth_headers))
-        r = resp.json()
-        assert r["code"] == 0
-        print(r)

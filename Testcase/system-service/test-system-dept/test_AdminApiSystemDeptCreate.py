@@ -20,6 +20,5 @@ class Test_AdminApiSystemDeptCreate:
             }
 
         ok(api_session.post(url, headers=auth_headers,json=params))
-        data = resp.json()
         #assert data["code"] == 0
         print(data)

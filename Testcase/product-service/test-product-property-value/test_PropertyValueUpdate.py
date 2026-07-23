@@ -10,6 +10,3 @@ class TestPropertyValueUpdate:
         url = f"{ADMIN_URL}/admin-api/product/property/value/update"
         body = {"id": autotest_value_id, "propertyId": 1, "name": "autotest_value_updated", "remark": "测试"}
         ok(api_session.put(url, json=body, headers=auth_headers))
-        r = resp.json()
-        assert r["code"] == 0
-        print(r)

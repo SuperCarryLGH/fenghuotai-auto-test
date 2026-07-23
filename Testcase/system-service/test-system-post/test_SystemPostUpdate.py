@@ -10,6 +10,3 @@ class TestSystemPostUpdate:
         url = f"{ADMIN_URL}/admin-api/system/post/update"
         body = {"id": autotest_post_id, "name": "autotest_updated", "code": "autotest_code", "sort": 0, "status": 0}
         ok(api_session.put(url, json=body, headers=auth_headers))
-        r = resp.json()
-        assert r["code"] == 0
-        print(r)

@@ -14,4 +14,3 @@ class Test_AdminApiRecycleAdminOrderDeleteList:
         url = f"{ADMIN_URL}/admin-api/recycle/admin-order/delete-list"
         params = {"ids": [common['common']['id']['invalid']]}
         ok(api_session.delete(url, params=params, headers=auth_headers))
-        print(resp.json())

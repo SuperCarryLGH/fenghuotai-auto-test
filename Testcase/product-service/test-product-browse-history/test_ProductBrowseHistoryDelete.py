@@ -15,6 +15,3 @@ class TestProductBrowseHistoryDelete:
         url = f"{APP_URL}/app-api/product/browse-history/delete"
         body = {"spuIds": [1]}
         ok(api_session.delete(url, json=body, headers=headers))
-        r = resp.json()
-        assert r["code"] == 0
-        print(r)

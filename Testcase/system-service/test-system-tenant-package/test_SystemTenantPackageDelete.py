@@ -10,6 +10,3 @@ class TestSystemTenantPackageDelete:
         url = f"{ADMIN_URL}/admin-api/system/tenant-package/delete"
         params = {"id": autotest_tenant_package_id}
         ok(api_session.delete(url, params=params, headers=auth_headers))
-        r = resp.json()
-        assert r["code"] == 0
-        print(r)

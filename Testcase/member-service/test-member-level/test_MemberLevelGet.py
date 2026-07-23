@@ -10,6 +10,3 @@ class TestMemberLevelGet:
         url = f"{ADMIN_URL}/admin-api/member/level/get"
         params = {"id": autotest_level_id}  # 来自 conftest fixture
         ok(api_session.get(url, params=params, headers=auth_headers))
-        r = resp.json()
-        assert r["code"] == 0
-        print(r)

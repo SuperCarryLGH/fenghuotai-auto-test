@@ -22,6 +22,5 @@ class Test_AdminApiSystemMenuCreate:
             }
 
         ok(api_session.post(url, headers=auth_headers,json=params))
-        data = resp.json()
         assert data["msg"] == "父菜单的类型必须是目录或者菜单"
         print(data)

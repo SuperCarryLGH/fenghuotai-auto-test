@@ -17,6 +17,3 @@ class TestAppApiMemberLevelList:
             }
 
         ok(api_session.get(url, params=params, headers=headers))
-        data = resp.json()
-        assert data["code"] == 0
-        print(data)

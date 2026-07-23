@@ -14,4 +14,3 @@ class Test_AdminApiRecycleAdminOrderGet:
         url = f"{ADMIN_URL}/admin-api/recycle/admin-order/get"
         params = {"id": common['common']['id']['valid']}
         ok(api_session.get(url, params=params, headers=auth_headers))
-        print(resp.json())

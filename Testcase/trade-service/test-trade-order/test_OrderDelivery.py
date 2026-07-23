@@ -15,6 +15,3 @@ class TestOrderDelivery:
             "logisticsNo": f"SF{int(time.time())}",
         }
         ok(api_session.put(url, json=body, headers=auth_headers))
-        r = resp.json()
-        assert r["code"] == 0
-        print(r)

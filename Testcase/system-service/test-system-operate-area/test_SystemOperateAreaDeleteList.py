@@ -10,6 +10,3 @@ class TestSystemOperateAreaDeleteList:
         url = f"{ADMIN_URL}/admin-api/system/operate-area/delete-list"
         params = {"ids": str(autotest_operate_area_id)}  # 来自 conftest fixture
         ok(api_session.delete(url, params=params, headers=auth_headers))
-        r = resp.json()
-        assert r["code"] == 0
-        print(r)

@@ -10,7 +10,5 @@ class TestRiskUserLimitDeleteList:
         url = f"{ADMIN_URL}/admin-api/risk/user-limit/delete-list"
         params = {"ids":1666666666}
         ok(api_session.delete(url, params=params, headers=auth_headers))
-        r = resp.json()
-        print(r)
 
         assert r["code"] == 0

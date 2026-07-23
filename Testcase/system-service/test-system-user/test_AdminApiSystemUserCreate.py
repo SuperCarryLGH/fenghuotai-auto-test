@@ -20,5 +20,3 @@ class TestCreateUser:
         }
 
         ok(api_session.post(url, json=payload, headers=auth_headers))
-        data = resp.json()
-        assert data["code"] == 0

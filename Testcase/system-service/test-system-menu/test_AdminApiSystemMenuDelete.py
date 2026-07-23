@@ -17,6 +17,5 @@ class Test_AdminApiSystemMenuDelete:
             }
 
         ok(api_session.delete(url, headers=auth_headers,params=params))
-        data = resp.json()
         #assert data["code"] == 0
         print(data)

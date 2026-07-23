@@ -11,6 +11,3 @@ class TestSystemTenantPackageDeleteList:
         # ⚠️ 敏感操作 — 参数已补全，确认后再执行
         params = {"ids": [autotest_tenant_package_id]}
         ok(api_session.delete(url, params=params, headers=auth_headers))
-        r = resp.json()
-        assert r["code"] == 0
-        print(r)

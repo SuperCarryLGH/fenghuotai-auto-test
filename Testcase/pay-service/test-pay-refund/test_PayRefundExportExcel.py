@@ -13,4 +13,3 @@ class TestPayRefundExportExcel:
             "pageSize": 10,
         }
         ok(api_session.get(url, params=params, headers=auth_headers))
-        print(f"下载成功, 文件大小={len(resp.content)}bytes")

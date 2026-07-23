@@ -17,6 +17,3 @@ class Test_AdminApiSystemMenuList:
             "pageSize": 10,
         }
         ok(api_session.get(url, params=params, headers=auth_headers))
-        data = resp.json()
-        assert data["code"] == 0
-        print(data)

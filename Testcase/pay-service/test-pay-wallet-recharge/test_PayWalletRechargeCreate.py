@@ -16,7 +16,4 @@ class TestPayWalletRechargeCreate:
               #"validPayPriceAndPackageId": True
             }
         ok(api_session.post(url, json=body, headers={"Authorization": f"Bearer {station_token}"}))
-        r = resp.json()
-        print(r)
-        assert r["code"] == 0
 

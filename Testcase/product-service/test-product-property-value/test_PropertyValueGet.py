@@ -10,6 +10,3 @@ class TestPropertyValueGet:
         url = f"{ADMIN_URL}/admin-api/product/property/value/get"
         params = {"id": autotest_value_id}  # 来自 conftest fixture
         ok(api_session.get(url, params=params, headers=auth_headers))
-        r = resp.json()
-        assert r["code"] == 0
-        print(r)

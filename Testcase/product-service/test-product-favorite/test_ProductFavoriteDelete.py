@@ -15,6 +15,3 @@ class TestProductFavoriteDelete:
         url = f"{APP_URL}/app-api/product/favorite/delete"
         body = {"spuId": 633}
         ok(api_session.delete(url, json=body, headers=headers))
-        r = resp.json()
-        assert r["code"] == 0
-        print(r)

@@ -17,6 +17,3 @@ class Test_AdminApiSystemDeptDelete:
             }
 
         ok(api_session.delete(url, headers=auth_headers,params=params))
-        data = resp.json()
-        assert data["code"] == 1002004002
-        print(data)

@@ -13,6 +13,3 @@ class TestMemberUserUpdate:
         url = f"{APP_URL}/app-api/member/user/update"
         body = {"id": 2074701659722608641, "nickname": f"更新用户_194200", "status": 0}
         ok(api_session.put(url, json=body, headers=headers))
-        r = resp.json()
-        assert r["code"] == 0
-        print(r)

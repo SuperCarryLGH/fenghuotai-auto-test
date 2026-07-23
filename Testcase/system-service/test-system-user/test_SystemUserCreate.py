@@ -12,6 +12,3 @@ class TestSystemUserCreate:
         suffix = str(int(time.time()))[-8:]
         body = {"username": f"test{suffix}", "password": "123456", "nickname": f"用户{suffix}", "mobile": f"156{suffix}", "sex": 1, "status": 0}
         ok(api_session.post(url, json=body, headers=auth_headers))
-        r = resp.json()
-        assert r["code"] == 0
-        print(r)

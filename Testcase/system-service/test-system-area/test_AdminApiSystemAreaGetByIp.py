@@ -18,7 +18,5 @@ class Test_AdminApiSystemAreaGetByIp:
             }
 
         ok(api_session.get(url, headers=auth_headers,params=params))
-        r = resp.json()
-        assert r["code"] == 0
         assert r["data"] == "河南省 郑州市"
         print(r)
