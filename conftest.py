@@ -94,7 +94,7 @@ def auth_headers(admin_token):
     提供一个带鉴权的 Header（后台管理端）
     这是最常用的 Fixture
     """
-    return {"Authorization": f"Bearer {admin_token}"}
+    return {"Authorization": f"Bearer {admin_token}", "tenant-id": "1", "appId": "admin", "sign": "admin"}
 
 
 @pytest.fixture(scope="function")

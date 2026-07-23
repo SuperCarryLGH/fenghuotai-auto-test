@@ -13,4 +13,4 @@ class Test_AdminApiRecycleStationListOperationCenter:
     def test_AdminApiRecycleStationListOperationCenter(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/recycle/station/listOperationCenter"
         params = {"pageNo": common['common']['page']['pageNo'], "pageSize": common['common']['page']['pageSize']}
-        ok(api_session.post(url, json=params, headers=auth_headers))
+        ok(api_session.get(url, params=params, headers=auth_headers))

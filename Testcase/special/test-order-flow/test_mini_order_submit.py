@@ -27,7 +27,7 @@ class TestMiniOrderSubmit:
             "bizMode": "WeightClothes",
             "userName": "QA",
             "userPhone": mobile,
-            "addressId": "2079049311432077313",
+            "addressId": "2072955495193686018",
             "appointmentDate": time.strftime("%Y-%m-%d", time.localtime(time.time() + 86400)),
             "appointmentTimePeriod": "17:00-18:00",
             "appointmentWeekStr": "周五",
