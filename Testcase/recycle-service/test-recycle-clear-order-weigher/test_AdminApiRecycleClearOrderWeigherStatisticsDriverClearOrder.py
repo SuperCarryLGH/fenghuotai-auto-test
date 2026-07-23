@@ -12,7 +12,7 @@ class Test_AdminApiRecycleClearOrderWeigherStatisticsDriverClearOrder:
 
     @pytest.mark.smoke
     def test_AdminApiRecycleClearOrderWeigherStatisticsDriverClearOrder(self, api_session, auth_headers):
-        url = f"{ADMIN_URL}/admin-api/recycle/clear-order/weigher/statistics-driver-clear-order"
+        url = f"{ADMIN_URL}/admin-api/recycle/app-clearOrder-weigher/statistics-driver-clear-order"
         params = {"id": weigher_data['weigher']['order_id']}
         resp = api_session.get(url, params=params, headers=auth_headers)
         assert resp.status_code == 200

@@ -12,6 +12,6 @@ class Test_AdminApiRecycleStationClueWorkbench:
 
     @pytest.mark.smoke
     def test_AdminApiRecycleStationClueWorkbench(self, api_session, auth_headers):
-        url = f"{ADMIN_URL}/admin-api/recycle/station/clue/workbench"
+        url = f"{ADMIN_URL}/admin-api/recycle/station-clue/workbench"
         resp = api_session.get(url, headers=auth_headers)
         assert resp.status_code == 200

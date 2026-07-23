@@ -12,7 +12,7 @@ class Test_AdminApiRecycleCooperationUpdate:
 
     @pytest.mark.smoke
     def test_AdminApiRecycleCooperationUpdate(self, api_session, auth_headers):
-        url = f"{ADMIN_URL}/admin-api/system/cooperation/update"
+        url = f"{ADMIN_URL}/admin-api/recycle/station/cooperation/update"
         suffix = str(int(time.time()))
         body = {"id": common['common']['id']['valid'], "name": f"{module_data['cooperation']['update_name']}_{suffix}", "status": common['common']['status']['enabled']}
         resp = api_session.put(url, json=body, headers=auth_headers)

@@ -31,10 +31,10 @@ class TestBatchCreateAddress:
                 assert resp_data["code"] == 0, f"code={resp_data['code']}, msg={resp_data.get('msg', '')}"
                 address_id = resp_data["data"]
                 new_ids[i] = address_id
-                print(f"✅ {desc} → {address_id}")
+                print(f"✅ {desc} -> {address_id}")
             except Exception as e:
                 failures.append((desc, str(e)))
-                print(f"❌ {desc} → {e}")
+                print(f"❌ {desc} -> {e}")
         yaml_path = os.path.join(DATA_DIR, "batch_users.yaml")
         with open(yaml_path, encoding="utf-8") as f:
             text = f.read()

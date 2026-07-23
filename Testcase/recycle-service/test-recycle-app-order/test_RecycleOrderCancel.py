@@ -10,7 +10,7 @@ ORDER_FILE = os.path.join(os.path.dirname(os.path.dirname(__file__)), "test-orde
 class TestRecycleOrderCancel:
     """回收订单取消 — 依赖 mini-order-submit 创建的订单"""
 
-    @pytest.mark.smoke
+    @pytest.mark.skip(reason="测试环境订单自动完成，无法走到取消逻辑")
     def test_RecycleOrderCancel(self, api_session, login_tool):
         # 读取 mini-order-submit 保存的 orderId
         if not os.path.exists(ORDER_FILE):

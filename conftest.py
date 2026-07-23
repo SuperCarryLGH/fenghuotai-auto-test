@@ -2,6 +2,9 @@ import sys
 import os
 import warnings
 
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
 warnings.filterwarnings("ignore", category=Warning, module="urllib3")
 
 # ===============================
@@ -45,6 +48,7 @@ def api_session():
     作用域为整个测试会话，自动携带 Cookie/Header
     """
     session = requests.Session()
+    session.verify = False
     session.headers.update({
         "Content-Type": "application/json",
         "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "

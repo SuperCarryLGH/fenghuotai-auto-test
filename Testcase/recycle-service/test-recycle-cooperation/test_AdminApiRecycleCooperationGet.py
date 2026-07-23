@@ -11,7 +11,7 @@ class Test_AdminApiRecycleCooperationGet:
 
     @pytest.mark.smoke
     def test_AdminApiRecycleCooperationGet(self, api_session, auth_headers):
-        url = f"{ADMIN_URL}/admin-api/system/cooperation/get"
+        url = f"{ADMIN_URL}/admin-api/recycle/station/cooperation/get"
         params = {"id": common['common']['id']['valid']}
         resp = api_session.get(url, params=params, headers=auth_headers)
         assert resp.status_code == 200

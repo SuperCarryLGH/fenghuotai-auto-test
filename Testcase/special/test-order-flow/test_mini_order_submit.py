@@ -23,7 +23,7 @@ class TestMiniOrderSubmit:
         url = f"{APP_URL}/app-api/recycle/order/v2/mini-order-submit"
         payload = {
             "platform": "web",
-            "provider": "",
+            "provider": "sfmini",
             "bizMode": "WeightClothes",
             "userName": "QA",
             "userPhone": mobile,
