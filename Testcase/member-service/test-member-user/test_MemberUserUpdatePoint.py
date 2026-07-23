@@ -10,6 +10,3 @@ class TestMemberUserUpdatePoint:
         url = f"{ADMIN_URL}/admin-api/member/user/update-point"
         body = {"id": 2071418043802406914, "point": 100}
         ok(api_session.put(url, json=body, headers=auth_headers))
-        r = resp.json()
-        assert r["code"] == 0
-        print(r)

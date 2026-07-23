@@ -16,8 +16,6 @@ class TestMemberLevelRecordGet:
             }
 
         ok(api_session.get(url, headers=auth_headers,params=params))
-        r = resp.json()
-        assert r["code"] == 0
         #assert r["data"] == {}
         print(r)
 

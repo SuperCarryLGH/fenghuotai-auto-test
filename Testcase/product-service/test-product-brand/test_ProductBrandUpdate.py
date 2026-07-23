@@ -10,6 +10,3 @@ class TestProductBrandUpdate:
         url = f"{ADMIN_URL}/admin-api/product/brand/update"
         body = {"id": autotest_brand_id, "name": "autotest_brand_updated", "picUrl": "", "sort": 0, "status": 0}
         ok(api_session.put(url, json=body, headers=auth_headers))
-        r = resp.json()
-        assert r["code"] == 0
-        print(r)

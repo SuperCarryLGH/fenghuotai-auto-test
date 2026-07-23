@@ -10,6 +10,3 @@ class TestSystemMailAccountUpdate:
         url = f"{ADMIN_URL}/admin-api/system/mail-account/update"
         body = {"id": autotest_mail_account_id, "mail": "autotest@autotest.com", "username": "autotest_updated", "password": "autotest123", "host": "smtp.autotest.com", "port": 465, "sslEnable": False, "starttlsEnable": False}
         ok(api_session.put(url, json=body, headers=auth_headers))
-        r = resp.json()
-        assert r["code"] == 0
-        print(r)

@@ -15,6 +15,3 @@ class TestProductBrowseHistoryClean:
         url = f"{APP_URL}/app-api/product/browse-history/clean"
         params = {"id": 1}  # TODO: 补充查询参数
         ok(api_session.delete(url, params=params, headers=headers))
-        r = resp.json()
-        assert r["code"] == 0
-        print(r)

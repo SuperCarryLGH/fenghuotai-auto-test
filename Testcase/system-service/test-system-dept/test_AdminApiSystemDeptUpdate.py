@@ -19,6 +19,5 @@ class Test_AdminApiSystemDeptUpdate:
             }
 
         ok(api_session.put(url, headers=auth_headers,json=params))
-        data = resp.json()
         assert data["msg"] == "已经存在该名字的部门"
         print(data)

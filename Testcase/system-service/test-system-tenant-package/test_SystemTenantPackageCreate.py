@@ -12,6 +12,3 @@ class TestSystemTenantPackageCreate:
         import time
         body = {"name": f"套餐_{int(time.time())}", "menuIds": [1], "status": 0}
         ok(api_session.post(url, json=body, headers=auth_headers))
-        r = resp.json()
-        assert r["code"] == 0
-        print(r)

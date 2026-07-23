@@ -10,6 +10,3 @@ class TestProductSpuGetCount:
         url = f"{ADMIN_URL}/admin-api/product/spu/get-count"
         params = {"id": 1}  # TODO: 补充查询参数
         ok(api_session.get(url, params=params, headers=auth_headers))
-        r = resp.json()
-        assert r["code"] == 0
-        print(r)

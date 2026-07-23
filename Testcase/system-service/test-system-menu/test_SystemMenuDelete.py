@@ -10,6 +10,3 @@ class TestSystemMenuDelete:
         url = f"{ADMIN_URL}/admin-api/system/menu/delete"
         params = {"id": autotest_menu_id}
         ok(api_session.delete(url, params=params, headers=auth_headers))
-        r = resp.json()
-        assert r["code"] == 0
-        print(r)

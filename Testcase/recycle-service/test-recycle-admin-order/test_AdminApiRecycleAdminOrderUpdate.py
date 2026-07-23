@@ -19,4 +19,3 @@ class Test_AdminApiRecycleAdminOrderUpdate:
             "addressId": common['common']['id']['addressId']
         }
         ok(api_session.put(url, json=body, headers=auth_headers))
-        print(resp.json())

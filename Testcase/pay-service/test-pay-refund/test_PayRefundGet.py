@@ -10,6 +10,3 @@ class TestPayRefundGet:
         url = f"{ADMIN_URL}/admin-api/pay/refund/get"
         params = {"id": 15617637160}
         ok(api_session.get(url, params=params, headers=auth_headers))
-        r = resp.json()
-        assert r["code"] == 0
-        print(r)

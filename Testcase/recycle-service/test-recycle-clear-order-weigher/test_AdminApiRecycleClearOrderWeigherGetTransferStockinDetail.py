@@ -16,4 +16,3 @@ class Test_AdminApiRecycleClearOrderWeigherGetTransferStockinDetail:
             "id": 1
         }
         ok(api_session.get(url, params=params, headers=auth_headers))
-        print(r)

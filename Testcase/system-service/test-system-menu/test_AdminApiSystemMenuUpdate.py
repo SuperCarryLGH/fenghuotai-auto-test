@@ -21,6 +21,5 @@ class Test_AdminApiSystemMenuUpdate:
             }
 
         ok(api_session.put(url, headers=auth_headers,json=params))
-        data = resp.json()
         assert data["msg"] == "请求参数不正确:父菜单 ID 不能为空"
         print(data)

@@ -10,6 +10,3 @@ class TestUserProfileGet:
         url = f"{ADMIN_URL}/admin-api/system/user/profile/get"
         params = {"id": 1}  # TODO: 替换为实际存在的 ID
         ok(api_session.get(url, params=params, headers=auth_headers))
-        r = resp.json()
-        assert r["code"] == 0
-        print(r)

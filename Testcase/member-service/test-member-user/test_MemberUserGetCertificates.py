@@ -13,6 +13,3 @@ class TestMemberUserGetCertificates:
         url = f"{APP_URL}/app-api/member/user/get-certificates"
         params = {"id": 1}  # TODO: 补充查询参数
         ok(api_session.get(url, params=params, headers=headers))
-        r = resp.json()
-        assert r["code"] == 0
-        print(r)

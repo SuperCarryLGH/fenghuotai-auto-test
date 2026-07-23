@@ -11,6 +11,3 @@ class TestSystemNotifyTemplateCreate:
         import time
         body = {"name": f"通知模板_{int(time.time())}", "code": f"NTF_{int(time.time())}", "content": "测试内容", "type": 1, "nickname": "autotest", "status": 0}
         ok(api_session.post(url, json=body, headers=auth_headers))
-        r = resp.json()
-        assert r["code"] == 0
-        print(r)

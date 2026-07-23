@@ -13,6 +13,3 @@ class TestPayRechargePage:
             # TODO: 核对参数后取消下方注释
         }
         ok(api_session.get(url, json=body, headers=auth_headers))
-        r = resp.json()
-        assert r["code"] == 0
-        print(r)

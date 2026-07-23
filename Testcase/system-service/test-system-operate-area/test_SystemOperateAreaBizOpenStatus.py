@@ -10,6 +10,3 @@ class TestSystemOperateAreaBizOpenStatus:
         url = f"{ADMIN_URL}/admin-api/system/operate-area/biz-open-status"
         params = {"ids": [autotest_operate_area_id], "status": 1}
         ok(api_session.put(url, params=params, headers=auth_headers))
-        r = resp.json()
-        assert r["code"] == 0
-        print(r)

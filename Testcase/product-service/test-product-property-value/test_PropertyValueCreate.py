@@ -10,6 +10,3 @@ class TestPropertyValueCreate:
         url = f"{ADMIN_URL}/admin-api/product/property/value/create"
         body = {"propertyId": 1, "name": f"商品_194199", "remark": "测试"}
         ok(api_session.post(url, json=body, headers=auth_headers))
-        r = resp.json()
-        assert r["code"] == 0
-        print(r)

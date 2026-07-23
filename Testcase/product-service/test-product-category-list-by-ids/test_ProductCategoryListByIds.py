@@ -15,6 +15,3 @@ class TestProductCategoryListByIds:
         url = f"{APP_URL}/app-api/product/category/list-by-ids"
         params = {"ids": [48]}
         ok(api_session.get(url, params=params, headers=headers))
-        r = resp.json()
-        assert r["code"] == 0
-        print(r)

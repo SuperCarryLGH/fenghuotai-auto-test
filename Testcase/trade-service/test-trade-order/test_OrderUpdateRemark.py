@@ -13,6 +13,3 @@ class TestOrderUpdateRemark:
             "remark": "测试备注",
         }
         ok(api_session.put(url, json=body, headers=auth_headers))
-        r = resp.json()
-        assert r["code"] == 0
-        print(r)

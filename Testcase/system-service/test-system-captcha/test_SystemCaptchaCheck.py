@@ -10,6 +10,5 @@ class TestSystemCaptchaCheck:
         url = f"{ADMIN_URL}/admin-api/system/captcha/check"
         body = {}  # TODO: 补充参数
         ok(api_session.post(url, json=body, headers=auth_headers))
-        r = resp.json()
         #assert r["code"] == 0
         print(r)

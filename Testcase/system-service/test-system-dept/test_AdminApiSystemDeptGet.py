@@ -17,6 +17,3 @@ class Test_AdminApiSystemDeptGet:
             }
 
         ok(api_session.get(url, headers=auth_headers,params=params))
-        data = resp.json()
-        assert data["code"] == 0
-        print(data)

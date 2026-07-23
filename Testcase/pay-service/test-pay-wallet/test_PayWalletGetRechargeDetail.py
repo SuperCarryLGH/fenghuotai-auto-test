@@ -10,6 +10,3 @@ class TestPayWalletGetRechargeDetail:
         url = f"{ADMIN_URL}/admin-api/pay/wallet/get-recharge-detail"
         params = {"rechargeId": 2079806408323100674}
         ok(api_session.get(url, params=params, headers=auth_headers))
-        r = resp.json()
-        assert r["code"] == 0
-        print(r)

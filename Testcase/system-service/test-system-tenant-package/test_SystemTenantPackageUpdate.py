@@ -11,6 +11,3 @@ class TestSystemTenantPackageUpdate:
         # ⚠️ 敏感操作 — 参数已补全，确认后再执行
         body = {"id": autotest_tenant_package_id, "name": "autotest_updated", "menuIds": [1], "status": 0}
         ok(api_session.put(url, json=body, headers=auth_headers))
-        r = resp.json()
-        assert r["code"] == 0
-        print(r)

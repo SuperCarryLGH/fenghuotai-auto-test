@@ -17,4 +17,3 @@ class Test_AdminApiRecycleAdminOrderPage:
             "pageSize": common['common']['page']['pageSize'],
         }
         ok(api_session.get(url, params=params, headers=auth_headers))
-        print(resp.json())

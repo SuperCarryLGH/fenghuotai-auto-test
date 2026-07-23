@@ -13,6 +13,3 @@ class TestMemberUserBindTransferAccount:
         url = f"{APP_URL}/app-api/member/user/bind-transfer-account"
         body = {"id": 1}  # TODO: 替换为实际 ID
         ok(api_session.post(url, json=body, headers=headers))
-        r = resp.json()
-        assert r["code"] == 0
-        print(r)

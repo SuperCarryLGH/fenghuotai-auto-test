@@ -10,6 +10,3 @@ class TestPayWalletUpdateBalance:
         url = f"{ADMIN_URL}/admin-api/pay/wallet/update-balance"
         body = {"userId": 15617637160, "balance": 0}  # 敏感操作,确认后执行
         ok(api_session.put(url, json=body, headers=auth_headers))
-        r = resp.json()
-        assert r["code"] == 0
-        print(r)

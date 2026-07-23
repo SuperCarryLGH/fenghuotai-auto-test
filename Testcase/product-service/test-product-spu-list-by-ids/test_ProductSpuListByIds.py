@@ -15,6 +15,3 @@ class TestProductSpuListByIds:
         url = f"{APP_URL}/app-api/product/spu/list-by-ids"
         params = {"ids": ["2076547056304779266"]}
         ok(api_session.get(url, params=params, headers=headers))
-        r = resp.json()
-        assert r["code"] == 0
-        print(r)

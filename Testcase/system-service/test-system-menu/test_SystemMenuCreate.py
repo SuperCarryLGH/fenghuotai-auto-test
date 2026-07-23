@@ -12,6 +12,3 @@ class TestSystemMenuCreate:
         import time
         body = {"name": f"测试菜单_{int(time.time())}", "parentId": 100, "type": 1, "sort": 0, "status": 0}
         ok(api_session.post(url, json=body, headers=auth_headers))
-        r = resp.json()
-        assert r["code"] == 0
-        print(r)

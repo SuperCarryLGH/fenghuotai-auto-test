@@ -11,6 +11,3 @@ class TestMemberTagUpdate:
         url = f"{ADMIN_URL}/admin-api/member/tag/update"
         body = {"id": autotest_tag_id, "name": f"autotest_upd_{str(int(time.time()))[-6:]}", "status": 0}
         ok(api_session.put(url, json=body, headers=auth_headers))
-        r = resp.json()
-        assert r["code"] == 0
-        print(r)

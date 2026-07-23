@@ -10,6 +10,3 @@ class TestSystemPostDeleteList:
         url = f"{ADMIN_URL}/admin-api/system/post/delete-list"
         params = {"ids": str(autotest_post_id)}  # 来自 conftest fixture
         ok(api_session.delete(url, params=params, headers=auth_headers))
-        r = resp.json()
-        assert r["code"] == 0
-        print(r)

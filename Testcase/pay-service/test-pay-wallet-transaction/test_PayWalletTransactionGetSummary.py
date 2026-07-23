@@ -14,6 +14,3 @@ class TestPayWalletTransactionGetSummary:
         token = login_tool.app_login()
         headers = {**Login.SMS_LOGIN_HEADERS, "timestamp": str(int(time.time() * 1000)), "Authorization": f"Bearer {token}"}
         ok(api_session.get(url, params=params, headers=headers))
-        r = resp.json()
-        assert r["code"] == 0
-        print(r)
