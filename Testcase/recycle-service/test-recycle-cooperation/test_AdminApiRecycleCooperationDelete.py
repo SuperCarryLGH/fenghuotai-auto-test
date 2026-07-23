@@ -11,7 +11,7 @@ class Test_AdminApiRecycleCooperationDelete:
 
     @pytest.mark.smoke
     def test_AdminApiRecycleCooperationDelete(self, api_session, auth_headers):
-        url = f"{ADMIN_URL}/admin-api/system/cooperation/delete"
+        url = f"{ADMIN_URL}/admin-api/recycle/station/cooperation/delete"
         params = {"id": common['common']['id']['invalid']}
         resp = api_session.delete(url, params=params, headers=auth_headers)
         assert resp.status_code == 200

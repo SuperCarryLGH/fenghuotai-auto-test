@@ -12,7 +12,7 @@ class Test_AdminApiRecycleClearOrderWeigherPageStockin:
 
     @pytest.mark.smoke
     def test_AdminApiRecycleClearOrderWeigherPageStockin(self, api_session, auth_headers):
-        url = f"{ADMIN_URL}/admin-api/recycle/clear-order/weigher/page-stockin"
+        url = f"{ADMIN_URL}/admin-api/recycle/app-clearOrder-weigher/page-stockin"
         params = {"pageNo": common['common']['page']['pageNo'], "pageSize": common['common']['page']['pageSize']}
         resp = api_session.get(url, params=params, headers=auth_headers)
         assert resp.status_code == 200

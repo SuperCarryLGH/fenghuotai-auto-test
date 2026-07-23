@@ -12,7 +12,7 @@ class Test_AdminApiRecycleClearOrderWeigherStockinFullvehicle:
 
     @pytest.mark.smoke
     def test_AdminApiRecycleClearOrderWeigherStockinFullvehicle(self, api_session, auth_headers):
-        url = f"{ADMIN_URL}/admin-api/recycle/clear-order/weigher/stockin-fullvehicle"
+        url = f"{ADMIN_URL}/admin-api/recycle/app-clearOrder-weigher/stockin-fullvehicle"
         body = {"id": weigher_data['weigher']['order_id']}
         resp = api_session.post(url, json=body, headers=auth_headers)
         assert resp.status_code == 200
