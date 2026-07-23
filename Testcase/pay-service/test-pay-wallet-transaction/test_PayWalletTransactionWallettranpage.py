@@ -9,8 +9,7 @@ class TestPayWalletTransactionWallettranpage:
     def test_PayWalletTransactionWallettranpage(self, api_session, station_token):
         url = f"{ADMIN_URL}/admin-api/pay/wallet-transaction/walletTranPage"
         params = {"pageNo": 1, "pageSize": 10}
-        resp = api_session.get(url, params=params, headers={"Authorization": f"Bearer {station_token}"})
-        assert resp.status_code == 200
+        ok(api_session.get(url, params=params, headers={"Authorization": f"Bearer {station_token}"}))
         r = resp.json()
         assert r["code"] == 0
         print(r)

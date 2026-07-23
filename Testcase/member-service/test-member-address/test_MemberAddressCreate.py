@@ -7,7 +7,7 @@ class TestMemberAddressCreate:
     """创建用户收件地址"""
 
     @pytest.mark.smoke
-    def test_MemberAddressCreate(self, api_session, login_tool):
+    def test_MemberAddressCreate(self, api_session, login_tool, ok):
         token = login_tool.app_login(mobile="15617637160")
         headers = {**Login.SMS_LOGIN_HEADERS, "Authorization": f"Bearer {token}"}
         url = f"{APP_URL}/app-api/member/address/create"
@@ -26,8 +26,4 @@ class TestMemberAddressCreate:
             "areaId": 330381,
             "defaultStatus": True,
         }
-        resp = api_session.post(url, json=body, headers=headers)
-        r = resp.json()
-        print(r)
-        assert resp.status_code == 200
-        assert r["code"] == 0, f"创建地址失败: {r}"
+        r = ok(api_session.post(url, json=body, headers=headers))

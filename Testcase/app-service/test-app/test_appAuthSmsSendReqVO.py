@@ -10,7 +10,7 @@ class TestAppAuthSmsSendReqVO:
     """发送手机验证码"""
 
     @pytest.mark.smoke
-    def test_appAuthSmsSendReqVO(self, api_session):
+    def test_appAuthSmsSendReqVO(self, api_session, ok):
         """
         运行: TEST_ENV=dev USE_MOCK=false pytest ... -v -s
         """
@@ -21,8 +21,7 @@ class TestAppAuthSmsSendReqVO:
                     "scene": 1
             }
 
-        resp = api_session.post(url, json=params, headers=headers)
-        assert resp.status_code == 200
+        ok(api_session.post(url, json=params, headers=headers))
         r = resp.json()
         assert r["code"] == 0
         assert r["data"] is True

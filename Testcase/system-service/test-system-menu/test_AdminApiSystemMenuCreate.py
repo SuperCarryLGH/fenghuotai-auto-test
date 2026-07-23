@@ -7,7 +7,7 @@ class Test_AdminApiSystemMenuCreate:
     """创建菜单"""
 
     @pytest.mark.smoke
-    def test_AdminApiSystemMenuCreate(self, api_session,auth_headers):
+    def test_AdminApiSystemMenuCreate(self, api_session,auth_headers, ok):
         """
         运行: TEST_ENV=dev USE_MOCK=false pytest ... -v -s
         """
@@ -21,8 +21,7 @@ class Test_AdminApiSystemMenuCreate:
             "status": menu["menu"]["status"]
             }
 
-        resp = api_session.post(url, headers=auth_headers,json=params)
-        assert resp.status_code == 200
+        ok(api_session.post(url, headers=auth_headers,json=params))
         data = resp.json()
         assert data["msg"] == "父菜单的类型必须是目录或者菜单"
         print(data)

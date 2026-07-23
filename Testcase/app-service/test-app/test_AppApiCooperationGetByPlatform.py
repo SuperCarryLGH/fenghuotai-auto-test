@@ -10,7 +10,7 @@ class TestAppApiCooperationGetByPlatform:
     """用户 APP - 发送手机验证码 Request VO"""
 
     @pytest.mark.smoke
-    def test_AppApiCooperationGetByPlatform(self, api_session, login_tool):
+    def test_AppApiCooperationGetByPlatform(self, api_session, login_tool, ok):
         """
         运行: TEST_ENV=dev USE_MOCK=false pytest ... -v -s
         """
@@ -22,8 +22,7 @@ class TestAppApiCooperationGetByPlatform:
             "channel":" "
             }
 
-        resp = api_session.get(url, headers=headers,params=params)
-        assert resp.status_code == 200
+        ok(api_session.get(url, headers=headers,params=params))
         r = resp.json()
         assert r["code"] == 0
         #assert r["data"] == {}

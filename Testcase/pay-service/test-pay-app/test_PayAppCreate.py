@@ -6,7 +6,7 @@ class TestPayAppCreate:
     """创建支付应用信息"""
 
     @pytest.mark.smoke
-    def test_PayAppCreate(self, api_session, auth_headers):
+    def test_PayAppCreate(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/pay/app/create"
         body = {
               "appKey": "autotest",
@@ -17,5 +17,4 @@ class TestPayAppCreate:
               "refundNotifyUrl": "http://autotest/refund-callback",
               "transferNotifyUrl": "http://autotest/transfer-callback"
             }
-        resp = api_session.post(url, json=body, headers=auth_headers)
-        assert resp.status_code == 200
+        ok(api_session.post(url, json=body, headers=auth_headers))

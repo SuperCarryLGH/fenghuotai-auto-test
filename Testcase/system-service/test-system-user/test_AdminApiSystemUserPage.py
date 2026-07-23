@@ -10,11 +10,10 @@ class Test_AdminApiSystemUserPage:
     """获得用户分页列表"""
 
     @pytest.mark.smoke
-    def test_AdminApiSystemUserPage(self, api_session, auth_headers):
+    def test_AdminApiSystemUserPage(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/system/user/page"
         params = {
             "pageNo": page["page"]["pageNo"],
             "pageSize": page["page"]["pageSize"],
         }
-        resp = api_session.get(url, params=params, headers=auth_headers)
-        assert resp.status_code == 200
+        ok(api_session.get(url, params=params, headers=auth_headers))

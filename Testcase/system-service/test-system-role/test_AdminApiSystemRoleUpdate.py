@@ -11,7 +11,7 @@ class Test_AdminApiSystemRoleUpdate:
     """修改角色"""
 
     @pytest.mark.smoke
-    def test_AdminApiSystemRoleUpdate(self, api_session, auth_headers):
+    def test_AdminApiSystemRoleUpdate(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/system/role/update"
         suffix = str(int(time.time()))
         body = {
@@ -21,5 +21,4 @@ class Test_AdminApiSystemRoleUpdate:
             "sort": 2,
             "status": common['common']['status']['enabled'],
         }
-        resp = api_session.put(url, json=body, headers=auth_headers)
-        assert resp.status_code == 200
+        ok(api_session.put(url, json=body, headers=auth_headers))

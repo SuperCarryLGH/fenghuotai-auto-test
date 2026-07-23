@@ -10,7 +10,7 @@ class TestAppApiRecycleStationDetail:
     """用户 APP - 站点全量详情（基础信息+签约配置完整数据）"""
 
     @pytest.mark.smoke
-    def test_AppApiRecycleStationDetail(self, api_session, login_tool):
+    def test_AppApiRecycleStationDetail(self, api_session, login_tool, ok):
         """
         运行: TEST_ENV=dev USE_MOCK=false pytest ... -v -s
         """
@@ -21,8 +21,7 @@ class TestAppApiRecycleStationDetail:
                     "id": station["station"]["id"],
             }
 
-        resp = api_session.get(url, headers=headers, params=params)
-        assert resp.status_code == 200
+        ok(api_session.get(url, headers=headers, params=params))
         r = resp.json()
         assert r["code"] == 0
         #assert r["data"] == {}

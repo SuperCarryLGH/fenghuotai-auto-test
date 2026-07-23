@@ -6,7 +6,7 @@ class TestRiskElectronicFenceUpdate:
     """更新风控-电子围栏主"""
 
     @pytest.mark.smoke
-    def test_RiskElectronicFenceUpdate(self, api_session, auth_headers):
+    def test_RiskElectronicFenceUpdate(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/risk/electronic-fence/update"
         body = {
               "id": 9999999998,
@@ -31,5 +31,4 @@ class TestRiskElectronicFenceUpdate:
               #"districtCode": "",
               "areaId": 2071771759382491138
         }
-        resp = api_session.put(url, json=body, headers=auth_headers)
-        assert resp.status_code == 200
+        ok(api_session.put(url, json=body, headers=auth_headers))

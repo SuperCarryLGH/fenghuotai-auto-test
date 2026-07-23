@@ -10,7 +10,7 @@ class Test_AdminApiSystemUserUpdate:
     """修改用户"""
 
     @pytest.mark.smoke
-    def test_AdminApiSystemUserUpdate(self, api_session, auth_headers):
+    def test_AdminApiSystemUserUpdate(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/system/user/update"
         suffix = str(int(time.time()))
         body = {
@@ -20,5 +20,4 @@ class Test_AdminApiSystemUserUpdate:
             "mobile": f"186{suffix[-8:]}",
             "status": common['common']['status']['enabled'],
         }
-        resp = api_session.put(url, json=body, headers=auth_headers)
-        assert resp.status_code == 200
+        ok(api_session.put(url, json=body, headers=auth_headers))

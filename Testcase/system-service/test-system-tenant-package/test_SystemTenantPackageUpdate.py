@@ -6,12 +6,11 @@ class TestSystemTenantPackageUpdate:
     """更新租户套餐"""
 
     @pytest.mark.smoke
-    def test_SystemTenantPackageUpdate(self, api_session, auth_headers, autotest_tenant_package_id):
+    def test_SystemTenantPackageUpdate(self, api_session, auth_headers, autotest_tenant_package_id, ok):
         url = f"{ADMIN_URL}/admin-api/system/tenant-package/update"
         # ⚠️ 敏感操作 — 参数已补全，确认后再执行
         body = {"id": autotest_tenant_package_id, "name": "autotest_updated", "menuIds": [1], "status": 0}
-        resp = api_session.put(url, json=body, headers=auth_headers)
-        assert resp.status_code == 200
+        ok(api_session.put(url, json=body, headers=auth_headers))
         r = resp.json()
         assert r["code"] == 0
         print(r)

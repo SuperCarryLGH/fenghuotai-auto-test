@@ -9,13 +9,12 @@ class TestProductFavoriteExits:
     """检查是否收藏过商品"""
 
     @pytest.mark.smoke
-    def test_ProductFavoriteExits(self, api_session, login_tool):
+    def test_ProductFavoriteExits(self, api_session, login_tool, ok):
         token = login_tool.app_login()
         headers = {**Login.SMS_LOGIN_HEADERS, "timestamp": str(int(time.time() * 1000)), "Authorization": f"Bearer {token}"}
         url = f"{APP_URL}/app-api/product/favorite/exits"
         params = {"id": 1}  # TODO: 补充查询参数
-        resp = api_session.get(url, params=params, headers=headers)
-        assert resp.status_code == 200
+        ok(api_session.get(url, params=params, headers=headers))
         r = resp.json()
         assert r["code"] == 0
         print(r)

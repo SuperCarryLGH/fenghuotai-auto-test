@@ -9,7 +9,7 @@ class TestAppApiRecycleActivityMyList:
     """用户 APP - 发获取活动组信息及活动列表"""
 
     @pytest.mark.smoke
-    def test_AppApiRecycleActivityMyList(self, api_session, login_tool):
+    def test_AppApiRecycleActivityMyList(self, api_session, login_tool, ok):
         mobile = "15617617160"
         token = login_tool.app_login(mobile=mobile)
         headers = {**Login.SMS_LOGIN_HEADERS, "Authorization": f"Bearer {token}"}
@@ -22,8 +22,7 @@ class TestAppApiRecycleActivityMyList:
             }
         print(params)
 
-        resp = api_session.get(url, headers=headers,params=params)
-        assert resp.status_code == 200
+        ok(api_session.get(url, headers=headers,params=params))
         r = resp.json()
         assert r["code"] == 0
         #assert r["data"]["id"] == 0

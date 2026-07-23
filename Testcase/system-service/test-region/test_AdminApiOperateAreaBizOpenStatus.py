@@ -9,8 +9,7 @@ class Test_AdminApiOperateAreaBizOpenStatus:
     """更新业务开通状态"""
 
     @pytest.mark.smoke
-    def test_AdminApiOperateAreaBizOpenStatus(self, api_session, auth_headers):
+    def test_AdminApiOperateAreaBizOpenStatus(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/system/operate-area/biz-open-status"
         params = {"ids": [common['common']['id']['valid']], "status": common['common']['status']['enabled']}
-        resp = api_session.put(url, params=params, headers=auth_headers)
-        assert resp.status_code == 200
+        ok(api_session.put(url, params=params, headers=auth_headers))

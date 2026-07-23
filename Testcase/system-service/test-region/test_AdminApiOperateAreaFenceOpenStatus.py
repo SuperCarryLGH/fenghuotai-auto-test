@@ -9,8 +9,7 @@ class Test_AdminApiOperateAreaFenceOpenStatus:
     """更新电子围栏开通状态"""
 
     @pytest.mark.smoke
-    def test_AdminApiOperateAreaFenceOpenStatus(self, api_session, auth_headers):
+    def test_AdminApiOperateAreaFenceOpenStatus(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/system/operate-area/fence-open-status"
         params = {"ids": [common['common']['id']['valid']], "status": common['common']['status']['enabled']}
-        resp = api_session.put(url, params=params, headers=auth_headers)
-        assert resp.status_code == 200
+        ok(api_session.put(url, params=params, headers=auth_headers))

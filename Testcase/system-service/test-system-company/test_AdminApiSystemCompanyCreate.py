@@ -11,12 +11,11 @@ class Test_AdminApiSystemCompanyCreate:
     """创建公司"""
 
     @pytest.mark.smoke
-    def test_AdminApiSystemCompanyCreate(self, api_session, auth_headers):
+    def test_AdminApiSystemCompanyCreate(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/system/company/create"
         suffix = str(int(time.time()))
         body = {
             "name": f"{company_data['company']['name']}_{suffix}",
             "status": common['common']['status']['enabled'],
         }
-        resp = api_session.post(url, json=body, headers=auth_headers)
-        assert resp.status_code == 200
+        ok(api_session.post(url, json=body, headers=auth_headers))

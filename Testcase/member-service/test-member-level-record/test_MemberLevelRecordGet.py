@@ -6,7 +6,7 @@ class TestMemberLevelRecordGet:
     """获得会员等级记录"""
 
     @pytest.mark.smoke
-    def test_MemberLeveRecordGet(self, api_session,auth_headers):
+    def test_MemberLeveRecordGet(self, api_session,auth_headers, ok):
         """
         运行: TEST_ENV=dev USE_MOCK=false pytest ... -v -s
         """
@@ -15,8 +15,7 @@ class TestMemberLevelRecordGet:
             "id": 1
             }
 
-        resp = api_session.get(url, headers=auth_headers,params=params)
-        assert resp.status_code == 200
+        ok(api_session.get(url, headers=auth_headers,params=params))
         r = resp.json()
         assert r["code"] == 0
         #assert r["data"] == {}

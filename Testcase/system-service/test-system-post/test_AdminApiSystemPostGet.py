@@ -9,8 +9,7 @@ class Test_AdminApiSystemPostGet:
     """获得岗位信息"""
 
     @pytest.mark.smoke
-    def test_AdminApiSystemPostGet(self, api_session, auth_headers):
+    def test_AdminApiSystemPostGet(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/system/post/get"
         params = {"id": common['common']['id']['valid']}
-        resp = api_session.get(url, params=params, headers=auth_headers)
-        assert resp.status_code == 200
+        ok(api_session.get(url, params=params, headers=auth_headers))

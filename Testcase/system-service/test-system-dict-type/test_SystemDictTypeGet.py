@@ -6,11 +6,10 @@ class TestSystemDictTypeGet:
     """-查询字典类型详细"""
 
     @pytest.mark.smoke
-    def test_SystemDictTypeGet(self, api_session, auth_headers, autotest_dict_type_id):
+    def test_SystemDictTypeGet(self, api_session, auth_headers, autotest_dict_type_id, ok):
         url = f"{ADMIN_URL}/admin-api/system/dict-type/get"
         params = {"id": autotest_dict_type_id}  # 来自 conftest fixture
-        resp = api_session.get(url, params=params, headers=auth_headers)
-        assert resp.status_code == 200
+        ok(api_session.get(url, params=params, headers=auth_headers))
         r = resp.json()
         assert r["code"] == 0
         print(r)

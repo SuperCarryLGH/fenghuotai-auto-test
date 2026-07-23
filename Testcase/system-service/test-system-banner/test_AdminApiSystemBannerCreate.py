@@ -11,12 +11,11 @@ class Test_AdminApiSystemBannerCreate:
     """创建 Banner"""
 
     @pytest.mark.smoke
-    def test_AdminApiSystemBannerCreate(self, api_session, auth_headers):
+    def test_AdminApiSystemBannerCreate(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/system/banner/create"
         suffix = str(int(time.time()))
         body = {
             "title": f"{banner_data['banner']['name']}_{suffix}",
             "status": common['common']['status']['enabled'],
         }
-        resp = api_session.post(url, json=body, headers=auth_headers)
-        assert resp.status_code == 200
+        ok(api_session.post(url, json=body, headers=auth_headers))

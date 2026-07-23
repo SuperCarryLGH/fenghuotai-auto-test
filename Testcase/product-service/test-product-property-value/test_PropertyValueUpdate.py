@@ -6,11 +6,10 @@ class TestPropertyValueUpdate:
     """更新属性值"""
 
     @pytest.mark.smoke
-    def test_PropertyValueUpdate(self, api_session, auth_headers, autotest_value_id):
+    def test_PropertyValueUpdate(self, api_session, auth_headers, autotest_value_id, ok):
         url = f"{ADMIN_URL}/admin-api/product/property/value/update"
         body = {"id": autotest_value_id, "propertyId": 1, "name": "autotest_value_updated", "remark": "测试"}
-        resp = api_session.put(url, json=body, headers=auth_headers)
-        assert resp.status_code == 200
+        ok(api_session.put(url, json=body, headers=auth_headers))
         r = resp.json()
         assert r["code"] == 0
         print(r)

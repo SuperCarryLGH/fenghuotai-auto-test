@@ -6,7 +6,7 @@ class TestPayFundPage:
     """获得公司-分拣中心资金分页"""
 
     @pytest.mark.smoke
-    def test_PayFundPage(self, api_session, auth_headers):
+    def test_PayFundPage(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/pay/fund/page"
         params = {
             "pageNo": 1,
@@ -15,5 +15,4 @@ class TestPayFundPage:
         }
         print("url:",url)
         print("params:",params)
-        resp = api_session.get(url, params=params, headers=auth_headers)
-        assert resp.status_code == 200
+        ok(api_session.get(url, params=params, headers=auth_headers))

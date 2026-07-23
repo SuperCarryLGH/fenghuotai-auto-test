@@ -6,7 +6,7 @@ class TestAppApiMemberLevelList:
     """获得会员等级列表"""
 
     @pytest.mark.smoke
-    def test_TestAppApiMemberLevelList(self,api_session,login_tool):
+    def test_TestAppApiMemberLevelList(self,api_session,login_tool, ok):
         mobile = "18600000000"
         token = login_tool.app_login(mobile=mobile)
         headers = {**Login.SMS_LOGIN_HEADERS, "Authorization": f"Bearer {token}"}
@@ -16,8 +16,7 @@ class TestAppApiMemberLevelList:
             #"": ""
             }
 
-        resp = api_session.get(url, params=params, headers=headers)
-        assert resp.status_code == 200
+        ok(api_session.get(url, params=params, headers=headers))
         data = resp.json()
         assert data["code"] == 0
         print(data)

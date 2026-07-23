@@ -6,14 +6,13 @@ class TestStatisticsMemberUserCountComparison:
     """获得用户数量对照"""
 
     @pytest.mark.smoke
-    def test_StatisticsMemberUserCountComparison(self, api_session, auth_headers):
+    def test_StatisticsMemberUserCountComparison(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/statistics/member/user-count-comparison"
         params = {
             "pageNo": 1,
             "pageSize": 10,
         }
-        resp = api_session.get(url, params=params, headers=auth_headers)
-        assert resp.status_code == 200
+        ok(api_session.get(url, params=params, headers=auth_headers))
         r = resp.json()
         assert r["code"] == 0
         print(r)

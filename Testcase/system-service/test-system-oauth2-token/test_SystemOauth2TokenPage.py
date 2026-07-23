@@ -12,8 +12,7 @@ class TestSystemOauth2TokenPage:
             "pageNo": 1,
             "pageSize": 10,
         }
-        resp = api_session.get(url, params=params, headers=auth_headers)
-        assert resp.status_code == 200
+        ok(api_session.get(url, params=params, headers=auth_headers))
         r = resp.json()
         assert r["code"] == 0
         print(r)

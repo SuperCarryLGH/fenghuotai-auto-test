@@ -7,7 +7,7 @@ class TestCreateUser:
     """新增用户"""
 
     @pytest.mark.smoke
-    def test_create_user(self, api_session, auth_headers):
+    def test_create_user(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/system/user/create"
         suffix = str(int(time.time()))[-8:]
         payload = {
@@ -19,7 +19,6 @@ class TestCreateUser:
             "status": 0,
         }
 
-        resp = api_session.post(url, json=payload, headers=auth_headers)
-        assert resp.status_code == 200
+        ok(api_session.post(url, json=payload, headers=auth_headers))
         data = resp.json()
         assert data["code"] == 0
