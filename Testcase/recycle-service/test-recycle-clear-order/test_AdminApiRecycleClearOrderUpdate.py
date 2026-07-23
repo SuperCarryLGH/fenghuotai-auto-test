@@ -15,7 +15,7 @@ class Test_AdminApiRecycleClearOrderUpdate:
         url = f"{ADMIN_URL}/admin-api/recycle/clear-order/update"
         suffix = str(int(time.time()))
         body = {
-            "id": common['common']['id']['valid'],
+            "id": module_data['clear_order']['id'],
             "name": f"{module_data['clear_order']['update_name']}_{suffix}",
             "status": common['common']['status']['enabled'],
         }

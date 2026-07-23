@@ -12,5 +12,5 @@ class Test_AdminApiRecycleStationDeleteList:
     @pytest.mark.smoke
     def test_AdminApiRecycleStationDeleteList(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/recycle/station/delete-list"
-        params = {"ids": [common['common']['id']['invalid']]}
+        params = {"ids": common['common']['id']['invalid']}
         ok(api_session.delete(url, params=params, headers=auth_headers))

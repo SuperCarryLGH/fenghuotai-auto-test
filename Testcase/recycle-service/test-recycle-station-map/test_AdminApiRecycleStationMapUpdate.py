@@ -14,5 +14,5 @@ class Test_AdminApiRecycleStationMapUpdate:
     def test_AdminApiRecycleStationMapUpdate(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/recycle/station/map/update"
         suffix = str(int(time.time()))
-        body = {"id": common['common']['id']['valid'], "name": f"{module_data['station_map']['update_name']}_{suffix}", "status": common['common']['status']['enabled']}
+        body = {"id": module_data['station_map']['id'], "name": f"{module_data['station_map']['update_name']}_{suffix}", "status": common['common']['status']['enabled']}
         ok(api_session.put(url, json=body, headers=auth_headers))

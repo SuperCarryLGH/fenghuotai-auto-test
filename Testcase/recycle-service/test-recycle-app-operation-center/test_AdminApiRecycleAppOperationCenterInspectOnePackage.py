@@ -11,5 +11,5 @@ class Test_AdminApiRecycleAppOperationCenterInspectOnePackage:
     @pytest.mark.smoke
     def test_AdminApiRecycleAppOperationCenterInspectOnePackage(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/recycle/app-operation-center/inspect-one-package"
-        body = {"id": common['common']['id']['valid']}
+        body = {"id": 1}
         ok(api_session.post(url, json=body, headers=auth_headers))

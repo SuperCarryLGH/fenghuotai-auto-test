@@ -15,7 +15,7 @@ class Test_AdminApiRecycleStationUpdate:
         url = f"{ADMIN_URL}/admin-api/recycle/station/update"
         suffix = str(int(time.time()))
         body = {
-            "id": common['common']['id']['valid'],
+            "id": module_data['station']['id'],
             "name": f"{module_data['station']['update_name']}_{suffix}",
             "status": common['common']['status']['enabled'],
         }

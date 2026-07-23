@@ -12,5 +12,5 @@ class Test_AdminApiRecycleStationExpressGet:
     @pytest.mark.smoke
     def test_AdminApiRecycleStationExpressGet(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/recycle/station/express/get"
-        params = {"id": common['common']['id']['valid']}
+        params = {"id": module_data['station_express']['id']}
         ok(api_session.get(url, params=params, headers=auth_headers))

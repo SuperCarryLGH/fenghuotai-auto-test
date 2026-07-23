@@ -1,4 +1,5 @@
 station_clue:
+  id: 62
   name: "测试线索"
   update_name: "更新线索"
   visit:

@@ -12,5 +12,5 @@ class Test_AdminApiRecycleStationMapGet:
     @pytest.mark.smoke
     def test_AdminApiRecycleStationMapGet(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/recycle/station/map/get"
-        params = {"id": common['common']['id']['valid']}
+        params = {"id": module_data['station_map']['id']}
         ok(api_session.get(url, params=params, headers=auth_headers))

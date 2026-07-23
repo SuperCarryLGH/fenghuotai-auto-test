@@ -1,3 +1,4 @@
 station_map:
+  id: 1
   name: "测试地图"
   update_name: "更新地图"

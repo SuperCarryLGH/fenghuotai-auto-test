@@ -13,5 +13,5 @@ class Test_AdminApiRecycleStationClueStationStatus:
     @pytest.mark.smoke
     def test_AdminApiRecycleStationClueStationStatus(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/recycle/station-clue/station-status"
-        body = {"id": common['common']['id']['valid'], "status": common['common']['status']['enabled']}
+        body = {"id": clue_data['station_clue']['id'], "status": common['common']['status']['enabled']}
         ok(api_session.put(url, json=body, headers=auth_headers))

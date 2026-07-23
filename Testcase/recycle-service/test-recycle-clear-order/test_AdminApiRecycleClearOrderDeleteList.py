@@ -12,5 +12,5 @@ class Test_AdminApiRecycleClearOrderDeleteList:
     @pytest.mark.smoke
     def test_AdminApiRecycleClearOrderDeleteList(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/recycle/clear-order/delete-list"
-        params = {"ids": [common['common']['id']['invalid']]}
+        params = {"ids": common['common']['id']['invalid']}
         ok(api_session.delete(url, params=params, headers=auth_headers))

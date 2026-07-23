@@ -13,5 +13,5 @@ class Test_AdminApiRecycleStationClueSignSubmit:
     @pytest.mark.smoke
     def test_AdminApiRecycleStationClueSignSubmit(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/recycle/station-clue/sign-submit"
-        body = {"id": common['common']['id']['valid']}
+        body = {"id": clue_data['station_clue']['id']}
         ok(api_session.post(url, json=body, headers=auth_headers))
