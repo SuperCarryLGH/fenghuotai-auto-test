@@ -10,7 +10,7 @@ class Test_AdminApiRecycleAdminOrderUpdate:
     """admin更新回收订单"""
 
     @pytest.mark.smoke
-    def test_AdminApiRecycleAdminOrderUpdate(self, api_session, auth_headers):
+    def test_AdminApiRecycleAdminOrderUpdate(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/recycle/admin-order/update"
         body = {
             "id": common['common']['id']['valid'],
@@ -18,6 +18,5 @@ class Test_AdminApiRecycleAdminOrderUpdate:
             "clearStatus": common['common']['id']['clearStatus'],
             "addressId": common['common']['id']['addressId']
         }
-        resp = api_session.put(url, json=body, headers=auth_headers)
-        assert resp.status_code == 200
+        ok(api_session.put(url, json=body, headers=auth_headers))
         print(resp.json())

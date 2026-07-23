@@ -10,9 +10,8 @@ class Test_AdminApiRecycleAdminOrderDelete:
     """admin删除回收订单"""
 
     @pytest.mark.smoke
-    def test_AdminApiRecycleAdminOrderDelete(self, api_session, auth_headers):
+    def test_AdminApiRecycleAdminOrderDelete(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/recycle/admin-order/delete"
         params = {"id": common['common']['id']['invalid']}
-        resp = api_session.delete(url, params=params, headers=auth_headers)
-        assert resp.status_code == 200
+        ok(api_session.delete(url, params=params, headers=auth_headers))
         print(resp.json())

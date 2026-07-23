@@ -253,87 +253,41 @@ class BizHelper:
         self.db = db
 
     # ---------- 订单相关 ----------
-    # TODO: 把 orders 替换成真实订单表名，字段名也按实际改
-    ORDER_TABLE = "orders"
+    ORDER_TABLE = "recycle_order"
 
     def get_order_by_no(self, order_no: str) -> Optional[Dict]:
         """根据订单号查订单"""
         return self.db.fetch_one(
-            f"SELECT * FROM {self.ORDER_TABLE} WHERE order_no = %s",  # TODO 确认字段名
+            f"SELECT * FROM {self.ORDER_TABLE} WHERE order_no = %s",
             (order_no,),
         )
 
     def get_order_status(self, order_no: str) -> Optional[str]:
         """查订单状态"""
         row = self.db.fetch_one(
-            f"SELECT status FROM {self.ORDER_TABLE} WHERE order_no = %s",  # TODO 确认字段名
+            f"SELECT status FROM {self.ORDER_TABLE} WHERE order_no = %s",
             (order_no,),
         )
         return row["status"] if row else None
 
-    # TODO: 按业务需要补充 order 相关查询
-    # 例如：
-    #   get_orders_by_user(user_id) -> List[Dict]
-    #   get_orders_by_date(date) -> List[Dict]
-    #   count_user_month_orders(user_id, year, month) -> int
-
-    # ---------- 用户指标相关 ----------
-    # TODO: 把 user_month_count 替换成真实表名
-    USER_MONTH_TABLE = "user_month_count"
-
-    def get_user_month_count(self, user_id: str) -> Optional[int]:
-        return self.db.fetch_one(
-            f"SELECT count FROM {self.USER_MONTH_TABLE} WHERE user_id = %s",  # TODO 确认字段
-            (user_id,),
-        )
-
-    def reset_user_month_count(self, user_id: str):
-        """将用户月下单次数清零"""
-        self.db.update(
-            self.USER_MONTH_TABLE,
-            {"count": 0},  # TODO 确认字段名
-            "user_id = %s",
-            (user_id,),
-        )
-
-    # ---------- 规则绑定相关 ----------
-    # TODO: 把 risk_rule_bind 替换成真实表名
-    RISK_RULE_BIND_TABLE = "risk_rule_bind"
-
-    def get_rule_bindings(self, region_id: str) -> List[Dict]:
-        """查某区域绑定了哪些规则"""
-        return self.db.fetch_all(
-            f"SELECT * FROM {self.RISK_RULE_BIND_TABLE} WHERE region_id = %s",  # TODO 确认字段
-            (region_id,),
-        )
-
-    # ---------- 风控日志相关 ----------
-    # TODO: 把 risk_check_log 替换成真实表名
-    RISK_LOG_TABLE = "risk_check_log"
-
-    def get_risk_log_by_order(self, order_no: str) -> Optional[Dict]:
-        """查某订单的风控检查记录"""
-        return self.db.fetch_one(
-            f"SELECT * FROM {self.RISK_LOG_TABLE} WHERE order_no = %s",  # TODO 确认字段
-            (order_no,),
-        )
-
     # ---------- 围栏相关 ----------
-    # TODO: 把 fence 替换成真实表名
-    FENCE_TABLE = "fence"
+    FENCE_TABLE = "risk_electronic_fence"
 
     def get_fence_by_id(self, fence_id: str) -> Optional[Dict]:
         return self.db.fetch_one(
-            f"SELECT * FROM {self.FENCE_TABLE} WHERE id = %s",  # TODO 确认字段
+            f"SELECT * FROM {self.FENCE_TABLE} WHERE id = %s",
             (fence_id,),
         )
 
     # ---------- 数据清理（测试用） ----------
-    # TODO: 补充所有需要清理的测试数据表
     TEST_TABLES = {
-        "orders": "is_test = 1",         # TODO 确认测试标记字段
-        "risk_check_log": "is_test = 1", # TODO 同上
+        "recycle_order": "deleted = 1 AND creator LIKE 'autotest_%'",
     }
+
+    def clean_test_data(self):
+        """清理测试产生的垃圾数据"""
+        for table, where in self.TEST_TABLES.items():
+            self.db.delete(table, where)
 
     def clean_test_data(self):
         """清理测试产生的垃圾数据"""

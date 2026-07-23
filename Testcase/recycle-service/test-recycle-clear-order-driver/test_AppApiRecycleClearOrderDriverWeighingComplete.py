@@ -11,8 +11,7 @@ class Test_AppApiRecycleClearOrderDriverWeighingComplete:
     """司机称重完成"""
 
     @pytest.mark.smoke
-    def test_AppApiRecycleClearOrderDriverWeighingComplete(self, api_session, auth_headers):
+    def test_AppApiRecycleClearOrderDriverWeighingComplete(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/recycle/app-clearOrder-driver/weighing-complete"
         body = {"id": driver_data['driver']['order_id']}
-        resp = api_session.post(url, json=body, headers=auth_headers)
-        assert resp.status_code == 200
+        ok(api_session.post(url, json=body, headers=auth_headers))

@@ -9,8 +9,7 @@ class Test_AdminApiRecycleAppOperationCenterManagerInspect:
     """admin管理员验货"""
 
     @pytest.mark.smoke
-    def test_AdminApiRecycleAppOperationCenterManagerInspect(self, api_session, auth_headers):
+    def test_AdminApiRecycleAppOperationCenterManagerInspect(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/recycle/app-operation-center/manager-inspect"
         body = {"id": common['common']['id']['valid']}
-        resp = api_session.post(url, json=body, headers=auth_headers)
-        assert resp.status_code == 200
+        ok(api_session.post(url, json=body, headers=auth_headers))

@@ -7,10 +7,6 @@ class Test_AdminApiRecycleAppTransferOrderCallTransferStatistic:
 
     @pytest.mark.skip(reason="待补充合法业务数据")
     @pytest.mark.smoke
-    def test_AdminApiRecycleAppTransferOrderCallTransferStatistic(self, api_session, auth_headers):
+    def test_AdminApiRecycleAppTransferOrderCallTransferStatistic(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/recycle/app-transferOrder/call-transfer-statistic"
-        resp = api_session.get(url, headers=auth_headers)
-        assert resp.status_code == 200
-        r = resp.json()
-        assert r["code"] == 0
-        print(r)
+        ok(api_session.get(url, headers=auth_headers))

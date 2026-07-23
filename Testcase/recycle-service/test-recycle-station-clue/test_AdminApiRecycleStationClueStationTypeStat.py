@@ -11,7 +11,6 @@ class Test_AdminApiRecycleStationClueStationTypeStat:
     """admin站点类型统计"""
 
     @pytest.mark.smoke
-    def test_AdminApiRecycleStationClueStationTypeStat(self, api_session, auth_headers):
+    def test_AdminApiRecycleStationClueStationTypeStat(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/recycle/station-clue/station-type-stat"
-        resp = api_session.get(url, headers=auth_headers)
-        assert resp.status_code == 200
+        ok(api_session.get(url, headers=auth_headers))

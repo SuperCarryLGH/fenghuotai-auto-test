@@ -12,7 +12,7 @@ class TestMiniOrderSubmit:
     """单次 mini 下单 — 登录走 Login 类，自动跟随 USE_REAL_SMS_CODE 开关"""
 
     @pytest.mark.smoke
-    def test_mini_order_submit(self, api_session, login_tool):
+    def test_mini_order_submit(self, api_session, login_tool, ok):
         mobile = "15617637160"
 
         token = login_tool.app_login_with(mobile)
@@ -38,10 +38,7 @@ class TestMiniOrderSubmit:
             "predictWeight": "5~10kg",
         }
 
-        resp = api_session.post(url, json=payload, headers=headers)
-        assert resp.status_code == 200
-        data = resp.json()
-        assert data["code"] == 0
+        data = ok(api_session.post(url, json=payload, headers=headers))
         order_id = data["data"]["id"]
         print(f"  ✅ 下单成功: order_id={order_id}")
 

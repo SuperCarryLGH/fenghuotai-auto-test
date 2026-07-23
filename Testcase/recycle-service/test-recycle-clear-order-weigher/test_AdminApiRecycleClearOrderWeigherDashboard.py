@@ -11,7 +11,6 @@ class Test_AdminApiRecycleClearOrderWeigherDashboard:
     """称重员仪表盘"""
 
     @pytest.mark.smoke
-    def test_AdminApiRecycleClearOrderWeigherDashboard(self, api_session, auth_headers):
+    def test_AdminApiRecycleClearOrderWeigherDashboard(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/recycle/app-clearOrder-weigher/dashboard"
-        resp = api_session.get(url, headers=auth_headers)
-        assert resp.status_code == 200
+        ok(api_session.get(url, headers=auth_headers))

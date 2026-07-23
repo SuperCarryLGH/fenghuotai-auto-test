@@ -10,8 +10,7 @@ class Test_AdminApiRecycleStationSignPage:
     """admin回收站点签约分页"""
 
     @pytest.mark.smoke
-    def test_AdminApiRecycleStationSignPage(self, api_session, auth_headers):
+    def test_AdminApiRecycleStationSignPage(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/recycle/station/sign/page"
         params = {"pageNo": common['common']['page']['pageNo'], "pageSize": common['common']['page']['pageSize']}
-        resp = api_session.get(url, params=params, headers=auth_headers)
-        assert resp.status_code == 200
+        ok(api_session.get(url, params=params, headers=auth_headers))

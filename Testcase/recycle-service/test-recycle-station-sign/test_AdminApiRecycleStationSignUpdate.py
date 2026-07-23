@@ -11,9 +11,8 @@ class Test_AdminApiRecycleStationSignUpdate:
     """admin更新回收站点签约"""
 
     @pytest.mark.smoke
-    def test_AdminApiRecycleStationSignUpdate(self, api_session, auth_headers):
+    def test_AdminApiRecycleStationSignUpdate(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/recycle/station/sign/update"
         suffix = str(int(time.time()))
         body = {"id": common['common']['id']['valid'], "name": f"{module_data['station_sign']['update_name']}_{suffix}", "status": common['common']['status']['enabled']}
-        resp = api_session.put(url, json=body, headers=auth_headers)
-        assert resp.status_code == 200
+        ok(api_session.put(url, json=body, headers=auth_headers))

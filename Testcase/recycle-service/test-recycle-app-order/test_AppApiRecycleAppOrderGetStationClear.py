@@ -11,8 +11,7 @@ class Test_AppApiRecycleAppOrderGetStationClear:
     """APP获取站点清洁"""
 
     @pytest.mark.smoke
-    def test_AppApiRecycleAppOrderGetStationClear(self, api_session, auth_headers):
+    def test_AppApiRecycleAppOrderGetStationClear(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/recycle/app-order/get-station-clear"
         params = {"id": order_data['app_order']['order_id']}
-        resp = api_session.get(url, params=params, headers=auth_headers)
-        assert resp.status_code == 200
+        ok(api_session.get(url, params=params, headers=auth_headers))

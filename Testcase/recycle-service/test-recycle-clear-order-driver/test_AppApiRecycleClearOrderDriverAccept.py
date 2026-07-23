@@ -9,8 +9,7 @@ class Test_AppApiRecycleClearOrderDriverAccept:
     """司机接单"""
 
     @pytest.mark.smoke
-    def test_AppApiRecycleClearOrderDriverAccept(self, api_session, auth_headers):
+    def test_AppApiRecycleClearOrderDriverAccept(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/recycle/app-clearOrder-driver/accept"
         body = {"id": driver_data['driver']['order_id']}
-        resp = api_session.post(url, json=body, headers=auth_headers)
-        assert resp.status_code == 200
+        ok(api_session.post(url, json=body, headers=auth_headers))

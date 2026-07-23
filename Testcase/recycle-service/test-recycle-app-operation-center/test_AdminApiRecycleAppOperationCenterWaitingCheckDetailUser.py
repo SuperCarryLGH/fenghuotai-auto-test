@@ -9,8 +9,7 @@ class Test_AdminApiRecycleAppOperationCenterWaitingCheckDetailUser:
     """admin待验货人员详情"""
 
     @pytest.mark.smoke
-    def test_AdminApiRecycleAppOperationCenterWaitingCheckDetailUser(self, api_session, auth_headers):
+    def test_AdminApiRecycleAppOperationCenterWaitingCheckDetailUser(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/recycle/app-operation-center/waiting-check-detail-user"
         params = {"id": common['common']['id']['valid']}
-        resp = api_session.get(url, params=params, headers=auth_headers)
-        assert resp.status_code == 200
+        ok(api_session.get(url, params=params, headers=auth_headers))

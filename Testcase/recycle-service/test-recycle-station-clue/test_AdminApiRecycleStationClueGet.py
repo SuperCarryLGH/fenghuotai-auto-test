@@ -11,8 +11,7 @@ class Test_AdminApiRecycleStationClueGet:
     """admin获取回收站点线索详情"""
 
     @pytest.mark.smoke
-    def test_AdminApiRecycleStationClueGet(self, api_session, auth_headers):
+    def test_AdminApiRecycleStationClueGet(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/recycle/station-clue/get"
         params = {"id": common['common']['id']['valid']}
-        resp = api_session.get(url, params=params, headers=auth_headers)
-        assert resp.status_code == 200
+        ok(api_session.get(url, params=params, headers=auth_headers))
