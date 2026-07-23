@@ -6,8 +6,10 @@ common:
     enabled: 30
     disabled: 1
   id:
-    valid: 2069965044961853442
-    invalid: 2069965038808809473,2069965042101338114
+    valid: 4
+    invalid:
+      - 2147483647
+      - 2147483646
     orderNo: PO202606251004221
     clearStatus: 0
     addressId: 2064531066662547457
