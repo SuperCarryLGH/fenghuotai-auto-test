@@ -10,7 +10,11 @@ class Test_AdminApiRecycleStationExportExcel:
     """admin导出回收站点Excel"""
 
     @pytest.mark.smoke
-    def test_AdminApiRecycleStationExportExcel(self, api_session, auth_headers, ok):
+    def test_AdminApiRecycleStationExportExcel(self, api_session, auth_headers):
         url = f"{ADMIN_URL}/admin-api/recycle/station/export-excel"
         params = {"pageNo": common['common']['page']['pageNo'], "pageSize": common['common']['page']['pageSize']}
-        ok(api_session.get(url, params=params, headers=auth_headers))
+        resp = api_session.get(url, params=params, headers=auth_headers)
+
+        assert resp.status_code == 200
+
+        assert len(resp.content) > 0

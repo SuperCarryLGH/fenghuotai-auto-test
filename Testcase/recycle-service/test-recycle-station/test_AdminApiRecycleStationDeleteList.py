@@ -10,7 +10,9 @@ class Test_AdminApiRecycleStationDeleteList:
     """admin批量删除回收站点"""
 
     @pytest.mark.smoke
-    def test_AdminApiRecycleStationDeleteList(self, api_session, auth_headers, ok):
+    def test_AdminApiRecycleStationDeleteList(self, api_session, auth_headers):
         url = f"{ADMIN_URL}/admin-api/recycle/station/delete-list"
         params = {"ids": common['common']['id']['invalid']}
-        ok(api_session.delete(url, params=params, headers=auth_headers))
+        resp = api_session.delete(url, params=params, headers=auth_headers)
+
+        assert resp.status_code == 200
