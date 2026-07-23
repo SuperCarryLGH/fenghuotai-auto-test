@@ -1,9 +1,10 @@
 import time
 import pytest
 from config import ADMIN_URL
-from Common.loader import load_common
+from Common.loader import load_common, load_recycle_admin_order
 
 common = load_common()
+module_data = load_recycle_admin_order()
 
 
 class Test_AdminApiRecycleAdminOrderUpdate:
