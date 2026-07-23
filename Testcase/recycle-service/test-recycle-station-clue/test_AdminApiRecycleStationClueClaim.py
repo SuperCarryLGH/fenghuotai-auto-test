@@ -11,8 +11,7 @@ class Test_AdminApiRecycleStationClueClaim:
     """admin认领线索"""
 
     @pytest.mark.smoke
-    def test_AdminApiRecycleStationClueClaim(self, api_session, auth_headers):
+    def test_AdminApiRecycleStationClueClaim(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/recycle/station-clue/claim"
         body = {"id": common['common']['id']['valid']}
-        resp = api_session.post(url, json=body, headers=auth_headers)
-        assert resp.status_code == 200
+        ok(api_session.post(url, json=body, headers=auth_headers))

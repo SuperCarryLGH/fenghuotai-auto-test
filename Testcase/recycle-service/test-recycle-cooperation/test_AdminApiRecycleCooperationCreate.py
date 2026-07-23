@@ -11,9 +11,8 @@ class Test_AdminApiRecycleCooperationCreate:
     """admin创建回收合作方"""
 
     @pytest.mark.smoke
-    def test_AdminApiRecycleCooperationCreate(self, api_session, auth_headers):
+    def test_AdminApiRecycleCooperationCreate(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/recycle/station/cooperation/create"
         suffix = str(int(time.time()))
         body = {"name": f"{module_data['cooperation']['name']}_{suffix}", "status": common['common']['status']['enabled']}
-        resp = api_session.post(url, json=body, headers=auth_headers)
-        assert resp.status_code == 200
+        ok(api_session.post(url, json=body, headers=auth_headers))

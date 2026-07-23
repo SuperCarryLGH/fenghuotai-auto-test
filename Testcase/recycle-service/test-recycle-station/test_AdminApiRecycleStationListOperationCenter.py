@@ -10,8 +10,7 @@ class Test_AdminApiRecycleStationListOperationCenter:
     """admin获取回收站点运营中心列表"""
 
     @pytest.mark.smoke
-    def test_AdminApiRecycleStationListOperationCenter(self, api_session, auth_headers):
+    def test_AdminApiRecycleStationListOperationCenter(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/recycle/station/listOperationCenter"
         params = {"pageNo": common['common']['page']['pageNo'], "pageSize": common['common']['page']['pageSize']}
-        resp = api_session.post(url, json=params, headers=auth_headers)
-        assert resp.status_code == 200
+        ok(api_session.post(url, json=params, headers=auth_headers))

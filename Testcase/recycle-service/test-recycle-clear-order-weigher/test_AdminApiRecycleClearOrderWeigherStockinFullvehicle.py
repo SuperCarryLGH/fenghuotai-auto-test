@@ -11,8 +11,7 @@ class Test_AdminApiRecycleClearOrderWeigherStockinFullvehicle:
     """称重员整车入库"""
 
     @pytest.mark.smoke
-    def test_AdminApiRecycleClearOrderWeigherStockinFullvehicle(self, api_session, auth_headers):
+    def test_AdminApiRecycleClearOrderWeigherStockinFullvehicle(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/recycle/app-clearOrder-weigher/stockin-fullvehicle"
         body = {"id": weigher_data['weigher']['order_id']}
-        resp = api_session.post(url, json=body, headers=auth_headers)
-        assert resp.status_code == 200
+        ok(api_session.post(url, json=body, headers=auth_headers))

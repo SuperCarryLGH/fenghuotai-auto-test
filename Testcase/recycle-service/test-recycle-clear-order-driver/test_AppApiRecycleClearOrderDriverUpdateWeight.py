@@ -11,8 +11,7 @@ class Test_AppApiRecycleClearOrderDriverUpdateWeight:
     """司机更新重量"""
 
     @pytest.mark.smoke
-    def test_AppApiRecycleClearOrderDriverUpdateWeight(self, api_session, auth_headers):
+    def test_AppApiRecycleClearOrderDriverUpdateWeight(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/recycle/app-clearOrder-driver/update-weight"
         body = {"id": driver_data['driver']['order_id']}
-        resp = api_session.post(url, json=body, headers=auth_headers)
-        assert resp.status_code == 200
+        ok(api_session.post(url, json=body, headers=auth_headers))

@@ -11,9 +11,8 @@ class Test_AdminApiRecycleStationSignCreate:
     """admin创建回收站点签约"""
 
     @pytest.mark.smoke
-    def test_AdminApiRecycleStationSignCreate(self, api_session, auth_headers):
+    def test_AdminApiRecycleStationSignCreate(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/recycle/station/sign/create"
         suffix = str(int(time.time()))
         body = {"name": f"{module_data['station_sign']['name']}_{suffix}", "status": common['common']['status']['enabled']}
-        resp = api_session.post(url, json=body, headers=auth_headers)
-        assert resp.status_code == 200
+        ok(api_session.post(url, json=body, headers=auth_headers))

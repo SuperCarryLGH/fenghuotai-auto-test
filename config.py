@@ -63,9 +63,9 @@ APP_URL = APP_CONFIG[ENV]["base_url"]
 # 4. 数据库配置 (DB)
 # ======================
 DB_CONFIG = {
-    "host": "test-db.xxx.com",
-    "port": 3306,
-    "user": "test_db_user",
-    "password": "test_db_password",
-    "database": "fenghuotai_test"
+    "host": os.getenv("DB_HOST", "test-db.xxx.com"),
+    "port": int(os.getenv("DB_PORT", "3306")),
+    "user": os.getenv("DB_USER", "test_db_user"),
+    "password": os.getenv("DB_PASSWORD", "test_db_password"),
+    "database": os.getenv("DB_DATABASE", "fenghuotai_test"),
 }

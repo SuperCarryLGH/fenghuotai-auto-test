@@ -10,13 +10,10 @@ class Test_AdminApiRecycleClearOrderWeigherGetTransferStockinDetail:
 
     @pytest.mark.skip(reason="待补充合法业务数据")
     @pytest.mark.smoke
-    def test_AdminApiRecycleClearOrderWeigherGetTransferStockinDetail(self, api_session, auth_headers):
+    def test_AdminApiRecycleClearOrderWeigherGetTransferStockinDetail(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/recycle/app-clearOrder-weigher/get-transfer-stockin-detail"
         params = {
             "id": 1
         }
-        resp = api_session.get(url, params=params, headers=auth_headers)
-        assert resp.status_code == 200
-        r = resp.json()
-        assert r["code"] == 0
+        ok(api_session.get(url, params=params, headers=auth_headers))
         print(r)

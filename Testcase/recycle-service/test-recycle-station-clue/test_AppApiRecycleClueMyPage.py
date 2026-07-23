@@ -11,8 +11,7 @@ class Test_AppApiRecycleClueMyPage:
     """APP我的线索分页"""
 
     @pytest.mark.smoke
-    def test_AppApiRecycleClueMyPage(self, api_session, auth_headers):
+    def test_AppApiRecycleClueMyPage(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/recycle/station-clue/my-page"
         params = {"pageNo": common['common']['page']['pageNo'], "pageSize": common['common']['page']['pageSize']}
-        resp = api_session.get(url, params=params, headers=auth_headers)
-        assert resp.status_code == 200
+        ok(api_session.get(url, params=params, headers=auth_headers))

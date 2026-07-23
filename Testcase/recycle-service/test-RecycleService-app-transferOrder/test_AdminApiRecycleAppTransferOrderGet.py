@@ -10,13 +10,9 @@ class Test_AdminApiRecycleAppTransferOrderGet:
 
     @pytest.mark.skip(reason="待补充合法业务数据")
     @pytest.mark.smoke
-    def test_AdminApiRecycleAppTransferOrderGet(self, api_session, auth_headers):
+    def test_AdminApiRecycleAppTransferOrderGet(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/recycle/app-transferOrder/get"
         params ={
             "id": transfer["transfer"]['id']
             }
-        resp = api_session.get(url, params=params, headers=auth_headers)
-        assert resp.status_code == 200
-        r = resp.json()
-        assert r["code"] == 0
-        print(r)
+        ok(api_session.get(url, params=params, headers=auth_headers))

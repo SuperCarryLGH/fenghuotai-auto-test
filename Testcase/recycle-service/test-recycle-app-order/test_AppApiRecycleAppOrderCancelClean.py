@@ -11,8 +11,7 @@ class Test_AppApiRecycleAppOrderCancelClean:
     """APP取消清洁"""
 
     @pytest.mark.smoke
-    def test_AppApiRecycleAppOrderCancelClean(self, api_session, auth_headers):
+    def test_AppApiRecycleAppOrderCancelClean(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/recycle/app-order/cancel-clean"
         body = {"id": order_data['app_order']['order_id']}
-        resp = api_session.post(url, json=body, headers=auth_headers)
-        assert resp.status_code == 200
+        ok(api_session.post(url, json=body, headers=auth_headers))

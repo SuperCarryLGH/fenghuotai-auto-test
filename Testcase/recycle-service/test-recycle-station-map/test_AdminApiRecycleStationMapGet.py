@@ -10,8 +10,7 @@ class Test_AdminApiRecycleStationMapGet:
     """admin获取回收站点地图详情"""
 
     @pytest.mark.smoke
-    def test_AdminApiRecycleStationMapGet(self, api_session, auth_headers):
+    def test_AdminApiRecycleStationMapGet(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/recycle/station/map/get"
         params = {"id": common['common']['id']['valid']}
-        resp = api_session.get(url, params=params, headers=auth_headers)
-        assert resp.status_code == 200
+        ok(api_session.get(url, params=params, headers=auth_headers))

@@ -11,8 +11,7 @@ class Test_AppApiRecycleAppOrderGetOrderInfo:
     """APP获取订单信息"""
 
     @pytest.mark.smoke
-    def test_AppApiRecycleAppOrderGetOrderInfo(self, api_session, auth_headers):
+    def test_AppApiRecycleAppOrderGetOrderInfo(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/recycle/app-order/get-order-info"
         params = {"id": order_data['app_order']['order_id']}
-        resp = api_session.get(url, params=params, headers=auth_headers)
-        assert resp.status_code == 200
+        ok(api_session.get(url, params=params, headers=auth_headers))

@@ -9,8 +9,7 @@ class Test_AdminApiRecycleAppOperationCenterPageWaitingCheck:
     """admin待验货分页"""
 
     @pytest.mark.smoke
-    def test_AdminApiRecycleAppOperationCenterPageWaitingCheck(self, api_session, auth_headers):
+    def test_AdminApiRecycleAppOperationCenterPageWaitingCheck(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/recycle/app-operation-center/page-waiting-check"
         params = {"pageNo": common['common']['page']['pageNo'], "pageSize": common['common']['page']['pageSize']}
-        resp = api_session.get(url, params=params, headers=auth_headers)
-        assert resp.status_code == 200
+        ok(api_session.get(url, params=params, headers=auth_headers))

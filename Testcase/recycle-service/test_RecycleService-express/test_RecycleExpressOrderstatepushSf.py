@@ -6,7 +6,7 @@ from Common.login import Login
 class TestRecycleExpressOrderstatepushSf:
 
     @pytest.mark.smoke
-    def test_TestRecycleExpressOrderstatepushSf(self,api_session,login_tool):
+    def test_TestRecycleExpressOrderstatepushSf(self,api_session,login_tool, ok):
         mobile = "18338956022"
         token = login_tool.app_login(mobile=mobile)
         headers = {**Login.SMS_LOGIN_HEADERS, "Authorization": f"Bearer {token}"}
@@ -32,8 +32,4 @@ class TestRecycleExpressOrderstatepushSf:
               ]
             }
 
-        resp = api_session.post(url, json=payload, headers=headers)
-        assert resp.status_code == 200
-        data = resp.json()
-        assert int(data["code"]) == 0
-        print(data)
+        ok(api_session.post(url, json=payload, headers=headers))

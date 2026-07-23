@@ -4,7 +4,7 @@ class Test_AdminApiRecycleAmapPageCommunitys:
     """admin更新回收站点签约"""
 
     @pytest.mark.smoke
-    def test_AdminApiRecycleAmapPageCommunitys(self, api_session, auth_headers):
+    def test_AdminApiRecycleAmapPageCommunitys(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/recycle/amap/pageCommunitys"
         body = {
             "region": '116.310003', #经度
@@ -14,5 +14,4 @@ class Test_AdminApiRecycleAmapPageCommunitys:
             "types":'',
             "cityLimit":''
         }
-        resp = api_session.get(url, params=body, headers=auth_headers)
-        assert resp.status_code == 200
+        ok(api_session.get(url, params=body, headers=auth_headers))

@@ -11,8 +11,7 @@ class Test_AdminApiRecycleClearOrderWeigherGetArrivedDriver:
     """称重员获取已到达司机"""
 
     @pytest.mark.smoke
-    def test_AdminApiRecycleClearOrderWeigherGetArrivedDriver(self, api_session, auth_headers):
+    def test_AdminApiRecycleClearOrderWeigherGetArrivedDriver(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/recycle/app-clearOrder-weigher/get-arrived-driver"
         params = {"id": weigher_data['weigher']['order_id']}
-        resp = api_session.get(url, params=params, headers=auth_headers)
-        assert resp.status_code == 200
+        ok(api_session.get(url, params=params, headers=auth_headers))
