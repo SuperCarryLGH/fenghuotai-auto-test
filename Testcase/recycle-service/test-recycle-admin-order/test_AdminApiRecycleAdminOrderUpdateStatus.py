@@ -11,5 +11,5 @@ class Test_AdminApiRecycleAdminOrderUpdateStatus:
     @pytest.mark.smoke
     def test_AdminApiRecycleAdminOrderUpdateStatus(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/recycle/admin-order/update-status"
-        body = {"id": common['common']['id']['valid'], "status": common['common']['status']['enabled']}
+        body = {"id": module_data['admin_order']['id'], "status": common['common']['status']['enabled']}
         ok(api_session.put(url, json=body, headers=auth_headers))

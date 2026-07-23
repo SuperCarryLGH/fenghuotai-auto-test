@@ -1,4 +1,5 @@
 station:
+  id: 4
   name: "测试站点"
   update_name: "更新站点"
   list_operation_center: {}

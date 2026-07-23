@@ -15,5 +15,5 @@ class Test_AdminApiRecycleStationClueUpdate:
     def test_AdminApiRecycleStationClueUpdate(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/recycle/station/clue/update"
         suffix = str(int(time.time()))
-        body = {"id": common['common']['id']['valid'], "name": f"{clue_data['station_clue']['update_name']}_{suffix}", "status": common['common']['status']['enabled']}
+        body = {"id": clue_data['station_clue']['id'], "name": f"{clue_data['station_clue']['update_name']}_{suffix}", "status": common['common']['status']['enabled']}
         ok(api_session.put(url, json=body, headers=auth_headers))

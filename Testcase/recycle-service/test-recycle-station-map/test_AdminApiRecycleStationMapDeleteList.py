@@ -12,5 +12,5 @@ class Test_AdminApiRecycleStationMapDeleteList:
     @pytest.mark.smoke
     def test_AdminApiRecycleStationMapDeleteList(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/recycle/station/map/delete-list"
-        params = {"ids": [common['common']['id']['invalid']]}
+        params = {"ids": common['common']['id']['invalid']}
         ok(api_session.delete(url, params=params, headers=auth_headers))

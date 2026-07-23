@@ -13,5 +13,5 @@ class Test_AdminApiRecycleStationClueClaim:
     @pytest.mark.smoke
     def test_AdminApiRecycleStationClueClaim(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/recycle/station-clue/claim"
-        body = {"id": common['common']['id']['valid']}
+        body = {"id": clue_data['station_clue']['id']}
         ok(api_session.post(url, json=body, headers=auth_headers))

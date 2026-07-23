@@ -13,7 +13,7 @@ class Test_AdminApiRecycleAdminOrderUpdate:
     def test_AdminApiRecycleAdminOrderUpdate(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/recycle/admin-order/update"
         body = {
-            "id": common['common']['id']['valid'],
+            "id": module_data['admin_order']['id'],
             "orderNo": common['common']['id']['orderNo'],
             "clearStatus": common['common']['id']['clearStatus'],
             "addressId": common['common']['id']['addressId']

@@ -13,5 +13,5 @@ class Test_AppApiRecycleStationClueDetail:
     @pytest.mark.smoke
     def test_AppApiRecycleStationClueDetail(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/recycle/station-clue/get"
-        params = {"id": common['common']['id']['valid']}
+        params = {"id": clue_data['station_clue']['id']}
         ok(api_session.get(url, params=params, headers=auth_headers))

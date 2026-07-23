@@ -11,5 +11,5 @@ class Test_AdminApiRecycleAppOperationCenterWaitingCheckDetail:
     @pytest.mark.smoke
     def test_AdminApiRecycleAppOperationCenterWaitingCheckDetail(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/recycle/app-operation-center/waiting-check-detail"
-        params = {"id": common['common']['id']['valid']}
+        params = {"id": 1}
         ok(api_session.get(url, params=params, headers=auth_headers))

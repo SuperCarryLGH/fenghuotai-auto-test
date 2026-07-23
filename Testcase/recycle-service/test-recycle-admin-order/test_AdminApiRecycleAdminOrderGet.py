@@ -12,5 +12,5 @@ class Test_AdminApiRecycleAdminOrderGet:
     @pytest.mark.smoke
     def test_AdminApiRecycleAdminOrderGet(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/recycle/admin-order/get"
-        params = {"id": common['common']['id']['valid']}
+        params = {"id": module_data['admin_order']['id']}
         ok(api_session.get(url, params=params, headers=auth_headers))
