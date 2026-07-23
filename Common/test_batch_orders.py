@@ -4,7 +4,6 @@ import pytest
 from config import APP_URL
 from Common.loader import load_yaml
 from Common.login import Login
-
 orders = load_yaml("batch_orders.yaml")["batch_orders"]
 
 _WEEKDAY_MAP = {0: "周一", 1: "周二", 2: "周三", 3: "周四", 4: "周五", 5: "周六", 6: "周日"}
@@ -42,7 +41,7 @@ class TestBatchOrders:
             "appointmentDate": appointment_date,
             "appointmentTimePeriod": order["appointmentTimePeriod"],
             "appointmentWeekStr": appointment_week_str,
-            "estimatedInfo": "",
+            "estimatedInfo": order.get("estimatedInfo", ""),
             "predictWeight": "",
             "addressId": user["address"]["addressId"],
             "lat": order.get("lat", ""),

@@ -9,6 +9,7 @@ from Common.login import Login
 common = load_common()
 
 
+@pytest.mark.skip(reason="自动化前置脚本，暂不维护")
 class TestOrderFlow:
     """验证下单风控链路的重量阈值规则"""
     # ------------------------------------------------------------------

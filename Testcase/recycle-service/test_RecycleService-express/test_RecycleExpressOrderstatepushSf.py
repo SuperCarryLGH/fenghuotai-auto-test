@@ -35,5 +35,5 @@ class TestRecycleExpressOrderstatepushSf:
         resp = api_session.post(url, json=payload, headers=headers)
         assert resp.status_code == 200
         data = resp.json()
-        assert data["code"] == 0
+        assert int(data["code"]) == 0
         print(data)

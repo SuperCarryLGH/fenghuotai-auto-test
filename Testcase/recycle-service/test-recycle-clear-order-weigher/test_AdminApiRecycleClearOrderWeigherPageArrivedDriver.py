@@ -12,7 +12,7 @@ class Test_AdminApiRecycleClearOrderWeigherPageArrivedDriver:
 
     @pytest.mark.smoke
     def test_AdminApiRecycleClearOrderWeigherPageArrivedDriver(self, api_session, auth_headers):
-        url = f"{ADMIN_URL}/admin-api/recycle/clear-order/weigher/page-arrived-driver"
+        url = f"{ADMIN_URL}/admin-api/recycle/app-clearOrder-weigher/page-arrived-driver"
         params = {"pageNo": common['common']['page']['pageNo'], "pageSize": common['common']['page']['pageSize']}
         resp = api_session.get(url, params=params, headers=auth_headers)
         assert resp.status_code == 200
