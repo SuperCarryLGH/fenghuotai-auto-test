@@ -7,11 +7,8 @@ class Test_AdminApiRecycleAmapPageCommunitys:
     def test_AdminApiRecycleAmapPageCommunitys(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/recycle/amap/pageCommunitys"
         body = {
-            "region": '116.310003', #经度
-            "pageNo": '39.991957', #纬度
-            "pageSize": '', #返回结果控制：base-基本地址，all-含 POI/道路等,示例值(base)
-            "keywords":'',#搜索半径（米），extensions=all 时生效，范围 0~3000,示例值(1000)
-            "types":'',
-            "cityLimit":''
+            "region": "杭州",
+            "pageNo": 1,
+            "pageSize": 10,
         }
         ok(api_session.get(url, params=body, headers=auth_headers))
