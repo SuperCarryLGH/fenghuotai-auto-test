@@ -1,9 +1,7 @@
 import pytest
-import time
-from config import APP_URL
+from config import ADMIN_URL
 from Common.loader import load_common
 from Common.loader import load_recycle_app_order
-from Common.login import Login
 
 common = load_common()
 order_data = load_recycle_app_order()
@@ -13,10 +11,8 @@ class Test_AppApiRecycleAppOrderGetStationClear:
     """APP获取站点清洁"""
 
     @pytest.mark.smoke
-    def test_AppApiRecycleAppOrderGetStationClear(self, api_session, login_tool):
-        url = f"{APP_URL}/app-api/recycle/app/order/get-station-clear"
-        token = login_tool.app_login()
-        headers = {**Login.SMS_LOGIN_HEADERS, "timestamp": str(int(time.time() * 1000)), "Authorization": f"Bearer {token}"}
+    def test_AppApiRecycleAppOrderGetStationClear(self, api_session, auth_headers):
+        url = f"{ADMIN_URL}/admin-api/recycle/app-order/get-station-clear"
         params = {"id": order_data['app_order']['order_id']}
-        resp = api_session.get(url, params=params, headers=headers)
+        resp = api_session.get(url, params=params, headers=auth_headers)
         assert resp.status_code == 200

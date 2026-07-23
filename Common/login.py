@@ -61,6 +61,7 @@ class Login:
             self.ADMIN_LOGIN_URL,
             json=payload,
             headers=self.ADMIN_LOGIN_HEADERS,
+            verify=False,
         )
         response.raise_for_status()
         return self._extract_token(response, self.ADMIN_TOKEN_PATH)
@@ -102,6 +103,7 @@ class Login:
             self.SMS_SEND_URL,
             json={"mobile": mobile, "scene": scene},
             headers=self.SMS_LOGIN_HEADERS,
+            verify=False,
         )
         resp.raise_for_status()
         return resp.json()["code"] == 0
@@ -143,6 +145,7 @@ class Login:
         payload = {"mobile": mobile, "code": code}
         response = self.session.post(
             self.SMS_LOGIN_URL, json=payload, headers=self.SMS_LOGIN_HEADERS,
+            verify=False,
         )
         response.raise_for_status()
         return self._extract_token(response, self.APP_TOKEN_PATH)

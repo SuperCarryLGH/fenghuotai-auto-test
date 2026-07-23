@@ -12,7 +12,7 @@ class Test_AdminApiRecycleStationClueVisitPage:
 
     @pytest.mark.smoke
     def test_AdminApiRecycleStationClueVisitPage(self, api_session, auth_headers):
-        url = f"{ADMIN_URL}/admin-api/recycle/station/clue/visit/page"
+        url = f"{ADMIN_URL}/admin-api/recycle/station-clue/visit-page"
         params = {"pageNo": common['common']['page']['pageNo'], "pageSize": common['common']['page']['pageSize']}
         resp = api_session.get(url, params=params, headers=auth_headers)
         assert resp.status_code == 200
