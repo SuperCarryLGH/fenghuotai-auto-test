@@ -9,8 +9,7 @@ class Test_AdminApiSystemUserDelete:
     """删除用户"""
 
     @pytest.mark.smoke
-    def test_AdminApiSystemUserDelete(self, api_session, auth_headers):
+    def test_AdminApiSystemUserDelete(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/system/user/delete"
         params = {"id": common['common']['id']['invalid']}
-        resp = api_session.delete(url, params=params, headers=auth_headers)
-        assert resp.status_code == 200
+        ok(api_session.delete(url, params=params, headers=auth_headers))

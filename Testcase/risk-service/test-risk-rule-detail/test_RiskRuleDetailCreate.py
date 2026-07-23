@@ -7,7 +7,7 @@ class TestRiskRuleDetailCreate:
     """创建风控-规则区间明细"""
 
     @pytest.mark.smoke
-    def test_RiskRuleDetailCreate(self, api_session, auth_headers):
+    def test_RiskRuleDetailCreate(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/risk/rule-detail/create"
         ruleId = int(time.time() * 1000000)
         body = {
@@ -18,5 +18,4 @@ class TestRiskRuleDetailCreate:
               "actionType": 10,
               "sort": 0
             }
-        resp = api_session.post(url, json=body, headers=auth_headers)
-        assert resp.status_code == 200
+        ok(api_session.post(url, json=body, headers=auth_headers))

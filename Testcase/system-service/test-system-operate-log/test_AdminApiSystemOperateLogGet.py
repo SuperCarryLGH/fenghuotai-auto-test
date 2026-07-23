@@ -8,7 +8,7 @@ class Test_AdminApiSystemOperateLogGet:
     """查看操作日志"""
 
     @pytest.mark.smoke
-    def test_AdminApiSystemOperateLogGet(self, api_session,auth_headers):
+    def test_AdminApiSystemOperateLogGet(self, api_session,auth_headers, ok):
         """
         运行: TEST_ENV=dev USE_MOCK=false pytest ... -v -s
         """
@@ -17,5 +17,4 @@ class Test_AdminApiSystemOperateLogGet:
             "id" : 1024
             }
 
-        resp = api_session.get(url, headers=auth_headers,params=params)
-        assert resp.status_code == 200
+        ok(api_session.get(url, headers=auth_headers,params=params))

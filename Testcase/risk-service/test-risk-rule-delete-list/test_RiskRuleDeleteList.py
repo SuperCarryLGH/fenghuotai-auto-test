@@ -6,10 +6,9 @@ class TestRiskRuleDeleteList:
     """批量删除风控-规则主"""
 
     @pytest.mark.smoke
-    def test_RiskRuleDeleteList(self, api_session, auth_headers):
+    def test_RiskRuleDeleteList(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/risk/rule/delete-list"
         params = {
             "ids":999999999
         }
-        resp = api_session.delete(url, params=params, headers=auth_headers)
-        assert resp.status_code == 200
+        ok(api_session.delete(url, params=params, headers=auth_headers))

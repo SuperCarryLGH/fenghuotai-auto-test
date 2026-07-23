@@ -8,18 +8,17 @@ class TestPayWalletPageStation:
     """获得站点钱包流水分页"""
 
     @pytest.mark.smoke
-    def test_PayWalletPageStation(self, api_session, login_tool):
+    def test_PayWalletPageStation(self, api_session, login_tool, ok):
         # ADMIN 端的 SMS 登录（不是 APP 端！）
         headers = {
             **Login.SMS_LOGIN_HEADERS,
             "timestamp": str(int(time.time() * 1000)),
         }
-        resp = api_session.post(
+        ok(api_session.post(
             f"{ADMIN_URL}/admin-api/system/auth/sms-login",
             json={"mobile": "18600000000", "code": "9999"},
             headers=headers,
-        )
-        assert resp.status_code == 200
+        ))
         token = resp.json()["data"]["accessToken"]
 
         url = f"{ADMIN_URL}/admin-api/pay/wallet/page-station"

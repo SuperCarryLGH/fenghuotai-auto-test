@@ -6,7 +6,7 @@ class TestPayFundUpdate:
     """更新支付资金"""
 
     @pytest.mark.smoke
-    def test_PayFundUpdate(self, api_session, auth_headers):
+    def test_PayFundUpdate(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/pay/fund/update"
         body = {
             "id": 2068869977784700952,
@@ -18,5 +18,4 @@ class TestPayFundUpdate:
             "allocableFund" : 0,
             "allocatedFund" : 0,
         }
-        resp = api_session.put(url, json=body, headers=auth_headers)
-        assert resp.status_code == 200
+        ok(api_session.put(url, json=body, headers=auth_headers))

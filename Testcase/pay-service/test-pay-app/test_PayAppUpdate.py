@@ -6,7 +6,7 @@ class TestPayAppUpdate:
     """更新支付应用信息"""
 
     @pytest.mark.smoke
-    def test_PayAppUpdate(self, api_session, auth_headers):
+    def test_PayAppUpdate(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/pay/app/update"
         body = {
               "appKey": "autotest",
@@ -18,5 +18,4 @@ class TestPayAppUpdate:
               "transferNotifyUrl": "http://autotest/transfer-callback",
               "id": 2077228704176402434
             }
-        resp = api_session.put(url, json=body, headers=auth_headers)
-        assert resp.status_code == 200
+        ok(api_session.put(url, json=body, headers=auth_headers))

@@ -9,8 +9,7 @@ class Test_AdminApiSystemRoleDelete:
     """删除角色"""
 
     @pytest.mark.smoke
-    def test_AdminApiSystemRoleDelete(self, api_session, auth_headers):
+    def test_AdminApiSystemRoleDelete(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/system/role/delete"
         params = {"id": common['common']['id']['invalid']}
-        resp = api_session.delete(url, params=params, headers=auth_headers)
-        assert resp.status_code == 200
+        ok(api_session.delete(url, params=params, headers=auth_headers))

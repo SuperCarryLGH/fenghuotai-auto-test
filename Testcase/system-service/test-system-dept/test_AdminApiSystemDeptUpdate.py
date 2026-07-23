@@ -7,7 +7,7 @@ class Test_AdminApiSystemDeptUpdate:
     """更新部门"""
 
     @pytest.mark.smoke
-    def test_AdminApiSystemDeptUpdate(self, api_session,auth_headers):
+    def test_AdminApiSystemDeptUpdate(self, api_session,auth_headers, ok):
         """
         运行: TEST_ENV=dev USE_MOCK=false pytest ... -v -s
         """
@@ -18,8 +18,7 @@ class Test_AdminApiSystemDeptUpdate:
             "status": dept["dept"]["status"]
             }
 
-        resp = api_session.put(url, headers=auth_headers,json=params)
-        assert resp.status_code == 200
+        ok(api_session.put(url, headers=auth_headers,json=params))
         data = resp.json()
         assert data["msg"] == "已经存在该名字的部门"
         print(data)

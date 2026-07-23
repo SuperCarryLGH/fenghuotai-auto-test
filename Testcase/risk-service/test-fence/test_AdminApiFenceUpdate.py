@@ -10,7 +10,7 @@ class Test_AdminApiFenceUpdate:
     """admin更新电子围栏"""
 
     @pytest.mark.smoke
-    def test_AdminApiFenceUpdate(self, api_session, auth_headers):
+    def test_AdminApiFenceUpdate(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/fence/update"
         suffix = str(int(time.time()))
         body = {
@@ -18,5 +18,4 @@ class Test_AdminApiFenceUpdate:
             "name": f"更新围栏_{suffix}",
             "status": common['common']['status']['enabled'],
         }
-        resp = api_session.put(url, json=body, headers=auth_headers)
-        assert resp.status_code == 200
+        ok(api_session.put(url, json=body, headers=auth_headers))

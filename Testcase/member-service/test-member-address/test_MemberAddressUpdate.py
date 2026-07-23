@@ -7,7 +7,7 @@ class TestMemberAddressUpdate:
     """更新用户收件地址"""
 
     @pytest.mark.smoke
-    def test_MemberAddressUpdate(self, api_session, login_tool, autotest_address_id):
+    def test_MemberAddressUpdate(self, api_session, login_tool, autotest_address_id, ok):
         token = login_tool.app_login(mobile="15617637160")
         headers = {**Login.SMS_LOGIN_HEADERS, "Authorization": f"Bearer {token}"}
         url = f"{APP_URL}/app-api/member/address/update"
@@ -19,5 +19,4 @@ class TestMemberAddressUpdate:
             "detailAddress": "浙江省杭州市滨江区立业园30幢",
             "defaultStatus": True,
         }
-        resp = api_session.put(url, json=body, headers=headers)
-        assert resp.status_code == 200
+        ok(api_session.put(url, json=body, headers=headers))

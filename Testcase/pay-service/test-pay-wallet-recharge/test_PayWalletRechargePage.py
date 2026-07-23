@@ -8,7 +8,7 @@ class TestPayWalletRechargePage:
     """获得钱包充值记录分页"""
 
     @pytest.mark.smoke
-    def test_PayWalletRechargePage(self, api_session, login_tool):
+    def test_PayWalletRechargePage(self, api_session, login_tool, ok):
         url = f"{APP_URL}/app-api/pay/wallet-recharge/page"
         params = {
             "pageNo": 1,
@@ -16,5 +16,4 @@ class TestPayWalletRechargePage:
         }
         token = login_tool.app_login()
         headers = {**Login.SMS_LOGIN_HEADERS, "timestamp": str(int(time.time() * 1000)), "Authorization": f"Bearer {token}"}
-        resp = api_session.get(url, params=params, headers=headers)
-        assert resp.status_code == 200
+        ok(api_session.get(url, params=params, headers=headers))

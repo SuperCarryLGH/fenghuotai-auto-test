@@ -10,7 +10,7 @@ class TestAppApiRecycleActivityList:
     """用户 APP - 查询活动分页列表"""
 
     @pytest.mark.smoke
-    def test_AppApiRecycleActivityList(self, api_session, login_tool):
+    def test_AppApiRecycleActivityList(self, api_session, login_tool, ok):
         """
         运行: TEST_ENV=dev USE_MOCK=false pytest ... -v -s
         """
@@ -23,8 +23,7 @@ class TestAppApiRecycleActivityList:
             "activityGroupId":1
             }
 
-        resp = api_session.get(url, headers=headers,params=params)
-        assert resp.status_code == 200
+        ok(api_session.get(url, headers=headers,params=params))
         r = resp.json()
         assert r["code"] == 0
         #assert r["data"]["id"] == 0

@@ -7,7 +7,7 @@ class Test_AdminApiSystemMenuUpdate:
     """修改菜单"""
 
     @pytest.mark.smoke
-    def test_AdminApiSystemMenuUpdate(self, api_session,auth_headers):
+    def test_AdminApiSystemMenuUpdate(self, api_session,auth_headers, ok):
         """
         运行: TEST_ENV=dev USE_MOCK=false pytest ... -v -s
         """
@@ -20,8 +20,7 @@ class Test_AdminApiSystemMenuUpdate:
             "status": menu["menu"]["status"]
             }
 
-        resp = api_session.put(url, headers=auth_headers,json=params)
-        assert resp.status_code == 200
+        ok(api_session.put(url, headers=auth_headers,json=params))
         data = resp.json()
         assert data["msg"] == "请求参数不正确:父菜单 ID 不能为空"
         print(data)

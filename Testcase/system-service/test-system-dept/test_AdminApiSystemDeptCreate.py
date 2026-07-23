@@ -7,7 +7,7 @@ class Test_AdminApiSystemDeptCreate:
     """创建部门"""
 
     @pytest.mark.smoke
-    def test_AdminApiSystemDeptCreate(self, api_session,auth_headers):
+    def test_AdminApiSystemDeptCreate(self, api_session,auth_headers, ok):
         """
         运行: TEST_ENV=dev USE_MOCK=false pytest ... -v -s
         """
@@ -19,8 +19,7 @@ class Test_AdminApiSystemDeptCreate:
             "status": dept["dept"]["status"]
             }
 
-        resp = api_session.post(url, headers=auth_headers,json=params)
-        assert resp.status_code == 200
+        ok(api_session.post(url, headers=auth_headers,json=params))
         data = resp.json()
         #assert data["code"] == 0
         print(data)

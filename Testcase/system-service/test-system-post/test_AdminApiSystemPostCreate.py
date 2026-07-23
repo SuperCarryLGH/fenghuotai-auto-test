@@ -11,7 +11,7 @@ class Test_AdminApiSystemPostCreate:
     """创建岗位"""
 
     @pytest.mark.smoke
-    def test_AdminApiSystemPostCreate(self, api_session, auth_headers):
+    def test_AdminApiSystemPostCreate(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/system/post/create"
         suffix = str(int(time.time()))
         body = {
@@ -20,5 +20,4 @@ class Test_AdminApiSystemPostCreate:
             "sort": post_data['post']['create']['sort'],
             "status": common['common']['status']['enabled'],
         }
-        resp = api_session.post(url, json=body, headers=auth_headers)
-        assert resp.status_code == 200
+        ok(api_session.post(url, json=body, headers=auth_headers))

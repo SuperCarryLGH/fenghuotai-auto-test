@@ -9,7 +9,6 @@ class Test_AdminApiFenceList:
     """admin获取电子围栏列表"""
 
     @pytest.mark.smoke
-    def test_AdminApiFenceList(self, api_session, auth_headers):
+    def test_AdminApiFenceList(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/fence/list"
-        resp = api_session.get(url, headers=auth_headers)
-        assert resp.status_code == 200
+        ok(api_session.get(url, headers=auth_headers))

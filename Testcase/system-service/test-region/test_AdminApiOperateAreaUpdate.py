@@ -10,7 +10,7 @@ class Test_AdminApiOperateAreaUpdate:
     """更新系统-运营区域管理"""
 
     @pytest.mark.smoke
-    def test_AdminApiOperateAreaUpdate(self, api_session, auth_headers):
+    def test_AdminApiOperateAreaUpdate(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/system/operate-area/update"
         suffix = str(int(time.time()))
         body = {
@@ -18,5 +18,4 @@ class Test_AdminApiOperateAreaUpdate:
             "name": f"更新运营区域_{suffix}",
             "status": common['common']['status']['enabled'],
         }
-        resp = api_session.put(url, json=body, headers=auth_headers)
-        assert resp.status_code == 200
+        ok(api_session.put(url, json=body, headers=auth_headers))

@@ -7,7 +7,7 @@ class Test_AdminApiSystemMenuDeleteList:
     """批量删除菜单"""
 
     @pytest.mark.smoke
-    def test_AdminApiSystemMenuDeleteList(self, api_session,auth_headers):
+    def test_AdminApiSystemMenuDeleteList(self, api_session,auth_headers, ok):
         """
         运行: TEST_ENV=dev USE_MOCK=false pytest ... -v -s
         """
@@ -16,8 +16,7 @@ class Test_AdminApiSystemMenuDeleteList:
             "ids": 1213
             }
 
-        resp = api_session.delete(url, headers=auth_headers,params=params)
-        assert resp.status_code == 200
+        ok(api_session.delete(url, headers=auth_headers,params=params))
         data = resp.json()
         #assert data["code"] == 0
         print(data)

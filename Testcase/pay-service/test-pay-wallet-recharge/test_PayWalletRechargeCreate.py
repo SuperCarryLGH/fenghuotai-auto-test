@@ -15,8 +15,7 @@ class TestPayWalletRechargeCreate:
               #"bizType": 0,
               #"validPayPriceAndPackageId": True
             }
-        resp = api_session.post(url, json=body, headers={"Authorization": f"Bearer {station_token}"})
-        assert resp.status_code == 200
+        ok(api_session.post(url, json=body, headers={"Authorization": f"Bearer {station_token}"}))
         r = resp.json()
         print(r)
         assert r["code"] == 0
