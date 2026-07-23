@@ -13,5 +13,5 @@ class Test_AdminApiRecycleClearOrderWeigherGetArrivedDriver:
     @pytest.mark.smoke
     def test_AdminApiRecycleClearOrderWeigherGetArrivedDriver(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/recycle/app-clearOrder-weigher/get-arrived-driver"
-        params = {"driverId": weigher_data['weigher']['order_id']}
+        params = {"driverId": weigher_data['weigher']['driver_id']}
         ok(api_session.get(url, params=params, headers=auth_headers))

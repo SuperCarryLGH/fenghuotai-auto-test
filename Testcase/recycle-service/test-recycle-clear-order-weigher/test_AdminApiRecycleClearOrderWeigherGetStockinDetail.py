@@ -13,5 +13,5 @@ class Test_AdminApiRecycleClearOrderWeigherGetStockinDetail:
     @pytest.mark.smoke
     def test_AdminApiRecycleClearOrderWeigherGetStockinDetail(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/recycle/app-clearOrder-weigher/get-stockin-detail"
-        params = {"id": weigher_data['weigher']['order_id']}
+        params = {"inId": weigher_data['weigher']['order_id']}
         ok(api_session.get(url, params=params, headers=auth_headers))
