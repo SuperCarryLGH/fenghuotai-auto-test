@@ -26,7 +26,7 @@ from typing import Any, Dict, List, Optional, Union
 from pymysql import connect
 from pymysql.cursors import DictCursor
 
-USE_MOCK = os.getenv("USE_MOCK", "true").lower() in ("1", "true", "yes")
+USE_MOCK = os.getenv("USE_MOCK", "false").lower() in ("1", "true", "yes")
 
 
 # ===================================================================

@@ -1,0 +1,38 @@
+# 推广达人申请 - 请求体
+default:
+  mobile: "15617617160"
+  provinceCode: ""
+  provinceName: "江苏省"
+  cityCode: ""
+  cityName: "苏州市"
+  districtCode: ""
+  districtName: "姑苏区"
+  promoteMode: 1 #0无 1线上 2线下 3线上线下都在做,
+  hasMediaAccount: 1 #是否经营自媒体账号：0否 1是
+  mediaAccountType: ""
+  mediaOtherDesc: ""
+  hasOfflineResource: 0
+  offlineResource: ""
+  resourceOtherDesc: ""
+  hasSimilarExp: 1 #是否有同类推广经验：0否 1是
+  similarExp: ""
+  expOtherDesc: ""
+  mediaScreenshot: ""
+
+# 无媒体账号
+no_media:
+  mobile: "13800138001"
+  provinceName: "浙江省"
+  cityName: "杭州市"
+  districtName: "西湖区"
+  promoteMode: 1
+  hasMediaAccount: 0
+  mediaAccountType: ""
+  mediaOtherDesc: ""
+  hasOfflineResource: 0
+  offlineResource: ""
+  resourceOtherDesc: ""
+  hasSimilarExp: 1
+  similarExp: ""
+  expOtherDesc: ""
+  mediaScreenshot: ""

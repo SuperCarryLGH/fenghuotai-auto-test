@@ -15,6 +15,7 @@ class Login:
 
     def __init__(self, session: requests.Session = None):
         self.session = session or requests.Session()
+        self.session.verify = False
         self.session.headers.update({"Content-Type": "application/json"})
 
     # ===================================================================
@@ -31,7 +32,11 @@ class Login:
     def _extract_token(self, response: requests.Response, path: tuple) -> str:
         """从登录响应中按路径提取 token"""
         resp_json = response.json()
-        print(f"\n[DEBUG] 登录响应: {resp_json}", flush=True)
+        if resp_json.get("code") != 0:
+            raise RuntimeError(
+                f"Login failed: code={resp_json.get('code')}, "
+                f"msg={resp_json.get('msg')}, data={resp_json.get('data')}"
+            )
         data = resp_json
         for key in path:
             data = data[key]
@@ -145,6 +150,28 @@ class Login:
         payload = {"mobile": mobile, "code": code}
         response = self.session.post(
             self.SMS_LOGIN_URL, json=payload, headers=self.SMS_LOGIN_HEADERS,
+            verify=False,
+        )
+        response.raise_for_status()
+        return self._extract_token(response, self.APP_TOKEN_PATH)
+
+    def app_login_for_promoter(self, mobile: str, code: str = "9999", promoter_id: int = None) -> str:
+        """
+        APP 登录，支持推广员邀请码绑定（不影响现有 app_login 逻辑）。
+
+        :param mobile: 手机号
+        :param code: 验证码，默认 9999
+        :param promoter_id: 邀请人推广ID（首次登录时绑定上下级关系）
+        """
+        import time
+        self.SMS_LOGIN_HEADERS["timestamp"] = str(int(time.time() * 1000))
+        payload = {"mobile": mobile, "code": code}
+        if promoter_id:
+            payload["promoterId"] = promoter_id
+        response = self.session.post(
+            self.SMS_LOGIN_URL,
+            json=payload,
+            headers=self.SMS_LOGIN_HEADERS,
             verify=False,
         )
         response.raise_for_status()
