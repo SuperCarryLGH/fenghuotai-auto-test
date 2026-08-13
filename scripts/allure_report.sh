@@ -6,7 +6,7 @@
 #   ./scripts/allure_report.sh <pytest参数...>       # 先跑测试(自动加 --alluredir)再生成并打开
 #
 # 示例:
-#   ./scripts/allure_report.sh Testcase/Auto_pre/DistService/test_DistTeam*.py -s
+#   ./scripts/allure_report.sh Testcase/dist-service/test_DistTeam*.py -s
 #
 # 说明: 报告必须通过 HTTP 打开（file:// 下 fetch 被拦截会一直 loading）
 set -e
