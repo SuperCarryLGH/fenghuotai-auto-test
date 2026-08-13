@@ -13,5 +13,5 @@ class TestPayTransferExportExcel:
             "pageSize": 10,
         }
         resp = api_session.get(url, params=params, headers=auth_headers)
-        #assert resp.status_code == 200
+        assert resp.status_code == 200
         print(f"下载成功, 文件大小={len(resp.content)}bytes")

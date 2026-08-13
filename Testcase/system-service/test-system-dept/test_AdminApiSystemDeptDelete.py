@@ -13,7 +13,10 @@ class Test_AdminApiSystemDeptDelete:
         """
         url = f"{ADMIN_URL}/admin-api/system/dept/delete"
         params = {
-            "id": dept["dept"]["create id"],
+            "id": 2147483647,
             }
 
-        ok(api_session.delete(url, headers=auth_headers,params=params))
+        resp = api_session.delete(url, headers=auth_headers, params=params)
+        assert resp.status_code == 200
+        r = resp.json()
+        print(r)

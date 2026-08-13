@@ -17,6 +17,6 @@ class Test_AdminApiSystemAreaGetByIp:
             "ip": "123.160.230.187"
             }
 
-        ok(api_session.get(url, headers=auth_headers,params=params))
+        r = ok(api_session.get(url, headers=auth_headers, params=params))
         assert r["data"] == "河南省 郑州市"
         print(r)

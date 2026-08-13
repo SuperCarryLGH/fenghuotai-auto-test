@@ -3,7 +3,7 @@ common:
     pageNo: 1
     pageSize: 10
   status:
-    enabled: 30
+    enabled: 0
     disabled: 1
   id:
     valid: 4

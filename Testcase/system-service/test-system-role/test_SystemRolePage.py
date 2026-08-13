@@ -6,14 +6,7 @@ class TestSystemRolePage:
     """获得角色分页"""
 
     @pytest.mark.smoke
-    def test_SystemRolePage(self, api_session, auth_headers, autotest_role_id):
+    def test_SystemRolePage(self, api_session, auth_headers, autotest_role_id, ok):
         url = f"{ADMIN_URL}/admin-api/system/role/page"
-        # ⚠️ 敏感操作 — 参数已补全，确认后再执行
-        body = {
-            # TODO: 核对参数后取消下方注释
-        }
-        # resp = api_session.get(url, json=body, headers=auth_headers)
-        # assert resp.status_code == 200
-        # r = resp.json()
-        # assert r["code"] == 0
-        # print(r)
+        r = ok(api_session.get(url, params={"pageNo": 1, "pageSize": 10}, headers=auth_headers))
+        print(r)

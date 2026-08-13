@@ -6,6 +6,7 @@ class TestMemberConfigSave:
     """保存会员配置"""
 
     @pytest.mark.smoke
+    @pytest.mark.skip(reason="会修改真实会员配置(id=1)，暂不执行")
     def test_MemberConfigSave(self, api_session, auth_headers):
         url = f"{ADMIN_URL}/admin-api/member/config/save"
         # ⚠️ 敏感操作 — 参数已补全，确认后再执行

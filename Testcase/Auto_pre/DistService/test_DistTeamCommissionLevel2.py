@@ -29,6 +29,8 @@ class TestDistTeamCommissionLevel2:
         pid_c = self.tu.become_promoter(mobile_c, promoter_id=pid_b)[0]
         # D 绑定 C → 下单
         token_d = self.tu.login.app_login_for_promoter(mobile=mobile_d, promoter_id=pid_c)
+        before_b = self.tu.get_wallet_balance(pid_b, 1)
+        before_t = self.tu.get_wallet_balance(team_id, 2)
         order_id = self.tu.settle_order(token_d, mobile_d)
         real_weight, total_price = self.tu.get_order_data(order_id)
 
@@ -48,15 +50,9 @@ class TestDistTeamCommissionLevel2:
         print(f"  weight={real_weight}, price={total_price}")
         print(f"  预期: C一级={exp_first}, B二级={exp_second}")
 
-        # C 个人一级佣金
+        # C 个人一级佣金（C 非团员，保留个人）
         self.tu.assert_commission(order_id, pid_c, exp_first, "C个人一级")
-        # B 个人二级佣金（B 无团队，二级归个人）
-        self.tu.assert_commission(order_id, pid_b, exp_second, "B个人二级")
-        # A 团队佣金：A 不在 D←C←B 链上，无团队佣金
-        team_acc_id = self.tu.get_team_commission_account_id(team_id)
-        assert team_acc_id is not None
-        actual_team = self.tu.wait_team_commission(order_id, team_acc_id, timeout=10)
-        if actual_team is not None:
-            print(f"  ⚠ A团队佣金={actual_team}（预期无：A 不在链上）")
-        else:
-            print(f"  ✅ A团队无佣金（A 不在链上，符合预期）")
+        # B 个人二级佣金（B 是团员，全给团队下无个人收益）
+        self.tu.assert_wallet_delta(pid_b, 1, before_b, 0, label="B个人")
+        # A 团队佣金（全给团队：B 的二级进团队）
+        self.tu.assert_wallet_delta(team_id, 2, before_t, exp_second, label="A团队")

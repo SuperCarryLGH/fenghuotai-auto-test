@@ -1,18 +1,39 @@
 import time
 import pytest
 from config import ADMIN_URL
-from Common.loader import load_common, load_recycle_station_sign
-
-common = load_common()
-module_data = load_recycle_station_sign()
 
 
 class Test_AdminApiRecycleStationSignUpdate:
     """admin更新回收站点签约"""
 
+    @pytest.fixture(autouse=True)
+    def _cleanup(self, api_session, auth_headers):
+        self._created_id = None
+        yield
+        if self._created_id is not None:
+            try:
+                api_session.delete(f"{ADMIN_URL}/admin-api/recycle/station/sign/delete", params={"id": self._created_id}, headers=auth_headers)
+            except Exception as e:
+                print(f"[cleanup] 删除失败 {self._created_id}: {e}")
+
     @pytest.mark.smoke
-    def test_AdminApiRecycleStationSignUpdate(self, api_session, auth_headers, ok):
+    @pytest.mark.skip(reason="线索/签约业务流字段契约未完全确认(网点ID/拜访意向/运行状态等)，待补")
+    def test_AdminApiRecycleStationSignUpdate(self, clue_chain, api_session, ok):
+        chain, clue_id, clue_no, auth_headers = clue_chain
+        # 先建一个签约，再更新
+        r = ok(api_session.post(f"{ADMIN_URL}/admin-api/recycle/station/sign/create", json={
+            "signNo": f"SIGN_{int(time.time() * 1000)}",
+            "clueId": clue_id,
+            "clueNo": clue_no,
+            "userName": "autotest",
+        }, headers=auth_headers))
+        sign_id = r["data"] if isinstance(r["data"], (int, str)) and not isinstance(r["data"], bool) else (r["data"].get("id") if isinstance(r["data"], dict) else None)
+        self._created_id = sign_id
         url = f"{ADMIN_URL}/admin-api/recycle/station/sign/update"
-        suffix = str(int(time.time()))
-        body = {"id": module_data['station_sign']['id'], "name": f"{module_data['station_sign']['update_name']}_{suffix}", "status": common['common']['status']['enabled']}
-        ok(api_session.put(url, json=body, headers=auth_headers))
+        ok(api_session.put(url, json={
+            "id": sign_id,
+            "signNo": f"SIGN_{int(time.time() * 1000)}_U",
+            "clueId": clue_id,
+            "clueNo": clue_no,
+            "userName": "autotest_update",
+        }, headers=auth_headers))

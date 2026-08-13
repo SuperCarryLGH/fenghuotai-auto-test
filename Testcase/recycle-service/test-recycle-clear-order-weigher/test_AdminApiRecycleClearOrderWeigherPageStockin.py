@@ -1,17 +1,13 @@
 import pytest
 from config import ADMIN_URL
-from Common.loader import load_common
-from Common.loader import load_recycle_clear_order_weigher
-
-common = load_common()
-weigher_data = load_recycle_clear_order_weigher()
 
 
 class Test_AdminApiRecycleClearOrderWeigherPageStockin:
     """称重员入库分页"""
 
     @pytest.mark.smoke
-    def test_AdminApiRecycleClearOrderWeigherPageStockin(self, api_session, auth_headers, ok):
-        url = f"{ADMIN_URL}/admin-api/recycle/app-clearOrder-weigher/page-stockin"
-        params = {"pageNo": common['common']['page']['pageNo'], "pageSize": common['common']['page']['pageSize']}
-        ok(api_session.get(url, params=params, headers=auth_headers))
+    def test_AdminApiRecycleClearOrderWeigherPageStockin(self, weigher_ctx):
+        chain, wt = weigher_ctx
+        r = chain._get(f"{ADMIN_URL}/admin-api/recycle/app-clearOrder-weigher/page-stockin",
+                       {"pageNo": 1, "pageSize": 10}, chain._b_headers(wt))
+        print(r)

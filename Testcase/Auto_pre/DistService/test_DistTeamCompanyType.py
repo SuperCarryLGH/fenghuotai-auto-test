@@ -85,21 +85,23 @@ class TestDistTeamCompanyType:
                        headers=self.tu.app_headers(token_a), verify=False).json()
         team_id = r["data"]["teamInfo"]["teamId"]
 
-        # B 绑定 A 成为推广员 → 入团
+        # B 绑定 A 成为推广员 → 入团（需审核通过，全给团队下 B 的佣金才路由到团队）
         pid_b = self.tu.become_promoter(mobile_b, promoter_id=pid_a)[0]
-        self.tu.join_team(mobile_b, team_id)
+        _, apply_id = self.tu.join_team(mobile_b, team_id)
+        self.tu.audit_join(apply_id, token_a, status=20)
 
         # C 绑定 B → 下单
         token_c = self.tu.login.app_login_for_promoter(mobile=mobile_c, promoter_id=pid_b)
+        before_b = self.tu.get_wallet_balance(pid_b, 1)
+        before_t = self.tu.get_wallet_balance(team_id, 2)
         order_id = self.tu.settle_order(token_c, mobile_c)
         real_weight, total_price = self.tu.get_order_data(order_id)
 
-        # 校验分佣（团队佣金 = A 的二级佣金分成）
+        # 校验分佣（全给团队：B 个人无收益，团队全额入账）
         rules = self.tu.load_team_rules(token_a)
         info = self.tu.get_promoter_info(token_a)
         _, detail = self.tu.match_rule_detail(rules, info["level"], info["star"], real_weight)
         expected_personal, _, expected_team = self.tu.calc_team_split(detail, total_price)
-        team_acc_id = self.tu.get_team_commission_account_id(team_id)
-        assert team_acc_id is not None
-        self.tu.assert_commission(order_id, pid_b, expected_personal, "B个人一级")
-        self.tu.assert_team_commission(order_id, team_acc_id, expected_team, "企业团队二级")
+        self.tu.assert_wallet_delta(team_id, 2, before_t,
+                                    expected_personal + expected_team, label="企业团队")
+        self.tu.assert_wallet_delta(pid_b, 1, before_b, 0, label="B个人")

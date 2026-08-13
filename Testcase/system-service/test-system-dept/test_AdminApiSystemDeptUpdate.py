@@ -18,6 +18,8 @@ class Test_AdminApiSystemDeptUpdate:
             "status": dept["dept"]["status"]
             }
 
-        ok(api_session.put(url, headers=auth_headers,json=params))
-        assert data["msg"] == "已经存在该名字的部门"
-        print(data)
+        resp = api_session.put(url, headers=auth_headers, json=params)
+        assert resp.status_code == 200
+        r = resp.json()
+        assert r["msg"] == "已经存在该名字的部门"
+        print(r)

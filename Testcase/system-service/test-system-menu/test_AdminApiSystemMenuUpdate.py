@@ -20,6 +20,8 @@ class Test_AdminApiSystemMenuUpdate:
             "status": menu["menu"]["status"]
             }
 
-        ok(api_session.put(url, headers=auth_headers,json=params))
-        assert data["msg"] == "请求参数不正确:父菜单 ID 不能为空"
-        print(data)
+        resp = api_session.put(url, headers=auth_headers, json=params)
+        assert resp.status_code == 200
+        r = resp.json()
+        assert r["msg"] == "请求参数不正确:父菜单 ID 不能为空"
+        print(r)

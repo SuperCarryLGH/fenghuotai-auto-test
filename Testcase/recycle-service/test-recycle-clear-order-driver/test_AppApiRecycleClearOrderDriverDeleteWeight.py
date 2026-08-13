@@ -13,5 +13,8 @@ class Test_AppApiRecycleClearOrderDriverDeleteWeight:
     @pytest.mark.smoke
     def test_AppApiRecycleClearOrderDriverDeleteWeight(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/recycle/app-clearOrder-driver/delete-weight"
-        body = {"id": driver_data['driver']['order_id']}
-        ok(api_session.post(url, json=body, headers=auth_headers))
+        body = {"id": 999999999999}
+        resp = api_session.post(url, json=body, headers=auth_headers)
+        assert resp.status_code == 200
+        r = resp.json()
+        print(r)

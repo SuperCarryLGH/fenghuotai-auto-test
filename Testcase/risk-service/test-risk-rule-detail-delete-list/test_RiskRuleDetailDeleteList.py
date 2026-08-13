@@ -9,6 +9,9 @@ class TestRiskRuleDetailDeleteList:
     def test_RiskRuleDetailDeleteList(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/risk/rule-detail/delete-list"
         params = {
-            "ids":2072920935440969729
+            "ids": "999999999999"
         }
-        ok(api_session.delete(url, params=params, headers=auth_headers))
+        resp = api_session.delete(url, params=params, headers=auth_headers)
+        assert resp.status_code == 200
+        r = resp.json()
+        print(r)

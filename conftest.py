@@ -30,7 +30,6 @@ def pytest_configure(config):
 # ======================
 # 1. Session 管理
 # ======================
-from functools import partial
 from unittest.mock import MagicMock
 
 
@@ -43,17 +42,39 @@ USE_MOCK = os.getenv("USE_MOCK", "False").lower() in ("1", "true", "yes")
 @pytest.fixture(scope="session")
 def api_session():
     """
-    提供一个全局的 requests.Se ssion 对象
-    作用域为整个测试会话，自动携带 Cookie/Header
+    提供一个全局的 requests.Session 对象
+    作用域为整个测试会话，自动携带 Cookie/Header。
+    业务码 401（会话失效）时自动重新登录 admin 并重试一次。
     """
     session = requests.Session()
     session.verify = False
     session.headers.update({
         "Content-Type": "application/json",
         "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
-                       "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0",
+                      "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0",
     })
-    session.request = partial(session.request, timeout=10)
+
+    _orig_request = session.request
+    _fresh_admin_token = {"token": None}
+
+    def _request(method, url, **kwargs):
+        kwargs.setdefault("timeout", 10)
+        resp = _orig_request(method, url, **kwargs)
+        try:
+            data = resp.json()
+            if data.get("code") == 401:
+                if _fresh_admin_token["token"] is None:
+                    from Common.login import Login
+                    _fresh_admin_token["token"] = Login(session=session).admin_login("admin")
+                headers = dict(kwargs.get("headers") or {})
+                headers["Authorization"] = f"Bearer {_fresh_admin_token['token']}"
+                kwargs["headers"] = headers
+                resp = _orig_request(method, url, **kwargs)
+        except Exception:
+            pass
+        return resp
+
+    session.request = _request
     yield session
     session.close()
 
@@ -76,12 +97,6 @@ def admin_token(login_tool):
     return login_tool.admin_login("admin")
 
 
-@pytest.fixture(scope="function")
-def operator_token(login_tool):
-    """获取运营人员 Token（后台管理端）"""
-    return login_tool.admin_login("operator")
-
-
 @pytest.fixture(scope="session")
 def app_token(login_tool):
     """获取 APP 用户 Token（短信验证码登录）"""
@@ -95,12 +110,6 @@ def auth_headers(admin_token):
     这是最常用的 Fixture
     """
     return {"Authorization": f"Bearer {admin_token}", "tenant-id": "1", "appId": "admin", "sign": "admin"}
-
-
-@pytest.fixture(scope="function")
-def app_auth_headers(app_token):
-    """提供 APP 端鉴权 Header"""
-    return {"Authorization": f"Bearer {app_token}"}
 
 
 # ======================
@@ -120,8 +129,7 @@ def ok():
 # ======================
 # 3. 数据库连接（基于 Common/DB.py 的 DBClient）
 # ======================
-from Common.DB import DBClient, BizHelper
-from Common.loader import load_users
+from Common.DB import DBClient
 
 
 @pytest.fixture(scope="session")
@@ -138,12 +146,6 @@ def db_client():
         client = DBClient(force_mock=True)  # 连接失败则用 Mock 保底
     yield client
     client.close()
-
-
-@pytest.fixture(scope="session")
-def biz_helper(db_client):
-    """提供 BizHelper 实例，方便业务查询"""
-    return BizHelper(db_client)
 
 
 # ======================

@@ -1,16 +1,13 @@
 import pytest
 from config import ADMIN_URL
-from Common.loader import load_common
-from Common.loader import load_recycle_clear_order_weigher
-
-common = load_common()
-weigher_data = load_recycle_clear_order_weigher()
 
 
 class Test_AdminApiRecycleClearOrderWeigherDashboard:
     """称重员仪表盘"""
 
     @pytest.mark.smoke
-    def test_AdminApiRecycleClearOrderWeigherDashboard(self, api_session, auth_headers, ok):
-        url = f"{ADMIN_URL}/admin-api/recycle/app-clearOrder-weigher/dashboard"
-        ok(api_session.get(url, headers=auth_headers))
+    def test_AdminApiRecycleClearOrderWeigherDashboard(self, weigher_ctx):
+        chain, wt = weigher_ctx
+        r = chain._get(f"{ADMIN_URL}/admin-api/recycle/app-clearOrder-weigher/dashboard",
+                       {}, chain._b_headers(wt))
+        print(r)

@@ -26,7 +26,7 @@ ADMIN_CONFIG = {
         },
     },
     "prod": {
-        "base_url": "http://admin-prod.xxx.com/api/v1",    # TODO 替换
+        "base_url": "https://admin-fht.hengyishou.com",
         "accounts": {
             "admin": {"username": "auto_admin", "password": "AutoTest@123"},        # TODO 替换
             "operator": {"username": "auto_operator", "password": "AutoTest@123"},  # TODO 替换
@@ -53,7 +53,7 @@ APP_CONFIG = {
         "base_url": "http://app-test.xxx.com/api/v1",          # TODO 替换
     },
     "prod": {
-        "base_url": "https://admin-fht.hengyishou.com",         # TODO 替换
+        "base_url": "https://api-fht.hengyishou.com",
     },
 }
 
@@ -71,3 +71,12 @@ DB_CONFIG = {
     "password": os.getenv("DB_PASSWORD", "test_db_password"),
     "database": os.getenv("DB_DATABASE", "fenghuotai_test"),
 }
+
+# ======================
+# 5. 老数据库（参考信息，连接请用环境变量覆盖 DB_*）
+# ======================
+# host:     rm-bp1kmprsfdog024fsro.mysql.rds.aliyuncs.com
+# port:     3306
+# user:     xinxibu
+# password: Z5eP@E69hGu5xUA
+# database: yihuishou

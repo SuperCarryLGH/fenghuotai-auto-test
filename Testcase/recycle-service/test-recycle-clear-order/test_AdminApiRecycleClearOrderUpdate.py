@@ -11,6 +11,7 @@ class Test_AdminApiRecycleClearOrderUpdate:
     """admin更新回收清运单"""
 
     @pytest.mark.smoke
+    @pytest.mark.skip(reason="recycle 深层链路依赖仓库/订单预置数据，暂未自建")
     def test_AdminApiRecycleClearOrderUpdate(self, api_session, auth_headers, ok):
         url = f"{ADMIN_URL}/admin-api/recycle/clear-order/update"
         suffix = str(int(time.time()))

@@ -76,7 +76,7 @@ class TestDistConcurrentSettle:
             "city": "杭州市", "districtCode": "330108", "district": "滨江区",
             "areaName": "浙江省 杭州市 滨江区", "communityName": "测试小区",
             "detailAddress": "测试地址", "lat": "30.2085", "lon": "120.212", "defaultStatus": True,
-        }, headers=self._app_headers(token), verify=False).json()
+        }, headers=self._app_headers(token), verify=False, timeout=15).json()
         self._assert_ok(r, f"{mobile} 地址")
         addr_id = r["data"] if isinstance(r["data"], (int, str)) else r["data"].get("id", r["data"])
         r = s.post(f"{APP_URL}/app-api/recycle/order/v2/mini-order-submit", json={
@@ -88,7 +88,7 @@ class TestDistConcurrentSettle:
             "estimatedInfo": "5~10kg", "lat": "34.795439", "lon": "113.688145",
             "num": 5, "predictWeight": "5~10kg",
             "channel": "",
-        }, headers=self._app_headers(token), verify=False).json()
+        }, headers=self._app_headers(token), verify=False, timeout=15).json()
         self._assert_ok(r, f"{mobile} 下单")
         order_id = r["data"]["id"]
         # 测试环境自动结算，已注释 order-inspection

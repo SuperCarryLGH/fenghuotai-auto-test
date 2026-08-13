@@ -23,3 +23,13 @@ Thumbs.db
 
 # Generated files
 api_docs.xlsx
+
+# Test artifacts
+allure-results/
+allure-report/
+output/
+
+# Migration runtime
+logs/
+scripts/.migrate_*.json
+scripts/*.log

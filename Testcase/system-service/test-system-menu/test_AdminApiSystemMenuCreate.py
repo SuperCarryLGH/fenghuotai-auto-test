@@ -6,6 +6,16 @@ menu = load_menu()
 class Test_AdminApiSystemMenuCreate:
     """创建菜单"""
 
+    @pytest.fixture(autouse=True)
+    def _cleanup(self, api_session, auth_headers):
+        self._created_id = None
+        yield
+        if self._created_id is not None:
+            try:
+                api_session.delete(f"{ADMIN_URL}/admin-api/system/menu/delete", params={"id": self._created_id}, headers=auth_headers)
+            except Exception as e:
+                print(f"[cleanup] 删除失败 {self._created_id}: {e}")
+
     @pytest.mark.smoke
     def test_AdminApiSystemMenuCreate(self, api_session,auth_headers, ok):
         """
@@ -13,7 +23,7 @@ class Test_AdminApiSystemMenuCreate:
         """
         url = f"{ADMIN_URL}/admin-api/system/menu/create"
         params = {
-            "id":1212,
+            "id": 1212,
             "name": menu["menu"]["name"],
             "parentId": menu["menu"]["parentId"],
             "type": menu["menu"]["type"],
@@ -21,6 +31,8 @@ class Test_AdminApiSystemMenuCreate:
             "status": menu["menu"]["status"]
             }
 
-        ok(api_session.post(url, headers=auth_headers,json=params))
-        assert data["msg"] == "父菜单的类型必须是目录或者菜单"
-        print(data)
+        resp = api_session.post(url, headers=auth_headers, json=params)
+        assert resp.status_code == 200
+        r = resp.json()
+        assert r["msg"] == "父菜单的类型必须是目录或者菜单"
+        print(r)

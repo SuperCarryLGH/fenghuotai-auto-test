@@ -412,7 +412,7 @@ class TestFundFlowScenarios:
             order_id = r.get("data", {}).get("id", 0)
 
             time.sleep(1)
-            requests.put(f"{ADMIN_URL}/recycle/admin-order/order-inspection",
+            requests.put(f"{ADMIN_URL}/admin-api/recycle/admin-order/order-inspection",
                          json={"orderId": order_id},
                          headers={**_BASE_HEADERS, **h}, timeout=30)
 
@@ -522,7 +522,7 @@ class TestFundFlowScenarios:
             order_id_s12 = r.get("data", {}).get("id", 0)
 
             time.sleep(1)
-            requests.put(f"{ADMIN_URL}/recycle/admin-order/order-inspection",
+            requests.put(f"{ADMIN_URL}/admin-api/recycle/admin-order/order-inspection",
                          json={"orderId": order_id_s12},
                          headers={**_BASE_HEADERS, **h}, timeout=30)
 
@@ -571,7 +571,7 @@ class TestFundFlowScenarios:
             order_id_s13 = r.get("data", {}).get("id", 0)
 
             time.sleep(1)
-            requests.put(f"{ADMIN_URL}/recycle/admin-order/order-inspection",
+            requests.put(f"{ADMIN_URL}/admin-api/recycle/admin-order/order-inspection",
                          json={"orderId": order_id_s13},
                          headers={**_BASE_HEADERS, **h}, timeout=30)
 

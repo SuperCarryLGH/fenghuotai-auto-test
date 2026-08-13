@@ -11,10 +11,7 @@ from typing import Optional
 import aiohttp
 AMAP_KEY = os.getenv("AMAP_KEY", "ea44abcc66c996667953325792c84c8f")
 KEYWORDS = [
-    "废品回收",
-    "再生资源回收",
-    "旧货回收",
-    "回收站",
+    "旧衣回收",
 ]
 QPS = 2
 OUTPUT_DIR = "output"

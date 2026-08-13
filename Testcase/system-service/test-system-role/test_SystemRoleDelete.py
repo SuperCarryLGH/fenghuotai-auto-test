@@ -6,14 +6,7 @@ class TestSystemRoleDelete:
     """删除角色"""
 
     @pytest.mark.smoke
-    def test_SystemRoleDelete(self, api_session, auth_headers, autotest_role_id):
+    def test_SystemRoleDelete(self, api_session, auth_headers, autotest_role_id, ok):
         url = f"{ADMIN_URL}/admin-api/system/role/delete"
-        # ⚠️ 敏感操作 — 参数已补全，确认后再执行
-        body = {
-            # TODO: 核对参数后取消下方注释
-        }
-        # resp = api_session.delete(url, json=body, headers=auth_headers)
-        # assert resp.status_code == 200
-        # r = resp.json()
-        # assert r["code"] == 0
-        # print(r)
+        r = ok(api_session.delete(url, params={"id": autotest_role_id}, headers=auth_headers))
+        print(r)

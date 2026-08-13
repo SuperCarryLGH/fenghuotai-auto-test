@@ -5,6 +5,16 @@ from config import ADMIN_URL
 class TestAdminApiPayFundCreate:
     """公司充值 - 分拣中心充值"""
 
+    @pytest.fixture(autouse=True)
+    def _cleanup(self, api_session, auth_headers):
+        self._created_id = None
+        yield
+        if self._created_id is not None:
+            try:
+                api_session.delete(f"{ADMIN_URL}/admin-api/pay/fund/delete", params={"id": self._created_id}, headers=auth_headers)
+            except Exception as e:
+                print(f"[cleanup] 删除失败 {self._created_id}: {e}")
+
     @pytest.mark.smoke
     def test_AdminApiPayFundCreate(self, api_session, auth_headers):
         """

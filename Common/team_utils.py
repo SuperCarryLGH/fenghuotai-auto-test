@@ -355,3 +355,75 @@ class TeamUtils:
             print(f"  订单信息: weight={order['real_weight']}, price={order['total_price']}")
             raise AssertionError(f"{label}: 预期={expected}, 实际={actual}")
         print(f"  ✅ {label} 团队佣金={actual}")
+
+    def dump_order_context(self, label, order_id, team_id, pid_b, mobile_b):
+        """打印订单上下文（B/团队/订单/账户/佣金），失败后可按 ID 直接查库"""
+        print(f"\n===== {label} 上下文 =====")
+        u = self.db.fetch_one("SELECT id, mobile FROM member_user WHERE mobile=%s", (mobile_b,))
+        print(f"  B(团员): mobile={mobile_b}, user_id={u['id'] if u else '?'}, promoter_id={pid_b}")
+        rel = self.db.fetch_all(
+            "SELECT parent_promoter_id, promoter_id, user_id, bind_time "
+            "FROM dist_promoter_user_relation WHERE promoter_id=%s AND deleted=0", (pid_b,))
+        print(f"  B 的绑定关系: {rel if rel else '无'}")
+        t = self.db.fetch_one(
+            "SELECT id, team_name, leader_promoter_id FROM dist_team WHERE id=%s AND deleted=0", (team_id,))
+        print(f"  团队: team_id={team_id}, team_name={t['team_name'] if t else '?'}, "
+              f"leader_promoter_id={t['leader_promoter_id'] if t else '?'}")
+        if t:
+            lp = self.db.fetch_one("SELECT user_id FROM dist_promoter WHERE id=%s AND deleted=0",
+                                   (t["leader_promoter_id"],))
+            if lp:
+                lu = self.db.fetch_one("SELECT mobile, nickname FROM member_user WHERE id=%s", (lp["user_id"],))
+                print(f"  团长: promoter_id={t['leader_promoter_id']}, "
+                      f"mobile={lu['mobile'] if lu else '?'}, nickname={lu['nickname'] if lu else '?'}")
+        o = self.db.fetch_one(
+            "SELECT id, user_id, real_weight, total_price, status FROM recycle_order WHERE id=%s", (order_id,))
+        print(f"  订单: order_id={order_id}, buyer_user={o['user_id'] if o else '?'}, "
+              f"weight={o['real_weight'] if o else '?'}, price={o['total_price'] if o else '?'}, "
+              f"status={o['status'] if o else '?'}")
+        acc = self.db.fetch_one(
+            "SELECT id, account_id, balance FROM dist_commission_account "
+            "WHERE account_id=%s AND account_type=2 AND deleted=0", (team_id,))
+        print(f"  团队账户: acc_id={acc['id'] if acc else '?'}, balance={acc['balance'] if acc else '?'}")
+        recs = self.db.fetch_all(
+            "SELECT r.price, r.source_type, r.income_target_type, r.status, a.account_id, a.account_type "
+            "FROM dist_commission_record r JOIN dist_commission_account a ON r.commission_account_id=a.id "
+            "WHERE r.order_id=%s AND r.deleted=0", (order_id,))
+        print(f"  订单佣金记录: {recs if recs else '无'}")
+        print("==========================\n")
+
+    def get_wallet_balance(self, account_id, account_type):
+        """读佣金账户余额（个人=1 / 团队=2）"""
+        row = self.db.fetch_one(
+            "SELECT balance FROM dist_commission_account "
+            "WHERE account_id=%s AND account_type=%s AND deleted=0",
+            (account_id, account_type))
+        return int(row["balance"]) if row else 0
+
+    def wait_wallet_delta(self, account_id, account_type, before, expected_delta, timeout=40, label=""):
+        """轮询直到余额相对 before 增加 expected_delta（>0 用）"""
+        for _ in range(timeout * 2):
+            now = self.get_wallet_balance(account_id, account_type)
+            if now - before >= expected_delta:
+                print(f"  ✅ {label} 余额 {before}→{now} (+{now-before})")
+                return
+            time.sleep(0.5)
+        now = self.get_wallet_balance(account_id, account_type)
+        raise AssertionError(f"{label}: 余额 {before}→{now}, 预期+{expected_delta}")
+
+    def assert_wallet_unchanged(self, account_id, account_type, before, label="", timeout=10):
+        """断言余额未变（全给团队下个人无收益，期望 delta=0）"""
+        time.sleep(1)
+        for _ in range(timeout * 2):
+            now = self.get_wallet_balance(account_id, account_type)
+            if now - before != 0:
+                raise AssertionError(f"{label}: 余额变化 {before}→{now}, 预期不变")
+            time.sleep(0.5)
+        print(f"  ✅ {label} 余额不变 ({before}→{now})")
+
+    def assert_wallet_delta(self, account_id, account_type, before, expected_delta, label="", timeout=40):
+        """钱包金额断言：delta>0 等入账，delta=0 断言不变"""
+        if expected_delta == 0:
+            self.assert_wallet_unchanged(account_id, account_type, before, label)
+        else:
+            self.wait_wallet_delta(account_id, account_type, before, expected_delta, timeout, label)

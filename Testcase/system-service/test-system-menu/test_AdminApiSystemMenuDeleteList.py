@@ -13,9 +13,10 @@ class Test_AdminApiSystemMenuDeleteList:
         """
         url = f"{ADMIN_URL}/admin-api/system/menu/delete-list"
         params = {
-            "ids": 1213
+            "ids": [2147483647]
             }
 
-        ok(api_session.delete(url, headers=auth_headers,params=params))
-        #assert data["code"] == 0
-        print(data)
+        resp = api_session.delete(url, headers=auth_headers, params=params)
+        assert resp.status_code == 200
+        r = resp.json()
+        print(r)

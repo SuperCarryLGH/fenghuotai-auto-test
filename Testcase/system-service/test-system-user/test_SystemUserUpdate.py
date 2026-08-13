@@ -6,7 +6,16 @@ class TestSystemUserUpdate:
     """修改用户"""
 
     @pytest.mark.smoke
-    def test_SystemUserUpdate(self, api_session, auth_headers, ok):
+    def test_SystemUserUpdate(self, api_session, auth_headers, autotest_user_id, ok):
         url = f"{ADMIN_URL}/admin-api/system/user/update"
-        body = {"id": 1, "nickname": f"更新用户_194199", "status": 0}
-        ok(api_session.put(url, json=body, headers=auth_headers))
+        suffix = str(autotest_user_id)[-8:]
+        body = {
+            "id": autotest_user_id,
+            "username": f"upd{suffix}",
+            "nickname": "更新用户_autotest",
+            "mobile": f"186{suffix}",
+            "sex": 1,
+            "status": 0,
+        }
+        r = ok(api_session.put(url, json=body, headers=auth_headers))
+        print(r)

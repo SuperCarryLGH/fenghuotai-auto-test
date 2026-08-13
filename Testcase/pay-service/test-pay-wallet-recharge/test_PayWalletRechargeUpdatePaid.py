@@ -6,6 +6,7 @@ class TestPayWalletRechargeUpdatePaid:
     """更新钱包充值为已充值"""
 
     @pytest.mark.smoke
+    @pytest.mark.skip(reason="需真实充值记录 id，当前为占位符")
     def test_PayWalletRechargeUpdatePaid(self, api_session, station_token):
         url = f"{ADMIN_URL}/admin-api/pay/wallet-recharge/update-paid"
         # ⚠️ 敏感操作 — 参数已补全，确认后再执行

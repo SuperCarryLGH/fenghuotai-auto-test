@@ -1,17 +1,11 @@
 import pytest
-from config import ADMIN_URL
-from Common.loader import load_common
-from Common.loader import load_recycle_clear_order_driver
-
-common = load_common()
-driver_data = load_recycle_clear_order_driver()
 
 
 class Test_AppApiRecycleClearOrderDriverGet:
     """司机获取详情"""
 
     @pytest.mark.smoke
-    def test_AppApiRecycleClearOrderDriverGet(self, api_session, auth_headers, ok):
-        url = f"{ADMIN_URL}/admin-api/recycle/app-clearOrder-driver/get"
-        params = {"id": driver_data['driver']['order_id']}
-        ok(api_session.get(url, params=params, headers=auth_headers))
+    def test_AppApiRecycleClearOrderDriverGet(self, clear_chain):
+        chain, co_id, driver_token, _ = clear_chain
+        r = chain.driver_get(co_id, driver_token)
+        print(r)

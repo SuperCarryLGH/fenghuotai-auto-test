@@ -11,14 +11,15 @@ class Test_AdminApiSystemRoleUpdate:
     """修改角色"""
 
     @pytest.mark.smoke
-    def test_AdminApiSystemRoleUpdate(self, api_session, auth_headers, ok):
+    def test_AdminApiSystemRoleUpdate(self, api_session, auth_headers, autotest_role_id, ok):
         url = f"{ADMIN_URL}/admin-api/system/role/update"
         suffix = str(int(time.time()))
         body = {
-            "id": common['common']['id']['valid'],
+            "id": autotest_role_id,
             "name": f"更新角色_{suffix}",
             "code": f"UPDATE_ROLE_{suffix}",
             "sort": 2,
-            "status": common['common']['status']['enabled'],
+            "status": 0,
         }
-        ok(api_session.put(url, json=body, headers=auth_headers))
+        r = ok(api_session.put(url, json=body, headers=auth_headers))
+        print(r)

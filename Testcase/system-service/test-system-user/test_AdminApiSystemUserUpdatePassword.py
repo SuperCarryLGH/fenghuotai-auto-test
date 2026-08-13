@@ -10,7 +10,8 @@ class Test_AdminApiSystemUserUpdatePassword:
     """重置用户密码"""
 
     @pytest.mark.smoke
-    def test_AdminApiSystemUserUpdatePassword(self, api_session, auth_headers, ok):
+    def test_AdminApiSystemUserUpdatePassword(self, api_session, auth_headers, autotest_user_id, ok):
         url = f"{ADMIN_URL}/admin-api/system/user/update-password"
-        body = {"id": common['common']['id']['valid'], "password": "autotest123"}
-        ok(api_session.put(url, json=body, headers=auth_headers))
+        body = {"id": autotest_user_id, "password": "autotest123"}
+        r = ok(api_session.put(url, json=body, headers=auth_headers))
+        print(r)

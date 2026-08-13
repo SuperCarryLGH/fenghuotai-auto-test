@@ -17,6 +17,7 @@ class Test_AdminApiRecycleStationUpdate:
         body = {
             "id": module_data['station']['id'],
             "name": f"{module_data['station']['update_name']}_{suffix}",
-            "status": common['common']['status']['enabled'],
+            "checkStatus": 1,
+            "status": 0,
         }
         ok(api_session.put(url, json=body, headers=auth_headers))

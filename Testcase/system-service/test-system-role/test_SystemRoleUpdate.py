@@ -6,12 +6,8 @@ class TestSystemRoleUpdate:
     """修改角色"""
 
     @pytest.mark.smoke
-    def test_SystemRoleUpdate(self, api_session, auth_headers, autotest_role_id):
+    def test_SystemRoleUpdate(self, api_session, auth_headers, autotest_role_id, ok):
         url = f"{ADMIN_URL}/admin-api/system/role/update"
-        # ⚠️ 敏感操作 — 参数已补全，确认后再执行
-        body = {"id": autotest_role_id}  # 来自 conftest fixture
-        # resp = api_session.put(url, json=body, headers=auth_headers)
-        # assert resp.status_code == 200
-        # r = resp.json()
-        # assert r["code"] == 0
-        # print(r)
+        body = {"id": autotest_role_id, "name": "autotest_role_update", "code": "AUTOTEST_ROLE_UPDATE", "sort": 0, "status": 0}
+        r = ok(api_session.put(url, json=body, headers=auth_headers))
+        print(r)

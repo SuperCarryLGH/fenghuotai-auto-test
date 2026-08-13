@@ -30,8 +30,16 @@ class TestDistTeamCommissionCalc:
 
         # 3. C 绑定 B → 下单
         token_c = self.tu.login.app_login_for_promoter(mobile=mobile_c, promoter_id=pid_b)
+        before_b = self.tu.get_wallet_balance(pid_b, 1)
+        before_t = self.tu.get_wallet_balance(team_id, 2)
         order_id = self.tu.settle_order(token_c, mobile_c)
         real_weight, total_price = self.tu.get_order_data(order_id)
+
+        # setup 身份日志
+        print(f"  A(团长): mobile={mobile_a}, promoter_id={pid_a}, team_id={team_id}")
+        print(f"  B(团员): mobile={mobile_b}, promoter_id={pid_b}")
+        print(f"  C(买家): mobile={mobile_c}, order_id={order_id}")
+        self.tu.dump_order_context("test_team_commission_basic", order_id, team_id, pid_b, mobile_b)
 
         # 4. 加载规则
         rules = self.tu.load_team_rules(token_a)
@@ -44,21 +52,15 @@ class TestDistTeamCommissionCalc:
         print(f"  weight={real_weight}, price={total_price}")
         print(f"  预期个人一级={expected_personal}, 团队二级={expected_team}")
 
-        # 6. 校验个人一级佣金 (B)
-        self.tu.assert_commission(order_id, pid_b, expected_personal, "B个人一级")
+        # 6-7. 钱包金额校验（全给团队：B 个人无收益，团队全额入账）
+        self.tu.assert_wallet_delta(team_id, 2, before_t,
+                                    expected_personal + expected_team, label="A团队")
+        self.tu.assert_wallet_delta(pid_b, 1, before_b, 0, label="B个人")
 
-        # 7. 校验团队佣金 (A 的团队账户 = A 的二级佣金)
-        team_acc_id = self.tu.get_team_commission_account_id(team_id)
-        assert team_acc_id is not None, "团队佣金账户不存在"
-        self.tu.assert_team_commission(order_id, team_acc_id, expected_team, "A团队二级")
-
-        # 8. APP 侧校验：B 个人、A 团队的佣金都可见（用户视角）
-        token_b = self.tu.login.app_login_for_promoter(mobile=mobile_b)
-        personal_comm = self._find_order_commission(token_b, order_id, 10)
+        # 8. APP 侧校验：A 团队订单列表可见本单佣金（全给团队下 B 个人无佣金）
         team_comm = self._find_order_commission(token_a, order_id, 20)
-        assert personal_comm is not None and personal_comm > 0, "B 个人订单列表查不到本单佣金"
         assert team_comm is not None and team_comm > 0, "A 团队订单列表查不到本单佣金"
-        print(f"  APP 订单列表可见: B个人佣金={personal_comm}, A团队佣金={team_comm}")
+        print(f"  APP 团队订单列表可见本单佣金={team_comm}")
 
     def _find_order_commission(self, token, order_id, promote_type):
         """APP stats/order-list 里找本单的 orderCommission"""

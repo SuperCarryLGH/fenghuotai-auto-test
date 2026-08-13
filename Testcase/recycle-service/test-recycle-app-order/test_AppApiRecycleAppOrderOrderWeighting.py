@@ -1,17 +1,13 @@
 import pytest
-from config import ADMIN_URL
-from Common.loader import load_common
-from Common.loader import load_recycle_app_order
-
-common = load_common()
-order_data = load_recycle_app_order()
 
 
 class Test_AppApiRecycleAppOrderOrderWeighting:
     """APP订单称重"""
 
     @pytest.mark.smoke
-    def test_AppApiRecycleAppOrderOrderWeighting(self, api_session, auth_headers, ok):
-        url = f"{ADMIN_URL}/admin-api/recycle/app-order/order-weighting"
-        body = {"id": order_data['app_order']['order_id']}
-        ok(api_session.post(url, json=body, headers=auth_headers))
+    def test_AppApiRecycleAppOrderOrderWeighting(self, order_chain):
+        chain, order_id, station_token, _ = order_chain
+        chain.order_receive(order_id, station_token)
+        item_id = chain.order_get_item_id(order_id, station_token)
+        r = chain.order_weigh(order_id, item_id, station_token)
+        print(r)

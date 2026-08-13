@@ -1,17 +1,13 @@
 import pytest
 from config import ADMIN_URL
-from Common.loader import load_common
-from Common.loader import load_recycle_station_clue
-
-common = load_common()
-clue_data = load_recycle_station_clue()
 
 
 class Test_AdminApiRecycleStationClueGet:
-    """admin获取回收站点线索详情"""
+    """线索详情"""
 
     @pytest.mark.smoke
-    def test_AdminApiRecycleStationClueGet(self, api_session, auth_headers, ok):
+    def test_AdminApiRecycleStationClueGet(self, clue_chain, api_session, ok):
+        chain, clue_id, clue_no, auth_headers = clue_chain
         url = f"{ADMIN_URL}/admin-api/recycle/station-clue/get"
-        params = {"id": clue_data['station_clue']['id']}
-        ok(api_session.get(url, params=params, headers=auth_headers))
+        r = ok(api_session.get(url, params={"id": clue_id}, headers=auth_headers))
+        print(r)
