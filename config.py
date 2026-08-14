@@ -62,6 +62,12 @@ APP_URL = APP_CONFIG[ENV]["base_url"]
 USE_REAL_SMS_CODE = os.getenv("USE_REAL_SMS_CODE", "false").lower() in ("1", "true", "yes")
 
 # ======================
+# 4. SkyWalking 链路查询库默认配置（Common/skywalking.py 使用）
+# ======================
+SW_OAP_URL = os.getenv("SW_OAP_URL", "http://218.244.151.59:8081")
+SW_AUTH_TOKEN = os.getenv("SW_AUTH_TOKEN", "")  # OAP 查询鉴权，无鉴权环境留空
+
+# ======================
 # 4. 数据库配置 (DB)
 # ======================
 DB_CONFIG = {
