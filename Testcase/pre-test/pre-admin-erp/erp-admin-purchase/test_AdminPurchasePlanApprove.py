@@ -4,6 +4,7 @@ from config import ADMIN_URL
 
 @pytest.mark.smoke
 def test_AdminPurchasePlanApprove(api_session, auth_headers, autotest_purchase_plan):
+    """审批采购计划"""
     plan_id = autotest_purchase_plan
     body = {
         "id": plan_id,

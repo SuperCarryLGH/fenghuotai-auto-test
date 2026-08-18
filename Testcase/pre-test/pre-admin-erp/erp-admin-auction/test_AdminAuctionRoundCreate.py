@@ -4,6 +4,7 @@ from config import ADMIN_URL
 
 @pytest.mark.smoke
 def test_AdminAuctionRoundCreate(api_session, auth_headers, autotest_product):
+    """创建竞拍场次"""
     product_id = autotest_product
     body = {
         "id": 0,

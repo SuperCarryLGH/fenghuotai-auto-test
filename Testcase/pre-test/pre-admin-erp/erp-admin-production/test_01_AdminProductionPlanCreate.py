@@ -1,5 +1,9 @@
 import pytest
-class TestAdminProductionPlanCreate: #创建生产计划
+
+
+class TestAdminProductionPlanCreate:
+    """创建生产计划"""
+
     @pytest.mark.smoke
     def test_admin_production_plan_create(self, production_plan_create):
         production_id = production_plan_create

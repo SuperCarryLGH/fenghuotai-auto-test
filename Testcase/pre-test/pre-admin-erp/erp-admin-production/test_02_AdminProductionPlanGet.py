@@ -4,6 +4,7 @@ from config import ADMIN_URL
 
 @pytest.mark.smoke
 def test_AdminProductionPlan_get(api_session,auth_headers,production_plan_create):
+    """获得生产计划"""
     production_plan_id = production_plan_create
     params = {"id": production_plan_id}
     resp = api_session.get(f"{ADMIN_URL}/admin-api/erp/production-plan/get",params=params,headers=auth_headers)

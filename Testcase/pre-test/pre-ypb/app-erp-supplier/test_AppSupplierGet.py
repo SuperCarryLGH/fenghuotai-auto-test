@@ -3,6 +3,7 @@ from config import APP_URL
 
 @pytest.mark.smoke
 def test_AppSupplierGet(api_session, auth_headers, app_supplier):
+    """获得供应商详情"""
     data_id = app_supplier
     params = {"id": data_id}
     resp = api_session.get(f"{APP_URL}/admin-api/erp/app-supplier/get", params=params, headers=auth_headers)

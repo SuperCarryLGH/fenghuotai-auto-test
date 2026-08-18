@@ -3,6 +3,7 @@ import time
 from config import ADMIN_URL
 @pytest.mark.smoke
 def test_AdminProductionPlan_update(api_session,auth_headers,production_plan_create):
+    """更新生产计划"""
     production_plan_id = production_plan_create
     body = {
         "id":production_plan_id,

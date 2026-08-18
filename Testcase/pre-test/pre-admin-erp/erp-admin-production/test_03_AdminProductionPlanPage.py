@@ -3,6 +3,7 @@ import pytest
 from config import ADMIN_URL
 @pytest.mark.smoke
 def test_AdminProductionPlan_page(api_session,auth_headers):
+    """获得生产计划分页"""
     body = {
         "pageNo":1,
         "pageSize":10,

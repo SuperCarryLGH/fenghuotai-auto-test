@@ -4,6 +4,7 @@ from config import ADMIN_URL
 
 @pytest.mark.smoke
 def test_AdminAuctionRoundExportExcel(api_session, auth_headers):
+    """导出竞拍场次 Excel"""
     params = {
         "pageNo": 1,
         "pageSize": 10,

@@ -4,6 +4,7 @@ from config import ADMIN_URL
 
 @pytest.mark.smoke
 def test_AdminPurchaseInspectPage(api_session, auth_headers):
+    """获取采购质检列表"""
     params = {
         "inspectType": 0,
         "pageNo": 1,

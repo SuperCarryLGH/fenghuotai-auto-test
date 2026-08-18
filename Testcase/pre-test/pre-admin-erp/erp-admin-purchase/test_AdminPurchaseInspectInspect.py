@@ -4,6 +4,7 @@ from config import ADMIN_URL
 
 @pytest.mark.smoke
 def test_AdminPurchaseInspectInspect(api_session, auth_headers, autotest_purchase_order):
+    """提交采购质检结果"""
     order_id = autotest_purchase_order
     body = {
         "id": order_id,

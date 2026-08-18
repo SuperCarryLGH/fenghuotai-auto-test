@@ -5,6 +5,7 @@ from config import ADMIN_URL
 
 @pytest.mark.smoke
 def test_AdminPurchasePlanUpdate(api_session, auth_headers, autotest_purchase_plan, autotest_product):
+    """更新采购计划"""
     plan_id = autotest_purchase_plan
     product_id = autotest_product
     body = {

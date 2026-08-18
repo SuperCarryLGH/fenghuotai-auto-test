@@ -3,6 +3,7 @@ from config import APP_URL
 
 @pytest.mark.smoke
 def test_AppProductionTaskProductStockIn(api_session, auth_headers, app_production_task, app_product):
+    """成品入库"""
     data_id = app_production_task
     body = {"taskId": data_id, "productId": app_product, "weight": 100, "packageCount": 2, "stockLocationId": 200, "stockLocationName": "B区-01", "remark": "合格"}
     resp = api_session.post(f"{APP_URL}/admin-api/erp/app-production-task/product-stock-in", json=body, headers=auth_headers)

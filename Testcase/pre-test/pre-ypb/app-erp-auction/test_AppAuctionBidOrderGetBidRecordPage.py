@@ -3,6 +3,7 @@ from config import APP_URL
 
 @pytest.mark.smoke
 def test_AppAuctionBidOrderGetBidRecordPage(api_session, auth_headers, app_auction_round_item):
+    """获得当前用户竞拍商品出价记录分页查询"""
     data_id = app_auction_round_item
     params = {"itemId": data_id, "pageNo": 1, "pageSize": 10}
     resp = api_session.get(f"{APP_URL}/admin-api/erp/app-auction-bid-order/get-bid-record-page", params=params, headers=auth_headers)

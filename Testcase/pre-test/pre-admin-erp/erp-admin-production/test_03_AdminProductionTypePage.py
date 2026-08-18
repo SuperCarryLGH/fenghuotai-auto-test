@@ -4,6 +4,7 @@ from config import ADMIN_URL
 
 @pytest.mark.smoke
 def test_AdminProductionType_page(api_session, auth_headers, production_type_create):
+    """获得生产类型分页"""
     production_type_id = production_type_create
     params = {
         "pageNo": 1,

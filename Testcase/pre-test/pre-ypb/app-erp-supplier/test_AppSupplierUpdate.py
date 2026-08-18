@@ -3,6 +3,7 @@ from config import APP_URL
 
 @pytest.mark.smoke
 def test_AppSupplierUpdate(api_session, auth_headers, app_supplier):
+    """更新供应商信息"""
     data_id = app_supplier
     body = {"id": data_id, "name": "测试供应商", "legalName": "测试企业", "contact": "芋艿", "mobile": "15601691300", "status": 1, "sort": 10, "taxNo": "91130803MA098BY05W", "idCard": "110101199001011234", "supplierType": 10}
     resp = api_session.put(f"{APP_URL}/admin-api/erp/app-supplier/update", json=body, headers=auth_headers)

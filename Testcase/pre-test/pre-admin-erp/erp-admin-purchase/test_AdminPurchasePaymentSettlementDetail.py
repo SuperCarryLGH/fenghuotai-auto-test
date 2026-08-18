@@ -4,6 +4,7 @@ from config import ADMIN_URL
 
 @pytest.mark.smoke
 def test_AdminPurchasePaymentSettlementDetail(api_session, auth_headers, autotest_supplier, autotest_purchase_order):
+    """获取发起结算详情"""
     supplier_id = autotest_supplier
     order_id = autotest_purchase_order
     params = {

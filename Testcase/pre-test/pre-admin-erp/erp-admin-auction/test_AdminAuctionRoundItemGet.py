@@ -4,6 +4,7 @@ from config import ADMIN_URL
 
 @pytest.mark.smoke
 def test_AdminAuctionRoundItemGet(api_session, auth_headers, autotest_auction_round_item):
+    """获得竞拍商品详情"""
     item_id = autotest_auction_round_item
     resp = api_session.get(f"{ADMIN_URL}/admin-api/erp/auction-round/item-get",
                            params={"id": item_id}, headers=auth_headers)

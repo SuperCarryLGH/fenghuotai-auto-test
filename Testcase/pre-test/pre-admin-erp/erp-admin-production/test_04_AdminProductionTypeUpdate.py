@@ -4,6 +4,7 @@ from config import ADMIN_URL
 
 @pytest.mark.smoke
 def test_AdminProductionType_update(api_session, auth_headers, production_type_create, production_product):
+    """更新生产类型"""
     production_type_id = production_type_create
     product_id = production_product
     body = {

@@ -3,6 +3,7 @@ from config import APP_URL
 
 @pytest.mark.smoke
 def test_AppProductionTaskManualPrepare(api_session, auth_headers, app_production_task, app_product):
+    """手工备货"""
     data_id = app_production_task
     body = {"taskId": data_id, "productId": app_product, "weight": 50, "packageCount": 1, "stockLocationId": 100, "stockLocationName": "A区-01", "price": 100}
     resp = api_session.post(f"{APP_URL}/admin-api/erp/app-production-task/manual-prepare", json=body, headers=auth_headers)

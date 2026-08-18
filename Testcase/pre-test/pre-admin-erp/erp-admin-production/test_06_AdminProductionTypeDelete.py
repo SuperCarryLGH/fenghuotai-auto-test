@@ -4,6 +4,7 @@ from config import ADMIN_URL
 
 @pytest.mark.smoke
 def test_AdminProductionType_Delete(api_session, auth_headers, production_type_create):
+    """删除生产类型"""
     production_type_id = production_type_create
     resp = api_session.delete(f"{ADMIN_URL}/admin-api/erp/production-type/delete",
                               params={"id": production_type_id}, headers=auth_headers)

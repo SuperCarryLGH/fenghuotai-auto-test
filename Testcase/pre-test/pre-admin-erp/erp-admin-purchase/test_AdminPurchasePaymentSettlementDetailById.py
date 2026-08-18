@@ -4,6 +4,7 @@ from config import ADMIN_URL
 
 @pytest.mark.smoke
 def test_AdminPurchasePaymentSettlementDetailById(api_session, auth_headers, autotest_purchase_in):
+    """根据付款单ID获取结算详情"""
     payment_id = autotest_purchase_in
     resp = api_session.get(f"{ADMIN_URL}/admin-api/erp/purchase-payment/settlement-detail-by-id",
                            params={"id": payment_id}, headers=auth_headers)

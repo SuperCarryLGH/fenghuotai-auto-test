@@ -4,6 +4,7 @@ from config import ADMIN_URL
 
 @pytest.mark.smoke
 def test_AdminAuctionBidOrderRecordPage(api_session, auth_headers):
+    """获得竞拍单出价记录列表"""
     params = {
         "orderId": 1,
     }

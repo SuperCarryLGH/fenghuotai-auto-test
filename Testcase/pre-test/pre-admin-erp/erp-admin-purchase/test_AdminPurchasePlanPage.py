@@ -4,6 +4,7 @@ from config import ADMIN_URL
 
 @pytest.mark.smoke
 def test_AdminPurchasePlanPage(api_session, auth_headers, autotest_purchase_plan):
+    """获得采购计划分页"""
     plan_id = autotest_purchase_plan
     params = {
         "pageNo": 1,

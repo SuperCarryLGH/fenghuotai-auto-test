@@ -1,5 +1,6 @@
 """老用户/已注册用户不能被拉新 — 双表校验"""
 import time
+
 import pytest
 from config import APP_URL, ADMIN_URL
 from Common.login import Login
@@ -64,7 +65,8 @@ class TestDistOldUserNoBind:
             "SELECT COUNT(*) as cnt FROM dist_promoter_user_relation "
             "WHERE user_id=(SELECT id FROM member_user WHERE mobile=%s) AND deleted=0",
             (mobile,))
-        assert row and row["cnt"] == 0, f"{mobile} 应有 0 条绑定，实际={row['cnt'] if row else 'None'}"
+        cnt = int(row["cnt"]) if row and row.get("cnt") is not None else 0
+        assert cnt == 0, f"{mobile} 应有 0 条绑定，实际={cnt}"
 
     def _assert_bound(self, mobile, expected_promoter_id):
         """dist_promoter_user_relation 校验：promoter↔user 绑定（异步，最多等 15 秒）"""

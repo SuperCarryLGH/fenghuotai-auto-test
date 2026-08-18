@@ -3,6 +3,7 @@ from config import APP_URL
 
 @pytest.mark.smoke
 def test_AppSupplierList(api_session, auth_headers):
+    """分页查询当前采购员下已启用的供应商列表"""
     params = {"pageNo": 1, "pageSize": 10}
     resp = api_session.get(f"{APP_URL}/admin-api/erp/app-supplier/list", params=params, headers=auth_headers)
     assert resp.status_code == 200

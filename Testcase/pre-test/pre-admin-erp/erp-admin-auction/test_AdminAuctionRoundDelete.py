@@ -4,6 +4,7 @@ from config import ADMIN_URL
 
 @pytest.mark.smoke
 def test_AdminAuctionRoundDelete(api_session, auth_headers, autotest_auction_round):
+    """删除竞拍场次"""
     round_id = autotest_auction_round
     resp = api_session.delete(f"{ADMIN_URL}/admin-api/erp/auction-round/delete",
                               params={"ids": [round_id]}, headers=auth_headers)

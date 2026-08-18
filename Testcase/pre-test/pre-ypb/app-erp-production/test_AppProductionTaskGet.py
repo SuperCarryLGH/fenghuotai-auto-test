@@ -3,6 +3,7 @@ from config import APP_URL
 
 @pytest.mark.smoke
 def test_AppProductionTaskGet(api_session, auth_headers, app_production_task):
+    """获得生产任务详情"""
     data_id = app_production_task
     params = {"id": data_id}
     resp = api_session.get(f"{APP_URL}/admin-api/erp/app-production-task/get", params=params, headers=auth_headers)

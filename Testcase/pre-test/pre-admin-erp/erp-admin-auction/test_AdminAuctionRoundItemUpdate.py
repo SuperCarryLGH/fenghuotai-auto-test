@@ -4,6 +4,7 @@ from config import ADMIN_URL
 
 @pytest.mark.smoke
 def test_AdminAuctionRoundItemUpdate(api_session, auth_headers, autotest_auction_round_item, autotest_product):
+    """修改竞拍商品"""
     item_id = autotest_auction_round_item
     product_id = autotest_product
     body = {

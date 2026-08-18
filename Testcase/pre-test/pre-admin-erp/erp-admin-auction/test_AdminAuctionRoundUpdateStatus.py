@@ -4,6 +4,7 @@ from config import ADMIN_URL
 
 @pytest.mark.smoke
 def test_AdminAuctionRoundUpdateStatus(api_session, auth_headers, autotest_auction_round):
+    """上架-下架竞拍场次"""
     round_id = autotest_auction_round
     body = {
         "id": round_id,

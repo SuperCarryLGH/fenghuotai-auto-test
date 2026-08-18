@@ -4,6 +4,7 @@ from config import ADMIN_URL
 
 @pytest.mark.smoke
 def test_AdminPurchasePaymentUnsettledPage(api_session, auth_headers):
+    """获取未结算列表"""
     params = {
         "pageNo": 1,
         "pageSize": 10,

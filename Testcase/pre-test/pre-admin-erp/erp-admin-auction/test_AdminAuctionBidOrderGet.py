@@ -4,6 +4,7 @@ from config import ADMIN_URL
 
 @pytest.mark.smoke
 def test_AdminAuctionBidOrderGet(api_session, auth_headers):
+    """获得竞拍单详情"""
     resp = api_session.get(f"{ADMIN_URL}/admin-api/erp/auction-bid-order/get",
                            params={"id": 1}, headers=auth_headers)
     assert resp.status_code == 200

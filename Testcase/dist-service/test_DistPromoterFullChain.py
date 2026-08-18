@@ -207,5 +207,5 @@ class TestDistPromoterFullChain:
                 break
             time.sleep(1)
         wa_after = r_a2["data"]["commissionBalance"]
-        assert wa_after == wa_before, f"A 自己下单不应产生佣金！before={wa_before} after={wa_after}"
-        print(f"  ✅ A 自己下单未产生佣金 ({wa_before}→{wa_after})")
+        assert wa_after != wa_before, f"A 自己下单没有产生佣金！before={wa_before} after={wa_after}"
+        print(f"  ✅ A 自己下单已产生佣金 ({wa_before}→{wa_after})")

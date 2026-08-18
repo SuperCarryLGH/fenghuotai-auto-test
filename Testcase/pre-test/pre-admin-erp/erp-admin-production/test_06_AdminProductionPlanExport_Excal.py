@@ -2,6 +2,7 @@ import pytest
 from config import ADMIN_URL
 @pytest.mark.smoke
 def test_AdminProductionPlanExport_Excel(api_session,auth_headers):
+    """导出生产计划 Excel"""
     body = {
         "pageNo":1,
         "pageSize":10,

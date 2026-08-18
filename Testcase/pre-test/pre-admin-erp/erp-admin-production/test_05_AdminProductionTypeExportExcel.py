@@ -4,6 +4,7 @@ from config import ADMIN_URL
 
 @pytest.mark.smoke
 def test_AdminProductionTypeExport_Excel(api_session, auth_headers):
+    """导出生产类型 Excel"""
     params = {
         "pageNo": 1,
         "pageSize": 10,

@@ -4,6 +4,7 @@ from config import ADMIN_URL
 
 @pytest.mark.smoke
 def test_AdminProductChemicalMaterialList(api_session, auth_headers):
+    """获得指定分类下开启的产品列表"""
     params = {
         "categoryId": 2079825943876988929,
     }

@@ -4,6 +4,7 @@ from config import ADMIN_URL
 
 @pytest.mark.smoke
 def test_AdminPurchasePaymentApprove(api_session, auth_headers, autotest_purchase_in):
+    """审核通过"""
     payment_id = autotest_purchase_in
     resp = api_session.put(f"{ADMIN_URL}/admin-api/erp/purchase-payment/approve",
                            params={"id": payment_id}, headers=auth_headers)

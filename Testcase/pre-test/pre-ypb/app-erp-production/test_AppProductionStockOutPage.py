@@ -3,6 +3,7 @@ from config import APP_URL
 
 @pytest.mark.smoke
 def test_AppProductionStockOutPage(api_session, auth_headers):
+    """获得生产出库单分页"""
     params = {"pageNo": 1, "pageSize": 10}
     resp = api_session.get(f"{APP_URL}/admin-api/erp/app-production-stock-out/page", params=params, headers=auth_headers)
     assert resp.status_code == 200

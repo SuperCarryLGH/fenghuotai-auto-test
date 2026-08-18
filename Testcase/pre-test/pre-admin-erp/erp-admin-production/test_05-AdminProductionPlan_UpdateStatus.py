@@ -2,6 +2,7 @@ import pytest
 from config import ADMIN_URL
 @pytest.mark.smoke
 def test_AdminProductionPlan_UpdateStatus(api_session,auth_headers,production_plan_create):
+    """更新生产计划状态"""
     production_plan_id = production_plan_create
     data = {
         "id":production_plan_id,

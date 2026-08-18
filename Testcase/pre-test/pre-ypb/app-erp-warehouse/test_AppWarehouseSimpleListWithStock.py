@@ -3,6 +3,7 @@ from config import APP_URL
 
 @pytest.mark.smoke
 def test_AppWarehouseSimpleListWithStock(api_session, auth_headers, app_product):
+    """获得分拣中心仓库下拉列表（含产品在库重量）"""
     data_id = app_product
     params = {"productId": data_id}
     resp = api_session.get(f"{APP_URL}/admin-api/erp/app-warehouse/simple-list-with-stock", params=params, headers=auth_headers)

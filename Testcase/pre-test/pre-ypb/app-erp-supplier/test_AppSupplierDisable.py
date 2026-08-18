@@ -3,6 +3,7 @@ from config import APP_URL
 
 @pytest.mark.smoke
 def test_AppSupplierDisable(api_session, auth_headers, app_supplier):
+    """禁用供应商"""
     data_id = app_supplier
     params = {"id": data_id}
     resp = api_session.put(f"{APP_URL}/admin-api/erp/app-supplier/disable", params=params, headers=auth_headers)

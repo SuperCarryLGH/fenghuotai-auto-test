@@ -3,6 +3,7 @@ from config import APP_URL
 
 @pytest.mark.smoke
 def test_AppProductionTaskPlanList(api_session, auth_headers):
+    """获得最近三个月的生产计划列表"""
     resp = api_session.get(f"{APP_URL}/admin-api/erp/app-production-task/plan-list", headers=auth_headers)
     assert resp.status_code == 200
     data = resp.json()

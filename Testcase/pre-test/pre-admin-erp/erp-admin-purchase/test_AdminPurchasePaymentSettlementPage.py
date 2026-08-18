@@ -4,6 +4,7 @@ from config import ADMIN_URL
 
 @pytest.mark.smoke
 def test_AdminPurchasePaymentSettlementPage(api_session, auth_headers):
+    """获取结算列表（待审批-未通过-已完成）"""
     params = {
         "status": 10,
         "pageNo": 1,

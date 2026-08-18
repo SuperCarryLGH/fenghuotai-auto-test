@@ -4,6 +4,7 @@ from config import ADMIN_URL
 
 @pytest.mark.smoke
 def test_AdminPurchasePaymentReject(api_session, auth_headers, autotest_purchase_in):
+    """审核未通过"""
     payment_id = autotest_purchase_in
     params = {
         "id": payment_id,
