@@ -17,9 +17,9 @@ class TestDistPromoterFullChain:
             "Authorization": f"Bearer {admin_token}",
         }
         now_suffix = str(int(time.time() * 1000))[-8:]
-        self.mobile_a = "156" + now_suffix
-        self.mobile_b = "156" + str(int(now_suffix) + 1).zfill(8)
-        self.mobile_c = "156" + str(int(now_suffix) + 2).zfill(8)
+        self.mobile_a = "159" + now_suffix
+        self.mobile_b = "159" + str(int(now_suffix) + 1).zfill(8)
+        self.mobile_c = "159" + str(int(now_suffix) + 2).zfill(8)
 
     # ============================================================
     # 工具方法

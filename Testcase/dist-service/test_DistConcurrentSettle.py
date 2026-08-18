@@ -21,7 +21,7 @@ class TestDistConcurrentSettle:
             **Login.ADMIN_LOGIN_HEADERS,
             "Authorization": f"Bearer {admin_token}",
         }
-        self.mobile_a = "156" + str(int(time.time() * 1000))[-8:]
+        self.mobile_a = "159" + str(int(time.time() * 1000))[-8:]
 
     def _app_headers(self, token):
         return {**Login.SMS_LOGIN_HEADERS, "Authorization": f"Bearer {token}"}
@@ -101,7 +101,7 @@ class TestDistConcurrentSettle:
         orders = []
         for i in range(N):
             suffix = str(int(time.time() * 1000))[-8:]
-            mobile = "156" + str(int(suffix) + i).zfill(8)
+            mobile = "159" + str(int(suffix) + i).zfill(8)
             self.login.app_login_for_promoter(mobile=mobile, promoter_id=pid_a)
             token = self.login.app_login_for_promoter(mobile=mobile)
             orders.append((mobile, token))

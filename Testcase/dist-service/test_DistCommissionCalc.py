@@ -20,8 +20,8 @@ class TestDistCommissionCalc:
             "Authorization": f"Bearer {admin_token}",
         }
         now_suffix = str(int(time.time() * 1000))[-8:]
-        self.mobile_a = "156" + now_suffix
-        self.mobile_b = "156" + str(int(now_suffix) + 1).zfill(8)
+        self.mobile_a = "159" + now_suffix
+        self.mobile_b = "159" + str(int(now_suffix) + 1).zfill(8)
 
     # ============================================================
     # 通用工具
@@ -186,7 +186,7 @@ class TestDistCommissionCalc:
     def test_basic_level1_commission(self):
         print(f"\n=== 基础一级佣金 ===")
         pid_a, token_a = self._become_promoter(self.mobile_a)
-        mobile_c = "156" + str(int(time.time() * 1000))[-8:]
+        mobile_c = "159" + str(int(time.time() * 1000))[-8:]
         token_c = self.login.app_login_for_promoter(mobile=mobile_c, promoter_id=pid_a)
 
         order_id = self._settle_order(token_c, mobile_c)
@@ -202,7 +202,7 @@ class TestDistCommissionCalc:
         print(f"\n=== 二级佣金 ===")
         pid_a, token_a = self._become_promoter(self.mobile_a)
         pid_b, token_b = self._become_promoter(self.mobile_b, promoter_id=pid_a)
-        mobile_c = "156" + str(int(time.time() * 1000))[-8:]
+        mobile_c = "159" + str(int(time.time() * 1000))[-8:]
         token_c = self.login.app_login_for_promoter(mobile=mobile_c, promoter_id=pid_b)
 
         order_id = self._settle_order(token_c, mobile_c)
@@ -220,8 +220,8 @@ class TestDistCommissionCalc:
         print(f"\n=== 边界测试: 不同重量区间的佣金 ===")
         pid_a, token_a = self._become_promoter(self.mobile_a)
         suffix = str(int(time.time() * 1000))[-8:]
-        mobile_c1 = "156" + suffix
-        mobile_c2 = "156" + str(int(suffix) + 1).zfill(8)
+        mobile_c1 = "159" + suffix
+        mobile_c2 = "159" + str(int(suffix) + 1).zfill(8)
         token_c1 = self.login.app_login_for_promoter(mobile=mobile_c1, promoter_id=pid_a)
         token_c2 = self.login.app_login_for_promoter(mobile=mobile_c2, promoter_id=pid_a)
 

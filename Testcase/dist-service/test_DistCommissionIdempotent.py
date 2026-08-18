@@ -20,8 +20,8 @@ class TestDistCommissionIdempotent:
             "Authorization": f"Bearer {admin_token}",
         }
         now = str(int(time.time() * 1000))[-8:]
-        self.mobile_a = "156" + now
-        self.mobile_b = "156" + str(int(now) + 1)
+        self.mobile_a = "159" + now
+        self.mobile_b = "159" + str(int(now) + 1)
 
     def _app_headers(self, token):
         return {**Login.SMS_LOGIN_HEADERS, "Authorization": f"Bearer {token}"}

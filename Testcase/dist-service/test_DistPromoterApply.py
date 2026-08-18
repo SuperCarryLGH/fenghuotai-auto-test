@@ -3,6 +3,7 @@ import time
 
 import pytest
 from config import APP_URL
+from Common.login import Login
 
 
 class TestDistPromoterApply:
@@ -10,7 +11,12 @@ class TestDistPromoterApply:
     URL = f"{APP_URL}/app-api/dist/promoter/apply"
 
     def _new_mobile(self):
-        return "156" + str(int(time.time() * 1000))[-8:]
+        return "159" + str(int(time.time() * 1000))[-8:]
+
+    def _app_headers(self, token):
+        return {**Login.SMS_LOGIN_HEADERS,
+                "timestamp": str(int(time.time() * 1000)),
+                "Authorization": f"Bearer {token}"}
 
     def _apply_body(self, mobile):
         return {
@@ -26,7 +32,7 @@ class TestDistPromoterApply:
     def test_DistPromoterApply(self, api_session, login_tool):
         mobile = self._new_mobile()
         token = login_tool.app_login(mobile=mobile)
-        headers = {"Authorization": f"Bearer {token}"}
+        headers = self._app_headers(token)
 
         # 1. 首次申请 → 成功（返回 applyId）
         r1 = api_session.post(self.URL, json=self._apply_body(mobile), headers=headers)

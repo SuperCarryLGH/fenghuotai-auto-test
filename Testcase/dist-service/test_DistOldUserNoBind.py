@@ -20,7 +20,7 @@ class TestDistOldUserNoBind:
             **Login.ADMIN_LOGIN_HEADERS,
             "Authorization": f"Bearer {admin_token}",
         }
-        self.mobile_a = "156" + str(int(time.time() * 1000))[-8:]
+        self.mobile_a = "159" + str(int(time.time() * 1000))[-8:]
 
     def _app_headers(self, token):
         return {**Login.SMS_LOGIN_HEADERS, "Authorization": f"Bearer {token}"}
@@ -99,7 +99,7 @@ class TestDistOldUserNoBind:
     def test_registered_user_no_orders_no_bind(self):
         print(f"\n=== Case 2: 已注册无订单用户 — 不能被拉新 ===")
         pid_a, _ = self._become_promoter(self.mobile_a)
-        mobile_b = "156" + str(int(time.time() * 1000))[-8:]
+        mobile_b = "159" + str(int(time.time() * 1000))[-8:]
         self.login.app_login(mobile=mobile_b)
         self.login.app_login_for_promoter(mobile=mobile_b, promoter_id=pid_a)
         self._assert_no_bind(mobile_b)
@@ -111,7 +111,7 @@ class TestDistOldUserNoBind:
     def test_new_user_normal_bind(self):
         print(f"\n=== Case 3: 全新用户 — 正常绑定 ===")
         pid_a, _ = self._become_promoter(self.mobile_a)
-        mobile_c = "156" + str(int(time.time() * 1000))[-8:]
+        mobile_c = "159" + str(int(time.time() * 1000))[-8:]
         self.login.app_login_for_promoter(mobile=mobile_c, promoter_id=pid_a)
         self._assert_bound(mobile_c, pid_a)
         print(f"  ✅ 全新用户({mobile_c})正常绑定到 A({pid_a})")

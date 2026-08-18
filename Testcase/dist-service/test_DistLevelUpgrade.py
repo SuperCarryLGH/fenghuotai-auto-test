@@ -19,7 +19,7 @@ class TestDistLevelUpgrade:
             **Login.ADMIN_LOGIN_HEADERS,
             "Authorization": f"Bearer {admin_token}",
         }
-        self.mobile_a = "156" + str(int(time.time() * 1000))[-8:]
+        self.mobile_a = "159" + str(int(time.time() * 1000))[-8:]
 
     def _app_headers(self, token):
         return {**Login.SMS_LOGIN_HEADERS, "Authorization": f"Bearer {token}"}
@@ -118,7 +118,7 @@ class TestDistLevelUpgrade:
         print(f"  初始等级: {level_before}")
         for i in range(target + 1):
             suffix = str(int(time.time() * 1000))[-8:]
-            mobile_down = "156" + str(int(suffix) + i).zfill(8)
+            mobile_down = "159" + str(int(suffix) + i).zfill(8)
             self.login.app_login_for_promoter(mobile=mobile_down, promoter_id=pid_a)
             token = self.login.app_login_for_promoter(mobile=mobile_down)
             self._settle_order(token, mobile_down)

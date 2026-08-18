@@ -42,7 +42,7 @@ def rulepersonal_headers(login_tool):
 
 def _new_mobile():
     """生成不重复手机号"""
-    return "156" + str(int(time.time() * 1000))[-8:]
+    return "159" + str(int(time.time() * 1000))[-8:]
 
 
 @pytest.fixture(scope="session")

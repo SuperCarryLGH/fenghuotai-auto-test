@@ -21,10 +21,10 @@ class TestDistBindingRules:
         }
         now_suffix = str(int(time.time() * 1000))[-8:]
         self.mobiles = {
-            "a": "156" + now_suffix,
-            "b": "156" + str(int(now_suffix) + 1).zfill(8),
-            "c": "156" + str(int(now_suffix) + 2).zfill(8),
-            "d": "156" + str(int(now_suffix) + 3).zfill(8),
+            "a": "159" + now_suffix,
+            "b": "159" + str(int(now_suffix) + 1).zfill(8),
+            "c": "159" + str(int(now_suffix) + 2).zfill(8),
+            "d": "159" + str(int(now_suffix) + 3).zfill(8),
         }
 
     def _app_headers(self, token):

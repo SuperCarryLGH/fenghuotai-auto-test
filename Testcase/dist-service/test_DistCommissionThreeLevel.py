@@ -14,10 +14,10 @@ class TestDistCommissionThreeLevel:
     def test_three_level_no_commission(self):
         """A→B→C→D，D 下单 C 一级 B 二级 A 三级无佣金"""
         suffix = str(int(time.time() * 1000))[-8:]
-        mobile_a = "156" + suffix
-        mobile_b = "156" + str(int(suffix) + 1).zfill(8)
-        mobile_c = "156" + str(int(suffix) + 2).zfill(8)
-        mobile_d = "156" + str(int(suffix) + 3).zfill(8)
+        mobile_a = "159" + suffix
+        mobile_b = "159" + str(int(suffix) + 1).zfill(8)
+        mobile_c = "159" + str(int(suffix) + 2).zfill(8)
+        mobile_d = "159" + str(int(suffix) + 3).zfill(8)
 
         pid_a, token_a = self.tu.become_promoter(mobile_a)
 
