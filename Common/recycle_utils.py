@@ -283,11 +283,22 @@ class RecycleChain:
     # ------------------------------------------------------------------
     # 站点线索
     # ------------------------------------------------------------------
-    def create_clue(self, admin_headers, name=None):
-        """创建站点线索，返回 (clue_id, clue_no)"""
+    def create_clue(self, admin_headers, name=None, user_id=1, user_name="admin"):
+        """创建站点线索，返回 (clue_id, clue_no)
+
+        :param admin_headers: 管理后台鉴权头（需含登录用户的 tenant/appId/sign/Authorization）
+        :param name: 线索名字（可空，自动生成）
+        :param user_id: 维护人 id（必填，来自当前登录用户）
+        :param user_name: 维护人名字（必填）
+        """
         name = name or f"autotest_clue_{int(time.time() * 1000)}"
-        r = self._post(f"{ADMIN_URL}/admin-api/recycle/station-clue/create", {
+        clue_no = f"SC{int(time.time() * 1000)}"
+        r = self._post(f"{ADMIN_URL}/admin-api/recycle/station/clue/create", {
+            "clueNo": clue_no,
             "poolType": 0, "clueName": name, "stationType": 1,
+            "userId": user_id, "userName": user_name,
+            "receiveUserId": user_id, "receiveUserName": user_name,
+            "status": 20, "visitCount": 0,
             "provinceCode": "330000", "province": "浙江省",
             "cityCode": "330100", "city": "杭州市",
             "districtCode": "330108", "district": "滨江区",
@@ -295,10 +306,10 @@ class RecycleChain:
         }, admin_headers)
         data = r.get("data")
         clue_id = data.get("id") if isinstance(data, dict) else data
-        clue_no = data.get("clueNo") or data.get("clue_no") or "" if isinstance(data, dict) else ""
+        clue_no = data.get("clueNo") or data.get("clue_no") or clue_no if isinstance(data, dict) else clue_no
         if not clue_no:
             try:
-                detail = self._get(f"{ADMIN_URL}/admin-api/recycle/station-clue/get",
+                detail = self._get(f"{ADMIN_URL}/admin-api/recycle/station/clue/get",
                                    {"id": clue_id}, admin_headers).get("data") or {}
                 clue_no = detail.get("clueNo") or ""
             except Exception:

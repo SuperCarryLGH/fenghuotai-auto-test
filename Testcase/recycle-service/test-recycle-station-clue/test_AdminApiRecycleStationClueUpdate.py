@@ -7,17 +7,21 @@ class Test_AdminApiRecycleStationClueUpdate:
     """线索更新"""
 
     @pytest.mark.smoke
-    @pytest.mark.skip(reason="线索/签约业务流字段契约未完全确认(网点ID/拜访意向/运行状态等)，待补")
-    def test_AdminApiRecycleStationClueUpdate(self, clue_chain, api_session, ok):
-        chain, clue_id, clue_no, auth_headers = clue_chain
+    def test_AdminApiRecycleStationClueUpdate(self, clue_chain, station_user_ctx, api_session, ok):
+        chain, clue_id, clue_no, b_headers = clue_chain
+        _, uid, uname = station_user_ctx
         url = f"{ADMIN_URL}/admin-api/recycle/station/clue/update"
         r = ok(api_session.put(url, json={
             "id": clue_id,
+            "userId": uid, "userName": uname,
+            "receiveUserId": uid, "receiveUserName": uname,
+            "clueNo": clue_no,
             "clueName": f"autotest_clue_update_{int(time.time())}",
             "stationType": 1,
+            "poolType": 0, "status": 20, "visitCount": 0,
             "provinceCode": "330000", "province": "浙江省",
             "cityCode": "330100", "city": "杭州市",
             "districtCode": "330108", "district": "滨江区",
             "detailAddress": "测试地址",
-        }, headers=auth_headers))
+        }, headers=b_headers))
         print(r)
