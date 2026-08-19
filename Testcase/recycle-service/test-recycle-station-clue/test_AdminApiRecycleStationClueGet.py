@@ -8,6 +8,6 @@ class Test_AdminApiRecycleStationClueGet:
     @pytest.mark.smoke
     def test_AdminApiRecycleStationClueGet(self, clue_chain, api_session, ok):
         chain, clue_id, clue_no, auth_headers = clue_chain
-        url = f"{ADMIN_URL}/admin-api/recycle/station-clue/get"
+        url = f"{ADMIN_URL}/admin-api/recycle/station/clue/get"
         r = ok(api_session.get(url, params={"id": clue_id}, headers=auth_headers))
         print(r)
