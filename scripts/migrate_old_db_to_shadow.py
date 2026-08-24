@@ -69,6 +69,10 @@ XLSX_FILE = "/Users/rs/Documents/online.xlsx"       # 线上导出：单文件�
 XLSX_SHEET_USER = "member_user"                     # 用户表 sheet（列=member_user 字段）
 XLSX_SHEET_WALLET = "pay_wallet"                    # 钱包表 sheet（列=pay_wallet 字段）
 
+# 正式迁移：prod 各表 id/唯一键导出（碰撞基准 = 线上最终目标），每表一个 sheet
+PROD_COLLISION_XLSX = "/Users/rs/Documents/prod_collision.xlsx"
+_PROD_CACHE = None
+
 TENANT_ID = 1
 BATCH = 20000
 PHONE_RE = r"^1[0-9]{10}$"   # 手机号过滤（老库 phone 可能是设备id）
@@ -159,8 +163,38 @@ def gen_id():
     raise RuntimeError("gen_id 连续碰撞")
 
 
+def load_prod_collision():
+    """读 prod_collision.xlsx（每表一个 sheet：id 列；member_user 带 mobile、
+    recycle_order 带 order_no、recycle_package_item 带 package_no）。文件不存在→空。
+    正式迁移的碰撞基准 = prod（最终目标），替代 dev 真实表作为防碰撞来源。"""
+    global _PROD_CACHE
+    if _PROD_CACHE is not None:
+        return _PROD_CACHE
+    data = {"ids": {}, "mobiles": set(), "order_nos": set(), "package_nos": set()}
+    if not os.path.exists(PROD_COLLISION_XLSX):
+        _PROD_CACHE = data
+        return data
+    import pandas as pd
+    try:
+        xl = pd.ExcelFile(PROD_COLLISION_XLSX)
+        for sh in xl.sheet_names:
+            df = xl.parse(sh)
+            if "id" in df.columns:
+                data["ids"][sh] = {int(x) for x in df["id"].dropna()}
+            if "mobile" in df.columns:
+                data["mobiles"] |= {str(x).strip() for x in df["mobile"].dropna()}
+            if "order_no" in df.columns:
+                data["order_nos"] |= {str(x).strip() for x in df["order_no"].dropna()}
+            if "package_no" in df.columns:
+                data["package_nos"] |= {str(x).strip() for x in df["package_no"].dropna()}
+    except Exception as e:
+        print(f"  ⚠️ [prod碰撞] 读取 {PROD_COLLISION_XLSX} 失败: {e}")
+    _PROD_CACHE = data
+    return data
+
+
 def preload_used_ids(dev_conn):
-    """预加载 dev 真实表 + 影子表现有 ID 到 _used_ids，确保生成值不与任何已有 ID 冲突"""
+    """预加载 dev 真实表 + 影子表现有 ID + prod 碰撞表 ID 到 _used_ids，确保生成值不与任何已有 ID 冲突"""
     cur = dev_conn.cursor()
     for t in list(SHADOW_TABLE.values()) + ["member_user", "pay_wallet",
                                             "pay_wallet_transaction", "member_address"]:
@@ -170,6 +204,9 @@ def preload_used_ids(dev_conn):
             continue
         for r in cur.fetchall():
             _used_ids.add(int(r["id"]))
+    # 正式迁移：prod 各表 id 并入防碰撞集合
+    for ids in load_prod_collision()["ids"].values():
+        _used_ids |= ids
 
 
 def check_id_collision(dev_conn, auto_fix=True):
@@ -196,6 +233,10 @@ def check_id_collision(dev_conn, auto_fix=True):
             online_user_ids = {int(x) for x in xu["id"].dropna()}
         except Exception as e:
             print(f"  ⚠️ [collision] 读取 xlsx 失败: {e}")
+
+    # 正式迁移：prod 各表 id 并入禁止集合（碰撞基准 = prod）
+    for ids in load_prod_collision()["ids"].values():
+        forbidden |= ids
 
     # 全部影子 + 禁止 ID 加入 _used_ids，保证重分配不撞
     all_shadow = set()

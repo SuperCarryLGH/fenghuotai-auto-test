@@ -86,9 +86,11 @@ def check_complete(conn, rows_done):
 
 
 def preload_package_nos(dev_conn):
-    """dev recycle_package_item 现有 package_no（含种子），供防冲突"""
+    """影子表自身已有 package_no（重跑幂等）。
+    不再读 dev 真实表——避免测试/既有数据导致影子缺行（影子必须完整，是 prod 同步源）；
+    prod 的 package_no 冲突由同步前对账清单处理，不在生成阶段跳过。"""
     cur = dev_conn.cursor()
-    cur.execute("SELECT package_no FROM recycle_package_item")
+    cur.execute(f"SELECT package_no FROM `{SHADOW_TABLE}`")
     return {str(r["package_no"]) for r in cur.fetchall()}
 
 

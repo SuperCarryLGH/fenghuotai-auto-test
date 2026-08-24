@@ -67,7 +67,8 @@ from pymysql.cursors import DictCursor  # noqa: E402
 
 from migrate_old_db_to_shadow import (  # noqa: E402
     db, DEV_DB, OLD_DB, BATCH, gen_id, insert_batch, rebuild_by_account,
-    load_target_users, to_int, to_dec, preload_used_ids, _used_ids, _is_polluted,
+    load_target_users, load_prod_collision, to_int, to_dec, preload_used_ids,
+    _used_ids, _is_polluted,
 )
 
 SHADOW_ORDER = "shadow_recycle_order"
@@ -130,11 +131,12 @@ def save_state(state):
 
 
 def preload_order_nos(dev_conn):
-    """预加载 dev recycle_order 既有 order_no，避免雪花生成的订单号冲突（uk_order_no）"""
+    """预加载 dev recycle_order 既有 order_no + prod 碰撞表 order_no，避免雪花订单号冲突（uk_order_no）"""
     cur = dev_conn.cursor()
     cur.execute("SELECT order_no FROM recycle_order")
     for r in cur.fetchall():
         _order_nos.add(str(r["order_no"]))
+    _order_nos |= load_prod_collision()["order_nos"]
 
 
 def preload_recycle_ids(dev_conn):

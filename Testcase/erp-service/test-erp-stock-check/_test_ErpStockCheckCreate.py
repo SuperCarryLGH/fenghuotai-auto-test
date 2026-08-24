@@ -17,8 +17,6 @@ class TestErpStockCheckCreate:
         r = resp.json()
         assert r["code"] == 0
         print(r)
-
- == 200
         r = resp.json()
         assert r["code"] == 0
         print(r)

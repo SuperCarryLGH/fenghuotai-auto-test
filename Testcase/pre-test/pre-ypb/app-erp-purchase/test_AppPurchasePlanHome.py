@@ -6,7 +6,7 @@ class TestAppPurchasePlanHome:
     """采购工作台首页聚合数据"""
 
     @pytest.mark.smoke
-    def test_home(self, api_session, auth_headers, ok):
+    def test_home(self, api_session, buyer_headers, ok):
         url = f"{APP_URL}/admin-api/erp/app-purchase-plan/home"
-        resp = ok(api_session.get(url, headers=auth_headers))
+        resp = ok(api_session.get(url, headers=buyer_headers))
         print(resp)
