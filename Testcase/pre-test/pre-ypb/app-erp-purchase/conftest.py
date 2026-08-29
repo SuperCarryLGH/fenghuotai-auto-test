@@ -231,6 +231,7 @@ def autotest_purchase_in(api_session, buyer_headers, auth_headers, autotest_purc
                 "productPrice": 100,
                 "itemCode": "",
                 "itemDetailId": 0,
+                "count":1,
             }
         ],
     }

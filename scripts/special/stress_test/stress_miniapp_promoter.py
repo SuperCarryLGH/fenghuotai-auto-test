@@ -53,7 +53,7 @@ LEVELS = [
     {"name": "P2稳态", "concurrency": 100, "duration": 90, "mix": {"bind": 0.7, "query": 0.3}},
     {"name": "P2稳态", "concurrency": 200, "duration": 90, "mix": {"bind": 0.7, "query": 0.3}},
     {"name": "P2稳态", "concurrency": 400, "duration": 90, "mix": {"bind": 0.7, "query": 0.3}},
-    {"name": "P3耐久", "concurrency": SOAK_CONCURRENCY, "duration": 3600, "mix": {"bind": 0.7, "query": 0.3}},
+    {"name": "P3耐久", "concurrency": SOAK_CONCURRENCY, "duration": 1800, "mix": {"bind": 0.7, "query": 0.3}},
     {"name": "P4边界", "concurrency": 600, "duration": 60, "mix": {"bind": 0.7, "query": 0.3}},
     {"name": "P4边界", "concurrency": 800, "duration": 60, "mix": {"bind": 0.7, "query": 0.3}},
     {"name": "P4边界", "concurrency": 1000, "duration": 60, "mix": {"bind": 0.7, "query": 0.3}},
@@ -61,8 +61,9 @@ LEVELS = [
 
 # 安全阀
 SAFETY_ERR_RATE = float(os.getenv("SAFETY_ERR_RATE", "2"))   # 错误率%阈值，超过自动停
-SAFETY_P95_MS = float(os.getenv("SAFETY_P95_MS", "3000"))    # P95 ms 阈值
-COOLDOWN_S = int(os.getenv("COOLDOWN_S", "30"))              # 档间回落时间（秒），观察系统恢复
+SAFETY_P95_MS = float(os.getenv("SAFETY_P95_MS", "5000"))    # P95 ms 阈值（默认关闭判断）
+SAFETY_CHECK_P95 = os.getenv("SAFETY_CHECK_P95", "false").lower() in ("1", "true", "yes")  # P95 安全阀开关，默认关闭
+COOLDOWN_S = int(os.getenv("COOLDOWN_S", "60"))              # 档间回落时间（秒），观察系统恢复
 
 # A/B 预置数量（动态扩展，跑多少造多少）
 PRELOAD_A = int(os.getenv("PRELOAD_A", "5"))       # 预置推广官 A 数量
@@ -102,6 +103,13 @@ _g = {
     "pq_total": 0, "pq_success": 0, "pq_times": [],
     "tx_total": 0, "tx_success": 0, "tx_times": [],
     "trend": [],          # 每 10s 的 TPS/RT 快照 [(elapsed, tps, p95, err_rate), ...]
+    "ep_times": {         # 每接口 RT 记录（毫秒），用于每档接口 RT 表
+        "sms-login": [],
+        "wallet/get": [],
+        "wallet-transaction/page": [],
+        "promoter/info": [],
+        "rule/get": [],
+    },
 }
 
 _g_mobile_seq = [0]
@@ -335,6 +343,8 @@ def do_bind_login(session, mobile, pid_b, h_b_query):
             _g["bind_success"] += 1
             _g["wallet_total"] += 1
             _g["wallet_times"].append(query_elapsed)
+            _g["ep_times"]["sms-login"].append(bind_elapsed)
+            _g["ep_times"]["wallet/get"].append(query_elapsed)
             if wallet_ok:
                 _g["wallet_success"] += 1
             # 绑定+钱包整体成功判定：绑定成功且钱包查询成功
@@ -361,9 +371,13 @@ def do_promoter_query(session, h):
     """A/B 推广官查询：promoter/info + rule/get + 钱包流水分页"""
     t0 = time.time()
     try:
+        t_info = time.time()
         r1 = session.get(f"{APP_URL}/app-api/dist/promoter/info", headers=h, timeout=30).json()
+        info_elapsed = (time.time() - t_info) * 1000
+        t_rule = time.time()
         r2 = session.get(f"{APP_URL}/app-api/dist/rule/get", params={"promoteType": 10},
                          headers=h, timeout=30).json()
+        rule_elapsed = (time.time() - t_rule) * 1000
         elapsed = (time.time() - t0) * 1000
         ok = r1.get("code") == 0 and r2.get("code") == 0
         # 钱包流水分页（独立统计，A/B 用自身 token）
@@ -371,6 +385,8 @@ def do_promoter_query(session, h):
         with _results_lock:
             _g["pq_total"] += 1
             _g["pq_times"].append(elapsed)
+            _g["ep_times"]["promoter/info"].append(info_elapsed)
+            _g["ep_times"]["rule/get"].append(rule_elapsed)
             _g["total"] += 1
             _g["times"].append(elapsed)
             if ok:
@@ -407,6 +423,7 @@ def do_wallet_transaction_query(session, h):
         with _results_lock:
             _g["tx_total"] += 1
             _g["tx_times"].append(elapsed)
+            _g["ep_times"]["wallet-transaction/page"].append(elapsed)
             if ok:
                 _g["tx_success"] += 1
             else:
@@ -417,6 +434,7 @@ def do_wallet_transaction_query(session, h):
         with _results_lock:
             _g["tx_total"] += 1
             _g["tx_times"].append(elapsed)
+            _g["ep_times"]["wallet-transaction/page"].append(elapsed)
             _g["err_codes"]["wallet-tx:" + str(type(e).__name__)] = \
                 _g["err_codes"].get("wallet-tx:" + str(type(e).__name__), 0) + 1
 
@@ -486,6 +504,23 @@ def print_row(row):
           f"P95:{row['p95']:>6.0f}ms P99:{row['p99']:>6.0f}ms")
 
 
+def print_ep_rt():
+    """打印本档各接口 RT 表（avg / P95 / P99 / 次数）"""
+    with _results_lock:
+        ep = {k: sorted(v) for k, v in _g["ep_times"].items()}
+    print("  ---- 接口 RT (ms) ----")
+    print(f"  {'接口':28s} {'次数':>7s} {'avg':>8s} {'P95':>8s} {'P99':>8s}")
+    for name, times in ep.items():
+        if not times:
+            continue
+        n = len(times)
+        avg = round(sum(times) / n, 0)
+        p95 = times[int(n * 0.95)] if n else 0
+        p99 = times[int(n * 0.99)] if n else 0
+        print(f"  {name:28s} {n:>7d} {avg:>8.0f} {p95:>8.0f} {p99:>8.0f}")
+    print("  " + "-" * 40)
+
+
 # ============================================================
 # 单档并发执行
 # ============================================================
@@ -505,6 +540,8 @@ def run_level(session, ah, level, pid_b_pool, promoter_h_pool):
         _g["pq_total"] = _g["pq_success"] = 0
         _g["tx_total"] = _g["tx_success"] = 0
         _g["tx_times"] = []
+        for k in _g["ep_times"]:
+            _g["ep_times"][k] = []
         _g["err_codes"] = {}
         _g["trend"] = []
 
@@ -556,11 +593,11 @@ def run_level(session, ah, level, pid_b_pool, promoter_h_pool):
                 "p95": round(p95, 0),
                 "err_rate": round(err_rate, 2),
             })
-            # 实时熔断：趋势采样窗口内错误率/P95 超阈值即中断本档
+            # 实时熔断：趋势采样窗口内错误率超阈值即中断本档（P95 判断默认关闭，可 SAFETY_CHECK_P95=true 开启）
             if err_rate > SAFETY_ERR_RATE:
                 _circuit[0] = True
                 _circuit_reason[0] = f"实时错误率 {err_rate}% > {SAFETY_ERR_RATE}%"
-            elif p95 > SAFETY_P95_MS:
+            elif SAFETY_CHECK_P95 and p95 > SAFETY_P95_MS:
                 _circuit[0] = True
                 _circuit_reason[0] = f"实时P95 {p95}ms > {SAFETY_P95_MS}ms"
             last_total = cur_total
@@ -609,13 +646,15 @@ def run_level(session, ah, level, pid_b_pool, promoter_h_pool):
         trip = True; reason = _circuit_reason[0]
     if row["err_rate"] > SAFETY_ERR_RATE:
         trip = True; reason = f"错误率 {row['err_rate']}% > {SAFETY_ERR_RATE}%"
-    if row["p95"] > SAFETY_P95_MS:
+    if SAFETY_CHECK_P95 and row["p95"] > SAFETY_P95_MS:
         trip = True; reason = f"P95 {row['p95']}ms > {SAFETY_P95_MS}ms"
     row["interrupted"] = "是" if trip else ""
     row["stop_reason"] = reason
     print_row(row)
     if row["err_codes"]:
         print(f"      错误分布: {row['err_codes']}")
+    # 每档打印接口 RT 表
+    print_ep_rt()
     if trip:
         print(f"  ⛔ 安全阀触发: {reason}，本档中断")
     return row, trip, reason

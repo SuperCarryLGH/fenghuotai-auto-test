@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# 全量数据迁移模拟编排器（本地库 → dev 影子表）
+# 正式数据迁移编排器（线上老库 yihuishou → dev 影子表）
 # 用法: nohup bash scripts/run_full_migration.sh > logs/master.log 2>&1 &
 set -u
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
@@ -8,12 +8,8 @@ PY="$ROOT/.venv/bin/python"
 LOG_DIR="$ROOT/logs"
 mkdir -p "$LOG_DIR"
 
-# 源=同事本地库（模拟）；target 比对仍读 online.xlsx（脚本内 DEP_SOURCE=xlsx）
-export OLD_DB_HOST=192.168.0.231
-export OLD_DB_PORT=3306
-export OLD_DB_USER=root
-export OLD_DB_PASSWORD=123456
-export OLD_DB_DATABASE=yihuishou
+# 源=线上老库（脚本默认 OLD_DB，新密码）；target 比对读 online.xlsx（DEP_SOURCE=xlsx）
+# 如需切换本地模拟库，设置 OLD_DB_* 环境变量覆盖
 
 mark() { echo "=== $(date '+%F %T') $1 ==="; }
 

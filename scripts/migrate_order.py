@@ -136,7 +136,7 @@ def preload_order_nos(dev_conn):
     cur.execute("SELECT order_no FROM recycle_order")
     for r in cur.fetchall():
         _order_nos.add(str(r["order_no"]))
-    _order_nos |= load_prod_collision()["order_nos"]
+    _order_nos.update(load_prod_collision()["order_nos"])
 
 
 def preload_recycle_ids(dev_conn):

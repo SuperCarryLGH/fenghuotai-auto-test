@@ -53,7 +53,7 @@ OLD_DB = {
     "host": os.getenv("OLD_DB_HOST", "rm-bp1kmprsfdog024fsro.mysql.rds.aliyuncs.com"),
     "port": int(os.getenv("OLD_DB_PORT", "3306")),
     "user": os.getenv("OLD_DB_USER", "xinxibu"),
-    "password": os.getenv("OLD_DB_PASSWORD", "Z5eP@E69hGu5xUA"),
+    "password": os.getenv("OLD_DB_PASSWORD", "1qaz2wsx3edc$RFV"),
     "database": os.getenv("OLD_DB_DATABASE", "yihuishou"),
 }
 DEV_DB = {
@@ -206,7 +206,7 @@ def preload_used_ids(dev_conn):
             _used_ids.add(int(r["id"]))
     # 正式迁移：prod 各表 id 并入防碰撞集合
     for ids in load_prod_collision()["ids"].values():
-        _used_ids |= ids
+        _used_ids.update(ids)
 
 
 def check_id_collision(dev_conn, auto_fix=True):

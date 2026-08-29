@@ -4,7 +4,7 @@ import os
 # ======================
 # 1. 环境配置 (Environment)
 # ======================
-ENV = os.getenv("TEST_ENV", "dev")  # 默认使用 dev 环境
+ENV = os.getenv("TEST_ENV", "prod")  # 默认使用 dev 环境
 
 # ======================
 # 2. 管理后台配置 (Admin)
@@ -26,10 +26,10 @@ ADMIN_CONFIG = {
         },
     },
     "prod": {
-        "base_url": "https://admin-fht.hengyishou.com",
+        "base_url": "https://api-fht.hengyishou.com",
         "accounts": {
-            "admin": {"username": "auto_admin", "password": "AutoTest@123"},        # TODO 替换
-            "operator": {"username": "auto_operator", "password": "AutoTest@123"},  # TODO 替换
+            "admin": {"username": "ceshi", "password": "xiaomi0827"},        # TODO 替换
+            "operator": {"username": "ceshi", "password": "xiaomi0827"},  # TODO 替换
         },
     },
 }
@@ -84,5 +84,5 @@ DB_CONFIG = {
 # host:     rm-bp1kmprsfdog024fsro.mysql.rds.aliyuncs.com
 # port:     3306
 # user:     xinxibu
-# password: Z5eP@E69hGu5xUA
+# password: 1qaz2wsx3edc$RFV
 # database: yihuishou
