@@ -4,7 +4,7 @@ import os
 # ======================
 # 1. 环境配置 (Environment)
 # ======================
-ENV = os.getenv("TEST_ENV", "prod")  # 默认使用 dev 环境
+ENV = os.getenv("TEST_ENV", "dev")  # 默认使用 dev 环境
 
 # ======================
 # 2. 管理后台配置 (Admin)
