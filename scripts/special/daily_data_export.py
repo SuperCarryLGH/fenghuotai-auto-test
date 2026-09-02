@@ -60,15 +60,22 @@ def to_plain(v):
     return v
 
 
-def run_query(cur, sql, start, end, status_index=None):
+def run_query(cur, sql, start, end, status_index=None, yesno_indices=None):
+    """执行查询并做二次处理:
+    - status_index: 状态列(转中文)
+    - yesno_indices: 有值→"是", 无值→"否" 的列
+    """
     cur.execute(sql, (start, end))
     headers = [d[0] for d in cur.description]
+    yesno_indices = yesno_indices or set()
     rows = []
     for row in cur.fetchall():
         r = [to_plain(x) for x in row]
         if status_index is not None:
             s = r[status_index]
             r[status_index] = STATUS_MAP.get(s, s)
+        for idx in yesno_indices:
+            r[idx] = "是" if r[idx] is not None and r[idx] != "" else "否"
         rows.append(r)
     return headers, rows
 
@@ -106,8 +113,8 @@ def main():
     wb = Workbook()
 
     try:
-        # Sheet1: 回收订单（状态列转中文）
-        h1, rows1 = run_query(cur, SQL_ORDER, start, end, status_index=12)
+        # Sheet1: 回收订单（状态转中文, 推广记录id转是/否）
+        h1, rows1 = run_query(cur, SQL_ORDER, start, end, status_index=12, yesno_indices={4})
         ws1 = wb.active
         ws1.title = "回收订单"
         ws1.append(h1)
@@ -115,8 +122,8 @@ def main():
             ws1.append(r)
         print(f"回收订单: {len(rows1)} 行")
 
-        # Sheet2: 会员用户
-        h2, rows2 = run_query(cur, SQL_MEMBER, start, end)
+        # Sheet2: 会员用户（绑定记录id转是/否）
+        h2, rows2 = run_query(cur, SQL_MEMBER, start, end, yesno_indices={3})
         ws2 = wb.create_sheet("会员用户")
         ws2.append(h2)
         for r in rows2:
