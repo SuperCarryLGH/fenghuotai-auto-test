@@ -31,6 +31,18 @@ PROD_DB = {
 
 STATUS_MAP = {10: "待回收", 20: "回收中", 30: "已完成", 50: "已取消"}
 
+PLATFORM_MAP = {
+    "smk": "市民卡",
+    "szd": "苏周到",
+    "web": "PC网站",
+    "mp-weixin": "微信小程序",
+    "h5": "H5网页",
+    "mp-alipay": "支付宝小程序",
+    "cn": "菜鸟",
+    "sfapp": "顺丰APP",
+    "sfmini": "顺丰小程序",
+}
+
 SQL_ORDER = """
 SELECT order_no 订单编号, express_order 物流单号, platform 下单平台, provider 供应商,
        b.id AS 推广记录id, user_name 下单人, user_phone 下单人手机号,
@@ -60,14 +72,16 @@ def to_plain(v):
     return v
 
 
-def run_query(cur, sql, start, end, status_index=None, yesno_indices=None):
+def run_query(cur, sql, start, end, status_index=None, yesno_indices=None, platform_indices=None):
     """执行查询并做二次处理:
     - status_index: 状态列(转中文)
     - yesno_indices: 有值→"是", 无值→"否" 的列
+    - platform_indices: 平台代码→中文, 无值/未知保持原样
     """
     cur.execute(sql, (start, end))
     headers = [d[0] for d in cur.description]
     yesno_indices = yesno_indices or set()
+    platform_indices = platform_indices or set()
     rows = []
     for row in cur.fetchall():
         r = [to_plain(x) for x in row]
@@ -76,6 +90,9 @@ def run_query(cur, sql, start, end, status_index=None, yesno_indices=None):
             r[status_index] = STATUS_MAP.get(s, s)
         for idx in yesno_indices:
             r[idx] = "是" if r[idx] is not None and r[idx] != "" else "否"
+        for idx in platform_indices:
+            if r[idx] is not None and r[idx] != "":
+                r[idx] = PLATFORM_MAP.get(r[idx], r[idx])
         rows.append(r)
     return headers, rows
 
@@ -113,8 +130,9 @@ def main():
     wb = Workbook()
 
     try:
-        # Sheet1: 回收订单（状态转中文, 推广记录id转是/否）
-        h1, rows1 = run_query(cur, SQL_ORDER, start, end, status_index=12, yesno_indices={4})
+        # Sheet1: 回收订单（状态转中文, 推广记录id转是/否, 下单平台/供应商转中文）
+        h1, rows1 = run_query(cur, SQL_ORDER, start, end, status_index=12,
+                              yesno_indices={4}, platform_indices={2, 3})
         ws1 = wb.active
         ws1.title = "回收订单"
         ws1.append(h1)
@@ -122,8 +140,8 @@ def main():
             ws1.append(r)
         print(f"回收订单: {len(rows1)} 行")
 
-        # Sheet2: 会员用户（绑定记录id转是/否）
-        h2, rows2 = run_query(cur, SQL_MEMBER, start, end, yesno_indices={3})
+        # Sheet2: 会员用户（绑定记录id转是/否, 平台转中文）
+        h2, rows2 = run_query(cur, SQL_MEMBER, start, end, yesno_indices={3}, platform_indices={2})
         ws2 = wb.create_sheet("会员用户")
         ws2.append(h2)
         for r in rows2:
