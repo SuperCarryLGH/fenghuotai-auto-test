@@ -34,6 +34,7 @@ STATUS_MAP = {10: "待回收", 20: "回收中", 30: "已完成", 50: "已取消"
 PLATFORM_MAP = {
     "smk": "市民卡",
     "szd": "苏周到",
+    "szdmini": "苏周到小程序",
     "web": "PC网站",
     "mp-weixin": "微信小程序",
     "h5": "H5网页",
@@ -45,7 +46,7 @@ PLATFORM_MAP = {
 
 SQL_ORDER = """
 SELECT order_no 订单编号, express_order 物流单号, platform 下单平台, provider 供应商,
-       b.id AS 推广记录id, user_name 下单人, user_phone 下单人手机号,
+       b.id AS 推广记录id, user_name 下单人, user_phone 下单人手机号, a.user_id 下单账户id,
        province 省份, city 城市, district 区域, detail_address 详细地址,
        real_weight 下单重量, a.status 状态
 FROM recycle_order a
@@ -131,7 +132,7 @@ def main():
 
     try:
         # Sheet1: 回收订单（状态转中文, 推广记录id转是/否, 下单平台/供应商转中文）
-        h1, rows1 = run_query(cur, SQL_ORDER, start, end, status_index=12,
+        h1, rows1 = run_query(cur, SQL_ORDER, start, end, status_index=13,
                               yesno_indices={4}, platform_indices={2, 3})
         ws1 = wb.active
         ws1.title = "回收订单"
