@@ -48,19 +48,19 @@ SQL_ORDER = """
 SELECT order_no 订单编号, express_order 物流单号, platform 下单平台, provider 供应商,
        b.id AS 推广记录id, user_name 下单人, user_phone 下单人手机号, a.user_id 下单账户id,
        province 省份, city 城市, district 区域, detail_address 详细地址,
-       real_weight 下单重量, a.status 状态
+       real_weight 下单重量, a.status 状态, a.create_time 下单时间
 FROM recycle_order a
 LEFT JOIN dist_promoter_order_record b ON a.id = b.order_id
 WHERE a.create_time >= %s AND a.create_time < %s
 """
 
 SQL_MEMBER = """
-SELECT a.id 用户id, a.mobile 手机号, platform 平台, b.id AS 绑定记录id
+SELECT a.id 用户id, a.mobile 手机号, platform 平台, b.id AS 绑定记录id,
+       provider 供应商, a.create_time 注册时间
 FROM member_user a
 LEFT JOIN dist_promoter_user_relation b ON a.id = b.user_id
 WHERE a.create_time >= %s AND a.create_time < %s
 """
-
 
 def to_plain(v):
     """Decimal 等转成可写单元格的类型；19位雪花ID转字符串保留精度、避免科学计数法"""
@@ -71,7 +71,6 @@ def to_plain(v):
     if isinstance(v, int) and abs(v) >= 1e15:
         return str(v)
     return v
-
 
 def run_query(cur, sql, start, end, status_index=None, yesno_indices=None, platform_indices=None):
     """执行查询并做二次处理:
@@ -96,7 +95,6 @@ def run_query(cur, sql, start, end, status_index=None, yesno_indices=None, platf
                 r[idx] = PLATFORM_MAP.get(r[idx], r[idx])
         rows.append(r)
     return headers, rows
-
 
 def main():
     ap = argparse.ArgumentParser(description="每日数据导出(线上prod前一天)")
@@ -141,8 +139,8 @@ def main():
             ws1.append(r)
         print(f"回收订单: {len(rows1)} 行")
 
-        # Sheet2: 会员用户（绑定记录id转是/否, 平台转中文）
-        h2, rows2 = run_query(cur, SQL_MEMBER, start, end, yesno_indices={3}, platform_indices={2})
+        # Sheet2: 会员用户（绑定记录id转是/否, 平台/供应商转中文）
+        h2, rows2 = run_query(cur, SQL_MEMBER, start, end, yesno_indices={3}, platform_indices={2, 4})
         ws2 = wb.create_sheet("会员用户")
         ws2.append(h2)
         for r in rows2:
@@ -157,7 +155,6 @@ def main():
     wb.save(out)
     print(f"✅ 已导出: {out}")
     print("=" * 50)
-
 
 if __name__ == "__main__":
     main()
