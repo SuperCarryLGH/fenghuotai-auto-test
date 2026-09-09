@@ -48,7 +48,8 @@ SQL_ORDER = """
 SELECT order_no 订单编号, express_order 物流单号, platform 下单平台, provider 供应商,
        b.id AS 推广记录id, user_name 下单人, user_phone 下单人手机号, a.user_id 下单账户id,
        province 省份, city 城市, district 区域, detail_address 详细地址,
-       real_weight 下单重量, a.status 状态, a.create_time 下单时间
+       real_weight 下单重量, a.status 状态, a.create_time 下单时间,
+       a.receive_time 接单时间, a.pay_time 支付时间
 FROM recycle_order a
 LEFT JOIN dist_promoter_order_record b ON a.id = b.order_id
 WHERE a.create_time >= %s AND a.create_time < %s
