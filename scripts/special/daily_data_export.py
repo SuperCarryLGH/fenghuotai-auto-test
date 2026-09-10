@@ -156,15 +156,34 @@ def main():
             for uid, mob in cur.fetchall():
                 up_mobile[uid] = mob
 
+        # 上上级: 上级(promotor_user_id)的 relation 里再取 promotor_user_id(上上级id)
+        grand_map = {}
+        for batch in chunks(sups):
+            ph = ','.join(['%s'] * len(batch))
+            cur.execute(
+                f"SELECT user_id, promotor_user_id FROM dist_promoter_user_relation "
+                f"WHERE user_id IN ({ph}) AND promotor_user_id IS NOT NULL", batch)
+            for uid, gid in cur.fetchall():
+                grand_map[uid] = gid
+        grand_ids = sorted({v for v in grand_map.values()})
+        grand_mobile = {}
+        for batch in chunks(grand_ids):
+            ph = ','.join(['%s'] * len(batch))
+            cur.execute(f"SELECT id, mobile FROM member_user WHERE id IN ({ph})", batch)
+            for uid, mob in cur.fetchall():
+                grand_mobile[uid] = mob
+
         ws2 = wb.create_sheet("会员用户")
-        ws2.append(['用户id', '手机号', '平台', '绑定记录id', '供应商', '推广上级', '注册时间'])
+        ws2.append(['用户id', '手机号', '平台', '绑定记录id', '供应商', '推广上级', '上上级', '注册时间'])
         for r in raw2:
             uid, mobile, platform, bid, provider, sup_id, ctime = r
             up = up_mobile.get(sup_id) if sup_id else None
+            gid = grand_map.get(sup_id) if sup_id else None
+            grand = grand_mobile.get(gid) if gid else None
             platform = PLATFORM_MAP.get(platform, platform) if platform else platform
             provider = PLATFORM_MAP.get(provider, provider) if provider else provider
             ws2.append([to_plain(uid), to_plain(mobile), platform, '是' if bid else '否',
-                        provider, up, to_plain(ctime)])
+                        provider, up, grand, to_plain(ctime)])
         print(f"会员用户: {len(raw2)} 行")
     except Exception as e:
         print(f"❌ 查询失败: {e}")
