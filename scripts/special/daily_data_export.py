@@ -56,7 +56,7 @@ WHERE a.create_time >= %s AND a.create_time < %s
 """
 
 SQL_MEMBER = """
-SELECT a.id, a.mobile, a.platform, b.id, a.provider, b.parent_promoter_id, a.create_time
+SELECT a.id, a.mobile, a.platform, b.id, a.provider, b.promotor_user_id, a.create_time
 FROM member_user a
 LEFT JOIN dist_promoter_user_relation b ON a.id = b.user_id
 WHERE a.create_time >= %s AND a.create_time < %s
@@ -147,19 +147,10 @@ def main():
             for i in range(0, len(lst), n):
                 yield lst[i:i + n]
 
-        # 上级映射: parent_promoter_id -> 上级用户id -> 上级手机号(分步、走索引, 避免行爆炸)
-        ppids = sorted({r[5] for r in raw2 if r[5]})
-        up_user = {}
-        for batch in chunks(ppids):
-            ph = ','.join(['%s'] * len(batch))
-            cur.execute(
-                f"SELECT promoter_id, MIN(user_id) FROM dist_promoter_user_relation "
-                f"WHERE promoter_id IN ({ph}) GROUP BY promoter_id", batch)
-            for rid, uid in cur.fetchall():
-                up_user[rid] = uid
-        uid_set = sorted({v for v in up_user.values()})
+        # 上级手机号: promotor_user_id 直接是上级用户id, 分批索引反查
+        sups = sorted({r[5] for r in raw2 if r[5]})
         up_mobile = {}
-        for batch in chunks(uid_set):
+        for batch in chunks(sups):
             ph = ','.join(['%s'] * len(batch))
             cur.execute(f"SELECT id, mobile FROM member_user WHERE id IN ({ph})", batch)
             for uid, mob in cur.fetchall():
@@ -168,8 +159,8 @@ def main():
         ws2 = wb.create_sheet("会员用户")
         ws2.append(['用户id', '手机号', '平台', '绑定记录id', '供应商', '推广上级', '注册时间'])
         for r in raw2:
-            uid, mobile, platform, bid, provider, ppid, ctime = r
-            up = up_mobile.get(up_user.get(ppid)) if ppid else None
+            uid, mobile, platform, bid, provider, sup_id, ctime = r
+            up = up_mobile.get(sup_id) if sup_id else None
             platform = PLATFORM_MAP.get(platform, platform) if platform else platform
             provider = PLATFORM_MAP.get(provider, provider) if provider else provider
             ws2.append([to_plain(uid), to_plain(mobile), platform, '是' if bid else '否',
