@@ -132,10 +132,59 @@ def main():
 
     wb = Workbook()
 
+    def chunks(lst, n=1000):
+        for i in range(0, len(lst), n):
+            yield lst[i:i + n]
+
     try:
         # Sheet1: 回收订单（状态转中文, 推广记录id转是/否, 下单平台/供应商转中文）
         h1, rows1 = run_query(cur, SQL_ORDER, start, end, status_index=13,
                               yesno_indices={4}, platform_indices={2, 3})
+
+        # 订单用户上级/上上级手机号(有上级即视为推广订单; 分步索引反查, 避免行爆炸)
+        order_uids = sorted({int(r[7]) for r in rows1 if r[7]})
+        o_rel = {}
+        for batch in chunks(order_uids):
+            ph = ','.join(['%s'] * len(batch))
+            cur.execute(
+                f"SELECT user_id, promotor_user_id FROM dist_promoter_user_relation "
+                f"WHERE user_id IN ({ph}) AND promotor_user_id IS NOT NULL", batch)
+            for uid, sup_id in cur.fetchall():
+                o_rel[uid] = sup_id
+        o_sups = sorted({v for v in o_rel.values()})
+        o_up_mobile = {}
+        for batch in chunks(o_sups):
+            ph = ','.join(['%s'] * len(batch))
+            cur.execute(f"SELECT id, mobile FROM member_user WHERE id IN ({ph})", batch)
+            for uid, mob in cur.fetchall():
+                o_up_mobile[uid] = mob
+        o_grand_map = {}
+        for batch in chunks(o_sups):
+            ph = ','.join(['%s'] * len(batch))
+            cur.execute(
+                f"SELECT user_id, promotor_user_id FROM dist_promoter_user_relation "
+                f"WHERE user_id IN ({ph}) AND promotor_user_id IS NOT NULL", batch)
+            for uid, gid in cur.fetchall():
+                o_grand_map[uid] = gid
+        o_grand_ids = sorted({v for v in o_grand_map.values()})
+        o_grand_mobile = {}
+        for batch in chunks(o_grand_ids):
+            ph = ','.join(['%s'] * len(batch))
+            cur.execute(f"SELECT id, mobile FROM member_user WHERE id IN ({ph})", batch)
+            for uid, mob in cur.fetchall():
+                o_grand_mobile[uid] = mob
+
+        h1.append('上级手机号')
+        h1.append('上上级手机号')
+        for r in rows1:
+            uid = int(r[7]) if r[7] else None
+            sup_id = o_rel.get(uid) if uid else None
+            up = o_up_mobile.get(sup_id) if sup_id else None
+            gid = o_grand_map.get(sup_id) if sup_id else None
+            grand = o_grand_mobile.get(gid) if gid else None
+            r.append(up if is_mobile(up) else '')
+            r.append(grand if is_mobile(grand) else '')
+
         ws1 = wb.active
         ws1.title = "回收订单"
         ws1.append(h1)
@@ -146,10 +195,6 @@ def main():
         # Sheet2: 会员用户（绑定记录id转是/否, 平台/供应商转中文, 推广上级按索引分步反查）
         cur.execute(SQL_MEMBER, (start, end))
         raw2 = cur.fetchall()
-
-        def chunks(lst, n=1000):
-            for i in range(0, len(lst), n):
-                yield lst[i:i + n]
 
         # 上级手机号: promotor_user_id 直接是上级用户id, 分批索引反查
         sups = sorted({r[5] for r in raw2 if r[5]})
