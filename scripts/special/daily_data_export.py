@@ -62,10 +62,6 @@ LEFT JOIN dist_promoter_user_relation b ON a.id = b.user_id
 WHERE a.create_time >= %s AND a.create_time < %s
 """
 
-def is_mobile(m):
-    """仅有效 11 位手机号(1开头)才算, 过滤测试座机/假号"""
-    return bool(m) and str(m).isdigit() and len(str(m)) == 11 and str(m).startswith('1')
-
 def to_plain(v):
     """Decimal 等转成可写单元格的类型；19位雪花ID转字符串保留精度、避免科学计数法"""
     if isinstance(v, decimal.Decimal):
@@ -182,8 +178,8 @@ def main():
             up = o_up_mobile.get(sup_id) if sup_id else None
             gid = o_grand_map.get(sup_id) if sup_id else None
             grand = o_grand_mobile.get(gid) if gid else None
-            r.append(up if is_mobile(up) else '')
-            r.append(grand if is_mobile(grand) else '')
+            r.append(up if up else '')
+            r.append(grand if grand else '')
 
         ws1 = wb.active
         ws1.title = "回收订单"
@@ -229,8 +225,6 @@ def main():
             up = up_mobile.get(sup_id) if sup_id else None
             gid = grand_map.get(sup_id) if sup_id else None
             grand = grand_mobile.get(gid) if gid else None
-            up = up if is_mobile(up) else None
-            grand = grand if is_mobile(grand) else None
             platform = PLATFORM_MAP.get(platform, platform) if platform else platform
             provider = PLATFORM_MAP.get(provider, provider) if provider else provider
             ws2.append([to_plain(uid), to_plain(mobile), platform, '是' if bid else '否',
