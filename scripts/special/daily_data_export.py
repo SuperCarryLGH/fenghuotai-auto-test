@@ -80,8 +80,8 @@ LEFT JOIN dist_promoter_user_relation b ON a.id = b.user_id
 LEFT JOIN member_user c ON c.id = b.promotor_user_id
 LEFT JOIN dist_promoter_user_relation b2 ON b2.user_id = c.id
 LEFT JOIN member_user c2 ON c2.id = b2.promotor_user_id
-LEFT JOIN activity_record d ON d.user_id = a.id AND d.activity_id = %s
-LEFT JOIN activity f ON d.activity_id = f.id
+LEFT JOIN (SELECT DISTINCT user_id, activity_id FROM activity_record WHERE activity_id = %s) d ON d.user_id = a.id
+LEFT JOIN activity f ON f.id = d.activity_id
 LEFT JOIN station_cooperation s ON s.id = a.cid
 LEFT JOIN system_dict_data sd1 ON sd1.`value` = s.platform COLLATE utf8mb4_0900_ai_ci
 LEFT JOIN system_dict_data sd2 ON sd2.`value` = s.channel COLLATE utf8mb4_0900_ai_ci
