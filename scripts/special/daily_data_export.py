@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
 """
 每日数据导出：从线上 prod 库查询前一天数据，导出为一个 xlsx（两个 sheet）
+所有转换(平台/供应商/状态/是否推广/推广员/上级)已下沉到 SQL，Python 只执行+写表
 
 部署在 Jenkins，凌晨定时跑：
   python daily_data_export.py
-  python daily_data_export.py --date 2026-09-01          # 指定日期(补跑)
-  python daily_data_export.py --output /path/每日数据.xlsx # 指定输出(建议传 ${WORKSPACE}/每日数据_YYYY-MM-DD.xlsx)
-
-邮件由 Jenkins email-ext 插件发送该 xlsx 附件。
+  python daily_data_export.py --date 2026-09-13          # 指定日期(补跑)
+  python daily_data_export.py --output /path/每日数据.xlsx
 """
 import os
 import sys
@@ -29,72 +28,82 @@ PROD_DB = {
     "database": os.getenv("PROD_DB_DATABASE", "fht_yhs"),
 }
 
-STATUS_MAP = {10: "待回收", 20: "回收中", 30: "已完成", 50: "已取消"}
-
-PLATFORM_MAP = {
-    "smk": "市民卡",
-    "szd": "苏周到",
-    "szdmini": "苏周到小程序",
-    "web": "PC网站",
-    "mp-weixin": "微信小程序",
-    "h5": "H5网页",
-    "mp-alipay": "支付宝小程序",
-    "cn": "菜鸟",
-    "sfapp": "顺丰APP",
-    "sfmini": "顺丰小程序",
-}
+# 指定活动（推广平台/渠道/场景 及 会员活动记录）
+ACTIVITY_ID = 2097239541775462402
 
 SQL_ORDER = """
-SELECT order_no 订单编号, express_order 物流单号, platform 下单平台, provider 供应商,
-       b.id AS 推广记录id, user_name 下单人, user_phone 下单人手机号, a.user_id 下单账户id,
-       province 省份, city 城市, district 区域, detail_address 详细地址,
-       real_weight 下单重量, a.status 状态, a.create_time 下单时间,
-       a.receive_time 接单时间, a.pay_time 支付时间
+SELECT a.order_no 订单编号, a.express_order 物流单号,
+  CASE a.platform WHEN 'web' THEN 'H5' WHEN 'mp-weixin' THEN '微信小程序'
+    WHEN 'mp-alipay' THEN '支付宝小程序' ELSE '' END AS 下单平台,
+  CASE a.provider WHEN 'smk' THEN '市民卡' WHEN 'szd' THEN '苏周到app'
+    WHEN 'szdmini' THEN '苏周到小程序' WHEN 'sfmini' THEN '顺丰小程序'
+    WHEN 'sfapp' THEN '顺丰app' ELSE '逸回收平台' END AS 供应商,
+  CASE WHEN b.id > 0 THEN '是' ELSE '否' END AS 是否推广,
+  m.mobile 推广员手机号, mu2.mobile 推广员上级手机号, a.user_id 下单账户id,
+  a.user_name 下单人, a.user_phone 下单人手机号,
+  a.province 省份, a.city 城市, a.district 区域,
+  REPLACE(REPLACE(a.detail_address, CHAR(10), ''), CHAR(13), '') AS 详细地址,
+  a.real_weight 下单重量,
+  CASE a.status WHEN 10 THEN '待回收' WHEN 20 THEN '回收中'
+    WHEN 30 THEN '已完成' WHEN 50 THEN '已取消' END AS 状态,
+  a.create_time AS 下单时间, a.receive_time 接单时间, a.pay_time 支付时间,
+  d.id AS 活动id, d.`name` AS 活动名字,
+  sd1.label AS 推广平台, sd2.label AS 推广渠道, sd3.label AS 推广场景
 FROM recycle_order a
 LEFT JOIN dist_promoter_order_record b ON a.id = b.order_id
+LEFT JOIN dist_promoter c ON c.id = b.promoter_id
+LEFT JOIN member_user m ON m.id = c.user_id
+LEFT JOIN dist_promoter_user_relation rm ON rm.user_id = m.id
+LEFT JOIN member_user mu2 ON mu2.id = rm.promotor_user_id
+LEFT JOIN activity d ON d.id = a.activity_id
+LEFT JOIN station_cooperation s ON s.id = a.cid
+LEFT JOIN system_dict_data sd1 ON sd1.`value` = s.platform COLLATE utf8mb4_0900_ai_ci
+LEFT JOIN system_dict_data sd2 ON sd2.`value` = s.channel COLLATE utf8mb4_0900_ai_ci
+LEFT JOIN system_dict_data sd3 ON sd3.`value` = s.scene COLLATE utf8mb4_0900_ai_ci
 WHERE a.create_time >= %s AND a.create_time < %s
+ORDER BY a.create_time ASC
 """
 
 SQL_MEMBER = """
-SELECT a.id, a.mobile, a.platform, b.id, a.provider, b.promotor_user_id, a.create_time
+SELECT a.id 用户id, a.mobile 手机号,
+  CASE a.platform WHEN 'web' THEN 'H5' WHEN 'mp-weixin' THEN '微信小程序'
+    WHEN 'mp-alipay' THEN '支付宝小程序' ELSE '' END AS 注册平台,
+  CASE a.provider WHEN 'smk' THEN '市民卡' WHEN 'szd' THEN '苏周到app'
+    WHEN 'szdmini' THEN '苏周到小程序' WHEN 'sfmini' THEN '顺丰小程序'
+    WHEN 'sfapp' THEN '顺丰app' ELSE '逸回收平台' END AS 注册供应商,
+  CASE WHEN b.id > 0 THEN '是' ELSE '否' END AS 是否推广,
+  c.mobile 推广员手机号, c2.mobile 推广员上级手机号, a.create_time 注册时间,
+  f.id 活动id, f.`name` AS 活动名字,
+  sd1.label AS 推广平台, sd2.label AS 推广渠道, sd3.label AS 推广场景
 FROM member_user a
 LEFT JOIN dist_promoter_user_relation b ON a.id = b.user_id
+LEFT JOIN member_user c ON c.id = b.promotor_user_id
+LEFT JOIN dist_promoter_user_relation b2 ON b2.user_id = c.id
+LEFT JOIN member_user c2 ON c2.id = b2.promotor_user_id
+LEFT JOIN activity_record d ON d.user_id = a.id AND d.activity_id = %s
+LEFT JOIN activity f ON d.activity_id = f.id
+LEFT JOIN station_cooperation s ON s.id = a.cid
+LEFT JOIN system_dict_data sd1 ON sd1.`value` = s.platform COLLATE utf8mb4_0900_ai_ci
+LEFT JOIN system_dict_data sd2 ON sd2.`value` = s.channel COLLATE utf8mb4_0900_ai_ci
+LEFT JOIN system_dict_data sd3 ON sd3.`value` = s.scene COLLATE utf8mb4_0900_ai_ci
 WHERE a.create_time >= %s AND a.create_time < %s
 """
 
+
 def to_plain(v):
-    """Decimal 等转成可写单元格的类型；19位雪花ID转字符串保留精度、避免科学计数法"""
+    """Decimal 等转成可写单元格的类型；19位雪花ID转字符串保留精度"""
     if isinstance(v, decimal.Decimal):
         if v == v.to_integral_value() and abs(v) >= 1e15:
             return str(int(v))
         return float(v)
     if isinstance(v, int) and abs(v) >= 1e15:
         return str(v)
+    if isinstance(v, str):
+        return ''.join(ch for ch in v if ch >= ' ' or ch in '\t\n\r')
+    if isinstance(v, datetime.datetime):
+        return v.strftime('%Y-%m-%d %H:%M:%S')
     return v
 
-def run_query(cur, sql, start, end, status_index=None, yesno_indices=None, platform_indices=None):
-    """执行查询并做二次处理:
-    - status_index: 状态列(转中文)
-    - yesno_indices: 有值→"是", 无值→"否" 的列
-    - platform_indices: 平台代码→中文, 无值/未知保持原样
-    """
-    cur.execute(sql, (start, end))
-    headers = [d[0] for d in cur.description]
-    yesno_indices = yesno_indices or set()
-    platform_indices = platform_indices or set()
-    rows = []
-    for row in cur.fetchall():
-        r = [to_plain(x) for x in row]
-        if status_index is not None:
-            s = r[status_index]
-            r[status_index] = STATUS_MAP.get(s, s)
-        for idx in yesno_indices:
-            r[idx] = "是" if r[idx] is not None and r[idx] != "" else "否"
-        for idx in platform_indices:
-            if r[idx] is not None and r[idx] != "":
-                r[idx] = PLATFORM_MAP.get(r[idx], r[idx])
-        rows.append(r)
-    return headers, rows
 
 def main():
     ap = argparse.ArgumentParser(description="每日数据导出(线上prod前一天)")
@@ -125,111 +134,29 @@ def main():
         print(f"❌ 连接线上库失败: {e}")
         sys.exit(1)
     cur = conn.cursor()
-
     wb = Workbook()
 
-    def chunks(lst, n=1000):
-        for i in range(0, len(lst), n):
-            yield lst[i:i + n]
-
     try:
-        # Sheet1: 回收订单（状态转中文, 推广记录id转是/否, 下单平台/供应商转中文）
-        h1, rows1 = run_query(cur, SQL_ORDER, start, end, status_index=13,
-                              yesno_indices={4}, platform_indices={2, 3})
-
-        # 订单用户上级/上上级手机号(有上级即视为推广订单; 分步索引反查, 避免行爆炸)
-        order_uids = sorted({int(r[7]) for r in rows1 if r[7]})
-        o_rel = {}
-        for batch in chunks(order_uids):
-            ph = ','.join(['%s'] * len(batch))
-            cur.execute(
-                f"SELECT user_id, promotor_user_id FROM dist_promoter_user_relation "
-                f"WHERE user_id IN ({ph}) AND promotor_user_id IS NOT NULL", batch)
-            for uid, sup_id in cur.fetchall():
-                o_rel[uid] = sup_id
-        o_sups = sorted({v for v in o_rel.values()})
-        o_up_mobile = {}
-        for batch in chunks(o_sups):
-            ph = ','.join(['%s'] * len(batch))
-            cur.execute(f"SELECT id, mobile FROM member_user WHERE id IN ({ph})", batch)
-            for uid, mob in cur.fetchall():
-                o_up_mobile[uid] = mob
-        o_grand_map = {}
-        for batch in chunks(o_sups):
-            ph = ','.join(['%s'] * len(batch))
-            cur.execute(
-                f"SELECT user_id, promotor_user_id FROM dist_promoter_user_relation "
-                f"WHERE user_id IN ({ph}) AND promotor_user_id IS NOT NULL", batch)
-            for uid, gid in cur.fetchall():
-                o_grand_map[uid] = gid
-        o_grand_ids = sorted({v for v in o_grand_map.values()})
-        o_grand_mobile = {}
-        for batch in chunks(o_grand_ids):
-            ph = ','.join(['%s'] * len(batch))
-            cur.execute(f"SELECT id, mobile FROM member_user WHERE id IN ({ph})", batch)
-            for uid, mob in cur.fetchall():
-                o_grand_mobile[uid] = mob
-
-        h1.append('上级手机号')
-        h1.append('上上级手机号')
-        for r in rows1:
-            uid = int(r[7]) if r[7] else None
-            sup_id = o_rel.get(uid) if uid else None
-            up = o_up_mobile.get(sup_id) if sup_id else None
-            gid = o_grand_map.get(sup_id) if sup_id else None
-            grand = o_grand_mobile.get(gid) if gid else None
-            r.append(up if up else '')
-            r.append(grand if grand else '')
-
+        # Sheet1: 回收订单
+        cur.execute(SQL_ORDER, (start, end))
+        h1 = [d[0] for d in cur.description]
+        rows1 = cur.fetchall()
         ws1 = wb.active
         ws1.title = "回收订单"
         ws1.append(h1)
         for r in rows1:
-            ws1.append(r)
-        print(f"回收订单: {len(rows1)} 行")
+            ws1.append([to_plain(x) for x in r])
+        print(f"回收订单: {len(rows1)} 行, {len(h1)} 列")
 
-        # Sheet2: 会员用户（绑定记录id转是/否, 平台/供应商转中文, 推广上级按索引分步反查）
-        cur.execute(SQL_MEMBER, (start, end))
-        raw2 = cur.fetchall()
-
-        # 上级手机号: promotor_user_id 直接是上级用户id, 分批索引反查
-        sups = sorted({r[5] for r in raw2 if r[5]})
-        up_mobile = {}
-        for batch in chunks(sups):
-            ph = ','.join(['%s'] * len(batch))
-            cur.execute(f"SELECT id, mobile FROM member_user WHERE id IN ({ph})", batch)
-            for uid, mob in cur.fetchall():
-                up_mobile[uid] = mob
-
-        # 上上级: 上级(promotor_user_id)的 relation 里再取 promotor_user_id(上上级id)
-        grand_map = {}
-        for batch in chunks(sups):
-            ph = ','.join(['%s'] * len(batch))
-            cur.execute(
-                f"SELECT user_id, promotor_user_id FROM dist_promoter_user_relation "
-                f"WHERE user_id IN ({ph}) AND promotor_user_id IS NOT NULL", batch)
-            for uid, gid in cur.fetchall():
-                grand_map[uid] = gid
-        grand_ids = sorted({v for v in grand_map.values()})
-        grand_mobile = {}
-        for batch in chunks(grand_ids):
-            ph = ','.join(['%s'] * len(batch))
-            cur.execute(f"SELECT id, mobile FROM member_user WHERE id IN ({ph})", batch)
-            for uid, mob in cur.fetchall():
-                grand_mobile[uid] = mob
-
+        # Sheet2: 会员用户
+        cur.execute(SQL_MEMBER, (ACTIVITY_ID, start, end))
+        h2 = [d[0] for d in cur.description]
+        rows2 = cur.fetchall()
         ws2 = wb.create_sheet("会员用户")
-        ws2.append(['用户id', '手机号', '平台', '绑定记录id', '供应商', '推广上级', '上上级', '注册时间'])
-        for r in raw2:
-            uid, mobile, platform, bid, provider, sup_id, ctime = r
-            up = up_mobile.get(sup_id) if sup_id else None
-            gid = grand_map.get(sup_id) if sup_id else None
-            grand = grand_mobile.get(gid) if gid else None
-            platform = PLATFORM_MAP.get(platform, platform) if platform else platform
-            provider = PLATFORM_MAP.get(provider, provider) if provider else provider
-            ws2.append([to_plain(uid), to_plain(mobile), platform, '是' if bid else '否',
-                        provider, up, grand, to_plain(ctime)])
-        print(f"会员用户: {len(raw2)} 行")
+        ws2.append(h2)
+        for r in rows2:
+            ws2.append([to_plain(x) for x in r])
+        print(f"会员用户: {len(rows2)} 行, {len(h2)} 列")
     except Exception as e:
         print(f"❌ 查询失败: {e}")
         sys.exit(1)
@@ -239,6 +166,7 @@ def main():
     wb.save(out)
     print(f"✅ 已导出: {out}")
     print("=" * 50)
+
 
 if __name__ == "__main__":
     main()
